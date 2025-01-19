@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,7 @@
 		488699F12D3C99B4006DF44A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 488699F02D3C99B4006DF44A /* Assets.xcassets */; };
 		488699F42D3C99B4006DF44A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 488699F32D3C99B4006DF44A /* Preview Assets.xcassets */; };
 		488699FC2D3CAAA5006DF44A /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 488699FB2D3CAAA5006DF44A /* AlertKit */; };
+		488699FF2D3CB5F5006DF44A /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 488699FE2D3CB5F5006DF44A /* AlertKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				488699FF2D3CB5F5006DF44A /* AlertKit in Frameworks */,
 				488699FC2D3CAAA5006DF44A /* AlertKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -87,6 +89,7 @@
 			name = "instagram-downloader";
 			packageProductDependencies = (
 				488699FB2D3CAAA5006DF44A /* AlertKit */,
+				488699FE2D3CB5F5006DF44A /* AlertKit */,
 			);
 			productName = "instagram-downloader";
 			productReference = 488699E92D3C99B2006DF44A /* instagram-downloader.app */;
@@ -117,7 +120,7 @@
 			);
 			mainGroup = 488699E02D3C99B2006DF44A;
 			packageReferences = (
-				488699FA2D3CAAA5006DF44A /* XCLocalSwiftPackageReference "packages/AlertKit" */,
+				488699FD2D3CB5F5006DF44A /* XCRemoteSwiftPackageReference "AlertKit" */,
 			);
 			productRefGroup = 488699EA2D3C99B2006DF44A /* Products */;
 			projectDirPath = "";
@@ -353,16 +356,25 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		488699FA2D3CAAA5006DF44A /* XCLocalSwiftPackageReference "packages/AlertKit" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = packages/AlertKit;
+/* Begin XCRemoteSwiftPackageReference section */
+		488699FD2D3CB5F5006DF44A /* XCRemoteSwiftPackageReference "AlertKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparrowcode/AlertKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.9;
+			};
 		};
-/* End XCLocalSwiftPackageReference section */
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		488699FB2D3CAAA5006DF44A /* AlertKit */ = {
 			isa = XCSwiftPackageProductDependency;
+			productName = AlertKit;
+		};
+		488699FE2D3CB5F5006DF44A /* AlertKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 488699FD2D3CB5F5006DF44A /* XCRemoteSwiftPackageReference "AlertKit" */;
 			productName = AlertKit;
 		};
 /* End XCSwiftPackageProductDependency section */
