@@ -106,6 +106,7 @@ struct ContentView: View {
                 }
             } catch {
                 isDownloading = false
+                isDownloaded = false
             }
         }
     }
