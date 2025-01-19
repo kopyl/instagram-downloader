@@ -115,6 +115,7 @@ struct ContentView: View {
             Text("Download URL is \(isUrlValid ? "valid" : "invalid")")
         }
         .onChange(of: scenePhase) {
+            notification.currentNotification?.dismiss()
             guard let _url = UIPasteboard.general.string else { return }
             withAnimation(.linear(duration: 0.15)){
                 isDownloaded = false
