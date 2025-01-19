@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,7 @@
 		488699EF2D3C99B2006DF44A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488699EE2D3C99B2006DF44A /* ContentView.swift */; };
 		488699F12D3C99B4006DF44A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 488699F02D3C99B4006DF44A /* Assets.xcassets */; };
 		488699F42D3C99B4006DF44A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 488699F32D3C99B4006DF44A /* Preview Assets.xcassets */; };
+		488699FC2D3CAAA5006DF44A /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 488699FB2D3CAAA5006DF44A /* AlertKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				488699FC2D3CAAA5006DF44A /* AlertKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +85,9 @@
 			dependencies = (
 			);
 			name = "instagram-downloader";
+			packageProductDependencies = (
+				488699FB2D3CAAA5006DF44A /* AlertKit */,
+			);
 			productName = "instagram-downloader";
 			productReference = 488699E92D3C99B2006DF44A /* instagram-downloader.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +116,9 @@
 				Base,
 			);
 			mainGroup = 488699E02D3C99B2006DF44A;
+			packageReferences = (
+				488699FA2D3CAAA5006DF44A /* XCLocalSwiftPackageReference "packages/AlertKit" */,
+			);
 			productRefGroup = 488699EA2D3C99B2006DF44A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -344,6 +352,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		488699FA2D3CAAA5006DF44A /* XCLocalSwiftPackageReference "packages/AlertKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = packages/AlertKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		488699FB2D3CAAA5006DF44A /* AlertKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AlertKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 488699E12D3C99B2006DF44A /* Project object */;
 }

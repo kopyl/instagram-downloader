@@ -1,30 +1,41 @@
 import SwiftUI
+import AlertKit
 
-struct NotificationBanner: View {
-    var message: String
-    var body: some View {
-        Text(message)
-            .padding()
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(10)
-            .shadow(radius: 10)
+struct Notification {
+    var windowScene: UIWindow?
+    var loadingNotification: AlertAppleMusic17View?
+    
+    func getWindowScene() -> UIWindow? {
+        guard let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
+        else {
+            return nil
+        }
+        return windowScene.windows.first(where: { $0.isKeyWindow })
+    }
+    
+    init() {
+        windowScene = getWindowScene()
+        loadingNotification = AlertAppleMusic17View(title: "Downloading", icon: .spinnerSmall)
+    }
+
+    func present() {
+        guard let scene = windowScene, let loadingNotification else { return }
+        loadingNotification.present(on: scene)
     }
 }
 
 struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
-    @State private var showNotification = true
     @State private var url: String = ""
     
+    let notification = Notification()
     
     var body: some View {
         VStack {
             Text(url)
-            NotificationBanner(message: "Test")
-                                .transition(.move(edge: .top))
-                                .animation(.easeInOut, value: showNotification)
-                                .padding()
+            Button("Test") {
+                notification.present()
+            }
         }
         .onChange(of: scenePhase) {
             guard scenePhase == .active else { return }
