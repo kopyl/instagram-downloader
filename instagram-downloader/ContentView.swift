@@ -51,7 +51,6 @@ struct Notification {
             currentNotification = AlertAppleMusic17View(title: "Error occured", icon: .error)
             currentNotification?.present(on: scene)
         }
-        return
     }
 }
 
