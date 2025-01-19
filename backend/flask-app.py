@@ -28,7 +28,7 @@ def info():
         print(f"Download failed: {str(e)}")
         return f"Error while downloading video: {str(e)}", 500
 
-    return jsonify({"url": info_dict.get("url")})
+    return jsonify(info_dict.get("url"))
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=6000)

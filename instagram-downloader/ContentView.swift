@@ -55,17 +55,13 @@ struct Notification {
     }
 }
 
-struct VideoURLResponse: Decodable {
-    let url: String
-}
-
 func fetchVideoURL(reelUrl: String) async throws -> String? {
     guard let infoURL = URL(string: String(format: INFO_DOWNLOAD_URL_SCHEME, reelUrl)) else {
         return nil
     }
     let (infoData, _) = try await URLSession.shared.data(from: infoURL)
-    let videoInfoResponse = try JSONDecoder().decode(VideoURLResponse.self, from: infoData)
-    return videoInfoResponse.url
+    let videoInfoResponse = try JSONDecoder().decode(String.self, from: infoData)
+    return videoInfoResponse
 }
 
 func downloadFile(from url: URL) async throws -> URL? {
