@@ -22,7 +22,7 @@ def info():
 
     try:
         with YoutubeDL(options) as ydl:
-            info_dict = ydl.extract_info(url)
+            info_dict = ydl.extract_info(url, download=False)
             print("Info downloaded")
     except Exception as e:
         print(f"Download failed: {str(e)}")
