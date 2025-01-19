@@ -1,6 +1,5 @@
 import SwiftUI
 import AlertKit
-import AVFoundation
 import Photos
 
 let INFO_DOWNLOAD_URL_SCHEME = "\(SERVER_URL)/info?url=%@"
