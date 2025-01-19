@@ -67,7 +67,7 @@ func fetchVideoURL(reelUrl: String) async throws -> String? {
 func downloadFile(from url: URL) async throws -> URL? {
     let (tempFileURL, _) = try await URLSession.shared.download(from: url)
     
-    let destinationURL = tempFileURL.deletingPathExtension().appendingPathExtension("mp4")
+    let destinationURL = tempFileURL.appendingPathExtension("mp4")
     
     if FileManager.default.fileExists(atPath: destinationURL.relativePath) {
         try FileManager.default.removeItem(at: destinationURL)
