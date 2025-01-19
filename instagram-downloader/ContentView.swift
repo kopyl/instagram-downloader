@@ -99,15 +99,12 @@ struct ContentView: View {
                 guard let downloadUrlURL = URL(string: downloadUrl) else { return }
                 guard let file = try await downloadFile(from: downloadUrlURL) else { return }
                 
-                PHPhotoLibrary.shared().performChanges({
+                try await PHPhotoLibrary.shared().performChanges({
                     PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: URL(fileURLWithPath: file.absoluteString))
-                }) { completed, error in
-                    if completed {
-                        withAnimation(.linear(duration: 0.15)){
-                            isDownloading = false
-                            isDownloaded = true
-                        }
-                    }
+                })
+                withAnimation(.linear(duration: 0.15)){
+                    isDownloading = false
+                    isDownloaded = true
                 }
             } catch {
                 isDownloading = false
