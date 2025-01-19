@@ -71,10 +71,8 @@ func fetchVideoURL(reelUrl: String) async throws -> String? {
 
 func downloadFile(from url: URL) async throws -> URL? {
     let (tempFileURL, _) = try await URLSession.shared.download(from: url)
-
-    let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0];
     
-    let destinationURL = URL(fileURLWithPath: "\(documentsPath)/tempFile.mp4")
+    let destinationURL = tempFileURL.deletingLastPathComponent().appendingPathComponent("tempFile.mp4")
     
     do {
         try FileManager.default.removeItem(at: destinationURL)
