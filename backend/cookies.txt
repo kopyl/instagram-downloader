@@ -1,0 +1,6 @@
+# Netscape HTTP Cookie File
+
+.instagram.com	TRUE	/	TRUE	1768747257	csrftoken	XXX
+.instagram.com	TRUE	/	TRUE	1768811061	ig_did	XXX
+.instagram.com	TRUE	/	TRUE	1768811061	ig_nrcb	1
+.instagram.com	TRUE	/	TRUE	1771835061	mid	XXX
