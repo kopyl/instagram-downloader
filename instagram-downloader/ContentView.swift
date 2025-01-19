@@ -63,6 +63,19 @@ struct ContentView: View {
     @State private var isDownloaded = false
     @State private var notification: Notification = Notification()
     
+    var backgroundColor: Color {
+        if isUrlValid {
+            return .red
+        }
+        if isDownloaded {
+            return .green
+        }
+        if isDownloading {
+            return .gray
+        }
+        return .red
+    }
+    
     func downloadVideoAndSaveToPhotos() {
         DispatchQueue.global(qos: .background).async {
             isDownloading = true
@@ -76,8 +89,10 @@ struct ContentView: View {
                         PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: URL(fileURLWithPath: filePath))
                     }) { completed, error in
                         if completed {
-                            isDownloading = false
-                            isDownloaded = true
+                            withAnimation(.linear(duration: 0.15)){
+                                isDownloading = false
+                                isDownloaded = true
+                            }
                         }
                     }
                 }
@@ -88,16 +103,23 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Text("Download URL is \(isUrlValid ? "valid" : "invalid")")
-                .padding(16)
-                .background(isUrlValid ? .blue : .red)
-                .foregroundColor(.white)
-                .cornerRadius(4)
+        }
+        .onChange(of: scenePhase) {
+            guard scenePhase == .background else { return }
+            withAnimation(.linear(duration: 0.15)){
+                isDownloaded = false
+            }
         }
         .onChange(of: scenePhase) {
             guard scenePhase == .active else { return }
             guard let _url = UIPasteboard.general.string else { return }
+            withAnimation(.linear(duration: 0.15)){
+                isDownloaded = false
+            }
             url = _url
-            isUrlValid = isValidInstagramReelURL(url: _url)
+            withAnimation(.linear(duration: 0.15)){
+                isUrlValid = isValidInstagramReelURL(url: _url)
+            }
             
             if isUrlValid {
                 notification.present(type: .loading)
@@ -107,12 +129,13 @@ struct ContentView: View {
         .onChange(of: isDownloaded) {
             if isDownloaded {
                 notification.present(type: .success)
-                isDownloaded = false
             }
         }
         .onAppear{
             notification.setWindowScene()
         }
+        .containerRelativeFrame([.horizontal, .vertical])
+        .background(isDownloaded ? .green : isUrlValid ? .blue : .red)
     }
 }
 
