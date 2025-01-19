@@ -69,10 +69,8 @@ func downloadFile(from url: URL) async throws -> URL? {
     
     let destinationURL = tempFileURL.deletingLastPathComponent().appendingPathComponent("tempFile.mp4")
     
-    do {
+    if FileManager.default.fileExists(atPath: destinationURL.relativePath) {
         try FileManager.default.removeItem(at: destinationURL)
-    } catch let error {
-        print(error)
     }
     
     do {
