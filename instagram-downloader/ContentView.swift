@@ -98,7 +98,6 @@ struct ContentView: View {
     @State private var isDownloading = false
     @State private var isDownloaded = false
     @State private var notification: Notification = Notification()
-    @State private var file: URL?
     
     func downloadVideoAndSaveToPhotos() {
         Task{
