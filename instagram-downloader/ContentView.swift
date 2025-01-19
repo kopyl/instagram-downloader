@@ -3,7 +3,6 @@ import AlertKit
 import AVFoundation
 import Photos
 
-let DOWNLOAD_URL_SCHEME = "\(SERVER_URL)/download?url=%@"
 let INFO_DOWNLOAD_URL_SCHEME = "\(SERVER_URL)/info?url=%@"
 
 func isValidInstagramReelURL(url: String) -> Bool {
