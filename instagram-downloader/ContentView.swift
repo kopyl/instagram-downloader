@@ -3,7 +3,6 @@ import AlertKit
 import AVFoundation
 import Photos
 
-let SERVER_URL = "http://192.168.0.79:6000"
 let DOWNLOAD_URL_SCHEME = "\(SERVER_URL)/download?url=%@"
 let INFO_DOWNLOAD_URL_SCHEME = "\(SERVER_URL)/info?url=%@"
 
