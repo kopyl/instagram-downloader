@@ -3,103 +3,55 @@ import AlertKit
 import AVFoundation
 import Photos
 
-class PhotoLibrary {
+let SERVER_URL = "http://192.168.0.79:6000"
+let DOWNLOAD_URL_SCHEME = "\(SERVER_URL)/download?url=%@"
 
-    class func saveVideoToCameraRoll(url: URL) async {
-        do {
-            try await PHPhotoLibrary.shared().performChanges {
-                PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: url)
-            }
-        } catch {
-            print("Failed to save video to camera roll: \(error.localizedDescription)")
-        }
-    }
+func isValidInstagramReelURL(url: String) -> Bool {
+    let pattern = "^https://www\\.instagram\\.com/reel/[A-Za-z0-9_-]+(?:/)?(?:\\?igsh=[A-Za-z0-9=]+)?$"
+    let regex = try! NSRegularExpression(pattern: pattern, options: [])
+    
+    let range = NSRange(location: 0, length: url.utf16.count)
+    let match = regex.firstMatch(in: url, options: [], range: range)
+    
+    return match != nil
 }
 
-class FileDownloader {
-
-    static func loadFileSync(url: URL, completion: @escaping (String?, Error?) -> Void)
-    {
-        let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-
-        let destinationUrl = documentsUrl.appendingPathComponent(url.lastPathComponent)
-
-        if FileManager().fileExists(atPath: destinationUrl.path)
-        {
-            print("File already exists [\(destinationUrl.path)]")
-            completion(destinationUrl.path, nil)
+struct Notification {
+    var scene: UIWindow?
+    var currentNotification: AlertAppleMusic17View?
+    
+    mutating func setWindowScene() {
+        guard let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
+        else {
+            return
         }
-        else if let dataFromURL = NSData(contentsOf: url)
-        {
-            if dataFromURL.write(to: destinationUrl, atomically: true)
-            {
-                print("file saved [\(destinationUrl.path)]")
-                completion(destinationUrl.path, nil)
-            }
-            else
-            {
-                print("error saving file")
-                let error = NSError(domain:"Error saving file", code:1001, userInfo:nil)
-                completion(destinationUrl.path, error)
-            }
-        }
-        else
-        {
-            let error = NSError(domain:"Error downloading file", code:1002, userInfo:nil)
-            completion(destinationUrl.path, error)
-        }
+        scene = windowScene.windows.first(where: { $0.isKeyWindow })
+    }
+    
+    enum type {
+        case loading
+        case success
+        case error
     }
 
-    static func loadFileAsync(url: URL, completion: @escaping (String?, Error?) -> Void)
-    {
-        let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-
-        let destinationUrl = documentsUrl.appendingPathComponent(url.lastPathComponent)
-
-        if FileManager().fileExists(atPath: destinationUrl.path)
-        {
-            print("File already exists [\(destinationUrl.path)]")
-            completion(destinationUrl.path, nil)
+    mutating func present(type: type) {
+        guard let scene else { return }
+        
+        switch type {
+        case .loading:
+            currentNotification?.dismiss()
+            currentNotification = AlertAppleMusic17View(title: "Downloading", icon: .spinnerSmall)
+            currentNotification?.present(on: scene)
+        case .success:
+            currentNotification?.dismiss()
+            currentNotification = AlertAppleMusic17View(title: "Added to photos", icon: .done)
+            currentNotification?.present(on: scene)
+        case .error:
+            currentNotification?.dismiss()
+            currentNotification = AlertAppleMusic17View(title: "Error occured", icon: .error)
+            currentNotification?.present(on: scene)
         }
-        else
-        {
-            let session = URLSession(configuration: URLSessionConfiguration.default, delegate: nil, delegateQueue: nil)
-            var request = URLRequest(url: url)
-            request.httpMethod = "GET"
-            let task = session.dataTask(with: request, completionHandler:
-            {
-                data, response, error in
-                if error == nil
-                {
-                    if let response = response as? HTTPURLResponse
-                    {
-                        if response.statusCode == 200
-                        {
-                            if let data = data
-                            {
-                                if let _ = try? data.write(to: destinationUrl, options: Data.WritingOptions.atomic)
-                                {
-                                    completion(destinationUrl.path, error)
-                                }
-                                else
-                                {
-                                    completion(destinationUrl.path, error)
-                                }
-                            }
-                            else
-                            {
-                                completion(destinationUrl.path, error)
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    completion(destinationUrl.path, error)
-                }
-            })
-            task.resume()
-        }
+        return
     }
 }
 
@@ -107,42 +59,61 @@ struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
     @State private var isUrlValid = false
     @State private var url: String = ""
+    @State private var isDownloading = false
+    @State private var isDownloaded = false
+    @State private var notification: Notification = Notification()
     
-    var body: some View {
-        VStack {
-            Text(url)
-            Text("Is valid: \(String(isUrlValid))")
-            Button("Test") {
-                
-                let url = URL(string: "http://192.168.0.79:6000/download")
-
-                
-                DispatchQueue.global(qos: .background).async {
-                    if let url,
-                        let urlData = NSData(contentsOf: url) {
-                        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0];
-                        let filePath="\(documentsPath)/tempFile.mp4"
-                        DispatchQueue.main.async {
-                            urlData.write(toFile: filePath, atomically: true)
-                            PHPhotoLibrary.shared().performChanges({
-                                PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: URL(fileURLWithPath: filePath))
-                            }) { completed, error in
-                                if completed {
-                                    print("Video is saved!")
-                                }
-                            }
+    func downloadVideoAndSaveToPhotos() {
+        DispatchQueue.global(qos: .background).async {
+            isDownloading = true
+            if let _url = URL(string: String(format: DOWNLOAD_URL_SCHEME, url)),
+                let urlData = NSData(contentsOf: _url) {
+                let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0];
+                let filePath="\(documentsPath)/tempFile.mp4"
+                DispatchQueue.main.async {
+                    urlData.write(toFile: filePath, atomically: true)
+                    PHPhotoLibrary.shared().performChanges({
+                        PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: URL(fileURLWithPath: filePath))
+                    }) { completed, error in
+                        if completed {
+                            isDownloading = false
+                            isDownloaded = true
                         }
                     }
                 }
-                
-                
-//                downloadVideo()
             }
         }
     }
     
-    
-
+    var body: some View {
+        VStack {
+            Text("Download URL is \(isUrlValid ? "valid" : "invalid")")
+                .padding(16)
+                .background(isUrlValid ? .blue : .red)
+                .foregroundColor(.white)
+                .cornerRadius(4)
+        }
+        .onChange(of: scenePhase) {
+            guard scenePhase == .active else { return }
+            guard let _url = UIPasteboard.general.string else { return }
+            url = _url
+            isUrlValid = isValidInstagramReelURL(url: _url)
+            
+            if isUrlValid {
+                notification.present(type: .loading)
+                downloadVideoAndSaveToPhotos()
+            }
+        }
+        .onChange(of: isDownloaded) {
+            if isDownloaded {
+                notification.present(type: .success)
+                isDownloaded = false
+            }
+        }
+        .onAppear{
+            notification.setWindowScene()
+        }
+    }
 }
 
 #Preview {
