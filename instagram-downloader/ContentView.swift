@@ -115,26 +115,16 @@ struct ContentView: View {
             Text("Download URL is \(isUrlValid ? "valid" : "invalid")")
         }
         .onChange(of: scenePhase) {
-            guard scenePhase == .background else { return }
-            withAnimation(.linear(duration: 0.15)){
-                isDownloaded = false
-            }
-        }
-        .onChange(of: scenePhase) {
-            guard scenePhase == .active else { return }
             guard let _url = UIPasteboard.general.string else { return }
             withAnimation(.linear(duration: 0.15)){
                 isDownloaded = false
-            }
-            url = _url
-            withAnimation(.linear(duration: 0.15)){
+                url = _url
                 isUrlValid = isValidInstagramReelURL(url: _url)
             }
-            
-            if isUrlValid {
-                notification.present(type: .loading)
-                downloadVideoAndSaveToPhotos()
-            }
+            guard scenePhase == .active else { return }
+            guard isUrlValid else { return }
+            notification.present(type: .loading)
+            downloadVideoAndSaveToPhotos()
         }
         .onChange(of: isDownloaded) {
             if isDownloaded {
