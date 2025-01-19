@@ -46,6 +46,7 @@ struct Notification {
         case .success:
             currentNotification?.dismiss()
             currentNotification = AlertAppleMusic17View(title: "Added to photos", icon: .done)
+            currentNotification?.haptic = .success
             currentNotification?.present(on: scene)
         case .error:
             currentNotification?.dismiss()
