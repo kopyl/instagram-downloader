@@ -15,11 +15,11 @@ func isValidInstagramReelURL(url: String) -> Bool {
     return match != nil
 }
 
-struct Notification {
+class Notification {
     var scene: UIWindow?
     var currentNotification: AlertAppleMusic17View?
     
-    mutating func setWindowScene() {
+    func setWindowScene() {
         guard let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
         else {
             return
@@ -33,7 +33,7 @@ struct Notification {
         case error
     }
 
-    mutating func present(type: type) {
+    func present(type: type) {
         guard let scene else { return }
         
         switch type {
@@ -87,7 +87,8 @@ struct ContentView: View {
     @State private var url: String = ""
     @State private var isDownloading = false
     @State private var isDownloaded = false
-    @State private var notification: Notification = Notification()
+    
+    private var notification = Notification()
     
     func downloadVideoAndSaveToPhotos() {
         Task{
