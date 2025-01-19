@@ -81,7 +81,7 @@ func downloadFile(from url: URL) async throws -> URL? {
         print(error)
     }
 
-    return URL(string: destinationURL.relativePath)
+    return destinationURL
 }
 
 struct ContentView: View {
@@ -100,7 +100,7 @@ struct ContentView: View {
                 guard let file = try await downloadFile(from: downloadUrlURL) else { return }
                 
                 try await PHPhotoLibrary.shared().performChanges({
-                    PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: URL(fileURLWithPath: file.absoluteString))
+                    PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: file)
                 })
                 withAnimation(.linear(duration: 0.15)){
                     isDownloading = false
