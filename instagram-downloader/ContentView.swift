@@ -5,6 +5,7 @@ import Photos
 
 let SERVER_URL = "http://192.168.0.79:6000"
 let DOWNLOAD_URL_SCHEME = "\(SERVER_URL)/download?url=%@"
+let INFO_DOWNLOAD_URL_SCHEME = "\(SERVER_URL)/info?url=%@"
 
 func isValidInstagramReelURL(url: String) -> Bool {
     let pattern = "^https://www\\.instagram\\.com/reel/[A-Za-z0-9_-]+(?:/)?(?:\\?igsh=[A-Za-z0-9=]+)?$"
@@ -55,6 +56,41 @@ struct Notification {
     }
 }
 
+struct VideoURLResponse: Decodable {
+    let url: String
+}
+
+func fetchVideoURL(reelUrl: String) async throws -> String? {
+    guard let infoURL = URL(string: String(format: INFO_DOWNLOAD_URL_SCHEME, reelUrl)) else {
+        return nil
+    }
+    let (infoData, _) = try await URLSession.shared.data(from: infoURL)
+    let videoInfoResponse = try JSONDecoder().decode(VideoURLResponse.self, from: infoData)
+    return videoInfoResponse.url
+}
+
+func downloadFile(from url: URL) async throws -> URL? {
+    let (tempFileURL, _) = try await URLSession.shared.download(from: url)
+
+    let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0];
+    
+    let destinationURL = URL(fileURLWithPath: "\(documentsPath)/tempFile.mp4")
+    
+    do {
+        try FileManager.default.removeItem(at: destinationURL)
+    } catch let error {
+        print(error)
+    }
+    
+    do {
+        try FileManager.default.moveItem(at: tempFileURL, to: destinationURL)
+    } catch let error {
+        print(error)
+    }
+
+    return URL(string: destinationURL.relativePath)
+}
+
 struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
     @State private var isUrlValid = false
@@ -62,40 +98,27 @@ struct ContentView: View {
     @State private var isDownloading = false
     @State private var isDownloaded = false
     @State private var notification: Notification = Notification()
-    
-    var backgroundColor: Color {
-        if isUrlValid {
-            return .red
-        }
-        if isDownloaded {
-            return .green
-        }
-        if isDownloading {
-            return .gray
-        }
-        return .red
-    }
+    @State private var file: URL?
     
     func downloadVideoAndSaveToPhotos() {
-        DispatchQueue.global(qos: .background).async {
-            isDownloading = true
-            if let _url = URL(string: String(format: DOWNLOAD_URL_SCHEME, url)),
-                let urlData = NSData(contentsOf: _url) {
-                let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0];
-                let filePath="\(documentsPath)/tempFile.mp4"
-                DispatchQueue.main.async {
-                    urlData.write(toFile: filePath, atomically: true)
-                    PHPhotoLibrary.shared().performChanges({
-                        PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: URL(fileURLWithPath: filePath))
-                    }) { completed, error in
-                        if completed {
-                            withAnimation(.linear(duration: 0.15)){
-                                isDownloading = false
-                                isDownloaded = true
-                            }
+        Task{
+            do {
+                guard let downloadUrl = try await fetchVideoURL(reelUrl: url) else { return }
+                guard let downloadUrlURL = URL(string: downloadUrl) else { return }
+                guard let file = try await downloadFile(from: downloadUrlURL) else { return }
+                
+                PHPhotoLibrary.shared().performChanges({
+                    PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: URL(fileURLWithPath: file.absoluteString))
+                }) { completed, error in
+                    if completed {
+                        withAnimation(.linear(duration: 0.15)){
+                            isDownloading = false
+                            isDownloaded = true
                         }
                     }
                 }
+            } catch {
+                isDownloading = false
             }
         }
     }
