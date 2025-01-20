@@ -116,7 +116,24 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Text("Download URL is \(isUrlValid ? "valid" : "invalid")")
+            if isDownloaded {
+                VStack(spacing: 10){
+                    Image(systemName: "checkmark.rectangle.stack.fill")
+                        .imageScale(.large)
+                        .foregroundStyle(.white)
+                    Text("Dowbloaded")
+                }
+            }
+            else if lastRequestResultedInError {
+                VStack(spacing: 10){
+                    Image(systemName: "globe")
+                        .imageScale(.large)
+                        .foregroundStyle(.white)
+                    Text("Network request")
+                }
+            } else {
+                Text("Download URL is \(isUrlValid ? "valid" : "invalid")")
+            }
         }
         .onChange(of: scenePhase) {
             notification.currentNotification?.dismiss()
