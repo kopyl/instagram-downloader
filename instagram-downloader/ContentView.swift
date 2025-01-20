@@ -87,12 +87,15 @@ struct ContentView: View {
     @State private var isDownloading = false
     @State private var isDownloaded = false
     @State private var isError = false
+    @State private var lastRequestResultedInError = false
     
     private var notification = Notification()
     
     func downloadVideoAndSaveToPhotos() {
         Task{
             do {
+                lastRequestResultedInError = false
+                
                 guard let downloadUrl = try await fetchVideoURL(reelUrl: url) else { return }
                 guard let downloadUrlURL = URL(string: downloadUrl) else { return }
                 guard let file = try await downloadFile(from: downloadUrlURL) else { return }
@@ -103,6 +106,8 @@ struct ContentView: View {
                 withAnimation(.linear(duration: 0.15)){
                     isDownloading = false
                     isDownloaded = true
+                    isError = false
+                    lastRequestResultedInError = false
                 }
             } catch {
                 isError = true
@@ -138,13 +143,14 @@ struct ContentView: View {
                 isError = false
                 isDownloading = false
                 isDownloaded = false
+                lastRequestResultedInError = true
             }
         }
         .onAppear{
             notification.setWindowScene()
         }
         .containerRelativeFrame([.horizontal, .vertical])
-        .background(isDownloaded ? .green : isUrlValid ? .blue : .red)
+        .background(isDownloaded ? .green : isUrlValid && !lastRequestResultedInError ? .blue : .red)
     }
 }
 
