@@ -104,7 +104,6 @@ struct ContentView: View {
                     PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: file)
                 })
                 withAnimation(.linear(duration: 0.15)){
-                    isDownloading = false
                     isDownloaded = true
                     isError = false
                     lastRequestResultedInError = false
@@ -138,12 +137,15 @@ struct ContentView: View {
             }
         }
         .onChange(of: isError) {
-            if isError {
-                notification.present(type: .error)
-                isError = false
+            withAnimation(.linear(duration: 0.15)){
                 isDownloading = false
-                isDownloaded = false
-                lastRequestResultedInError = true
+                
+                if isError {
+                    notification.present(type: .error)
+                    isError = false
+                    isDownloaded = false
+                    lastRequestResultedInError = true
+                }
             }
         }
         .onAppear{
