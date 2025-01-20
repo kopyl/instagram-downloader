@@ -86,6 +86,7 @@ struct ContentView: View {
     @State private var url: String = ""
     @State private var isDownloading = false
     @State private var isDownloaded = false
+    @State private var isError = false
     
     private var notification = Notification()
     
@@ -104,8 +105,7 @@ struct ContentView: View {
                     isDownloaded = true
                 }
             } catch {
-                isDownloading = false
-                isDownloaded = false
+                isError = true
             }
         }
     }
@@ -130,6 +130,14 @@ struct ContentView: View {
         .onChange(of: isDownloaded) {
             if isDownloaded {
                 notification.present(type: .success)
+            }
+        }
+        .onChange(of: isError) {
+            if isError {
+                notification.present(type: .error)
+                isError = false
+                isDownloading = false
+                isDownloaded = false
             }
         }
         .onAppear{
