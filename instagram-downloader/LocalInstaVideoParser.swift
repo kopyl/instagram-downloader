@@ -104,8 +104,7 @@ func getBiggestVideo(from responseData: Data) -> String? {
 }
 
 func getVideoDownloadURL(reelURL: String) async throws -> URL? {
-    let videoCode = urlToVideoCode(reelURL)
-    guard let videoCode else { return nil }
+    guard let videoCode = urlToVideoCode(reelURL) else { return nil }
     guard let videoID = videoCodeToVideoID(videoCode) else { return nil }
     let videoApiURL = videoIDToAPIURl(videoID)
 
