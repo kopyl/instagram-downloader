@@ -1,6 +1,5 @@
 import SwiftUI
 import UniformTypeIdentifiers
-import ActivityKit
 import Photos
 
 class ShareViewController: UIViewController {
