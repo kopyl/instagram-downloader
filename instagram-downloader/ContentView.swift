@@ -1,6 +1,7 @@
 import SwiftUI
 import AlertKit
 import Photos
+import ActivityKit
 
 class Notification {
     var scene: UIWindow?
@@ -41,6 +42,42 @@ class Notification {
     }
 }
 
+class ActivityManager {
+    let attributes = DownloadProgressAttributes()
+    var isDownloading = false
+    var isDownloaded = false
+    
+    var preState = DownloadProgressAttributes.ContentState(isDownloading: false, isDownloaded: false)
+    var state: ActivityContent<DownloadProgressAttributes.ContentState>?
+    
+    var activity: Activity<DownloadProgressAttributes>?
+
+    func getState() -> ActivityContent<DownloadProgressAttributes.ContentState>? {
+        let preState = DownloadProgressAttributes.ContentState(isDownloading: true, isDownloaded: false)
+        return ActivityContent<DownloadProgressAttributes.ContentState>(state: preState,
+                                                                            staleDate: nil)
+    }
+    
+    func launch() {
+        guard let state = getState() else { return }
+        
+        do {
+            activity = try Activity<DownloadProgressAttributes>.request(attributes: attributes, content: state, pushType: nil)
+        }
+        catch let error {
+            print(error)
+        }
+    }
+    
+    func end() {
+        guard let state = getState() else { return }
+        guard let a = activity else { return }
+        Task {
+            await a.end(state, dismissalPolicy: .immediate)
+        }
+    }
+}
+
 struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
     @State private var isUrlValid = false
@@ -51,6 +88,7 @@ struct ContentView: View {
     @State private var lastRequestResultedInError = false
     
     private var notification = Notification()
+    private var activity = ActivityManager()
     
     func downloadVideoAndSaveToPhotos() {
         Task{
@@ -106,11 +144,14 @@ struct ContentView: View {
             guard scenePhase == .active else { return }
             guard isUrlValid else { return }
             notification.present(type: .loading)
+            activity.launch()
+
             downloadVideoAndSaveToPhotos()
         }
         .onChange(of: isDownloaded) {
             if isDownloaded {
                 notification.present(type: .success)
+                activity.end()
             }
         }
         .onChange(of: isError) {
