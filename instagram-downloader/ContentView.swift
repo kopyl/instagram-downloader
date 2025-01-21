@@ -84,7 +84,7 @@ struct ContentView: View {
         Task{
             do {
                 lastRequestResultedInError = false
-                
+
                 guard let downloadUrl = try await getVideoDownloadURL(reelURL: url) else { return }
                 guard let file = try await downloadFile(from: downloadUrl) else { return }
                 
