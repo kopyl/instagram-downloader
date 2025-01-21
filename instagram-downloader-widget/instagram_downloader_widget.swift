@@ -13,10 +13,13 @@ struct Instagram_downloader_widget: Widget {
             } compactLeading: {
             } compactTrailing: {
                 if context.state.isDownloaded {
-                    Image(systemName: "checkmark.circle.fill").foregroundColor(.blue)
+                    Circle()
+                        .fill(.green)
                 }
                 else if context.state.isDownloading {
-                    Image(systemName: "arrow.down.circle.fill").foregroundColor(.blue)
+                    Circle()
+                        .fill(.blue)
+                    
                 } else {
                     EmptyView()
                 }

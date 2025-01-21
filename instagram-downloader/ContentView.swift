@@ -74,7 +74,8 @@ class ActivityManager {
         guard let a = activity else { return }
         Task {
             await a.update(stateFinishing)
-            await a.end(stateFinishing, dismissalPolicy: .after(Date().addingTimeInterval(5)))
+            try await Task.sleep(for: .seconds(2))
+            await a.end(stateFinishing, dismissalPolicy: .immediate)
         }
     }
 }
@@ -150,6 +151,7 @@ struct ContentView: View {
             guard scenePhase == .active else { return }
             guard isUrlValid else { return }
             notification.present(type: .loading)
+            print("Launching")
             activity.launch()
 
             downloadVideoAndSaveToPhotos()
@@ -157,6 +159,7 @@ struct ContentView: View {
         .onChange(of: isDownloaded) {
             if isDownloaded {
                 notification.present(type: .success)
+                print("Ending")
                 activity.end()
             }
         }
