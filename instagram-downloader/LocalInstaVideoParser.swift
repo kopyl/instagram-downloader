@@ -53,7 +53,6 @@ func makeRequest(strUrl: String, videoCode: String) async throws -> Data {
 }
 
 func getBiggestVideo(from responseData: Data) -> String? {
-    var videoUrls: Array<String> = []
     let jsonObject: Any
     
     do {
@@ -93,14 +92,11 @@ func getBiggestVideo(from responseData: Data) -> String? {
             }
             return false
         }
+    
+    guard let firstVideo = sortedVideoVersions.first else { return nil }
+    guard let firstVideoURL = firstVideo["url"] as? String else { return nil }
 
-    for videoVersion in sortedVideoVersions {
-        if let videoURL = videoVersion["url"] as? String {
-            videoUrls.append(videoURL)
-        }
-    }
-
-    return videoUrls.first
+    return firstVideoURL
 }
 
 func getVideoDownloadURL(reelURL: String) async throws -> URL? {
