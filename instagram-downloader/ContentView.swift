@@ -3,7 +3,7 @@ import AlertKit
 import Photos
 
 func isValidInstagramReelURL(url: String) -> Bool {
-    let pattern = "^https://www\\.instagram\\.com/reel/[A-Za-z0-9_-]+(?:/)?(?:\\?igsh=[A-Za-z0-9%=]+)?$"
+    let pattern = "^https://(www.)?instagram\\.com/(reel|p)/[A-Za-z0-9_-]+(?:/)?(?:\\?igsh=[A-Za-z0-9%=]+)?$"
     let regex = try! NSRegularExpression(pattern: pattern, options: [])
     
     let range = NSRange(location: 0, length: url.utf16.count)
