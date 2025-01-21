@@ -2,16 +2,6 @@ import SwiftUI
 import AlertKit
 import Photos
 
-func isValidInstagramReelURL(url: String) -> Bool {
-    let pattern = "^https://(www.)?instagram\\.com/(reel|p)/[A-Za-z0-9_-]+(?:/)?(?:\\?igsh=[A-Za-z0-9%=]+)?$"
-    let regex = try! NSRegularExpression(pattern: pattern, options: [])
-    
-    let range = NSRange(location: 0, length: url.utf16.count)
-    let match = regex.firstMatch(in: url, options: [], range: range)
-    
-    return match != nil
-}
-
 class Notification {
     var scene: UIWindow?
     var currentNotification: AlertAppleMusic17View?
