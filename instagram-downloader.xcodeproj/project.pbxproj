@@ -26,6 +26,8 @@
 		48E39EF22D400135000341CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48E39EF12D400135000341CD /* Assets.xcassets */; };
 		48E39EF62D400135000341CD /* instagram-downloader-widgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 48E39EE62D400133000341CD /* instagram-downloader-widgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		48E39EFA2D400238000341CD /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E39EE02D3FFF14000341CD /* Activity.swift */; };
+		48E39EFE2D402673000341CD /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E39EFD2D402673000341CD /* Data.swift */; };
+		48E39EFF2D402673000341CD /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E39EFD2D402673000341CD /* Data.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +83,9 @@
 		48E39EEF2D400133000341CD /* instagram_downloader_widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = instagram_downloader_widget.swift; sourceTree = "<group>"; };
 		48E39EF12D400135000341CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		48E39EF32D400135000341CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		48E39EFB2D402553000341CD /* instagram-downloader-share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "instagram-downloader-share.entitlements"; sourceTree = "<group>"; };
+		48E39EFC2D402567000341CD /* instagram-downloader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "instagram-downloader.entitlements"; sourceTree = "<group>"; };
+		48E39EFD2D402673000341CD /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +120,7 @@
 		488699E02D3C99B2006DF44A = {
 			isa = PBXGroup;
 			children = (
+				48E39EFD2D402673000341CD /* Data.swift */,
 				488699EB2D3C99B2006DF44A /* instagram-downloader */,
 				48D1B19E2D3FB6D50040569E /* instagram-downloader-share */,
 				48E39EEC2D400133000341CD /* instagram-downloader-widget */,
@@ -136,6 +142,7 @@
 		488699EB2D3C99B2006DF44A /* instagram-downloader */ = {
 			isa = PBXGroup;
 			children = (
+				48E39EFC2D402567000341CD /* instagram-downloader.entitlements */,
 				48869A022D3CD25A006DF44A /* Info.plist */,
 				488699EC2D3C99B2006DF44A /* instagram_downloaderApp.swift */,
 				48D1B1972D3F2ED10040569E /* Network.swift */,
@@ -159,6 +166,7 @@
 		48D1B19E2D3FB6D50040569E /* instagram-downloader-share */ = {
 			isa = PBXGroup;
 			children = (
+				48E39EFB2D402553000341CD /* instagram-downloader-share.entitlements */,
 				48E39EDE2D3FE8C1000341CD /* FileLogger.swift */,
 				48D1B19F2D3FB6D50040569E /* ShareViewController.swift */,
 				48D1B1A42D3FB6D50040569E /* Info.plist */,
@@ -324,6 +332,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48E39EE12D3FFF14000341CD /* Activity.swift in Sources */,
+				48E39EFE2D402673000341CD /* Data.swift in Sources */,
 				48D1B1982D3F2ED10040569E /* Network.swift in Sources */,
 				488699EF2D3C99B2006DF44A /* ContentView.swift in Sources */,
 				488699ED2D3C99B2006DF44A /* instagram_downloaderApp.swift in Sources */,
@@ -336,6 +345,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48D1B1A02D3FB6D50040569E /* ShareViewController.swift in Sources */,
+				48E39EFF2D402673000341CD /* Data.swift in Sources */,
 				48E39EDF2D3FE8C1000341CD /* FileLogger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -493,6 +503,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "instagram-downloader/instagram-downloader.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"instagram-downloader/Preview Content\"";
@@ -524,6 +535,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "instagram-downloader/instagram-downloader.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"instagram-downloader/Preview Content\"";
@@ -552,6 +564,7 @@
 		48D1B1A92D3FB6D50040569E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "instagram-downloader-share/instagram-downloader-share.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9QNMAN8CT6;
@@ -577,6 +590,7 @@
 		48D1B1AA2D3FB6D50040569E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "instagram-downloader-share/instagram-downloader-share.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9QNMAN8CT6;

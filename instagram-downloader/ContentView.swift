@@ -2,6 +2,7 @@ import SwiftUI
 import AlertKit
 import Photos
 import ActivityKit
+import SwiftData
 
 class Notification {
     var scene: UIWindow?
@@ -89,6 +90,8 @@ struct ContentView: View {
     @State private var isError = false
     @State private var lastRequestResultedInError = false
     
+    @Query private var allReelUrls: [ReelUrl]
+    
     private var notification = Notification()
     private var activity = ActivityManager()
     
@@ -116,6 +119,9 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
+            ForEach(allReelUrls, id: \.self) { reelUrl in
+                Text(reelUrl.url)
+            }
             if isDownloaded {
                 VStack(spacing: 10){
                     Image(systemName: "checkmark.rectangle.stack.fill")
@@ -139,6 +145,9 @@ struct ContentView: View {
             if activity.isDownloaded {
                 
             }
+        }
+        .onChange(of: allReelUrls) {
+            print("Item added")
         }
         .onChange(of: scenePhase) {
             notification.currentNotification?.dismiss()

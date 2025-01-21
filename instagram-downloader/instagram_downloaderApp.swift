@@ -7,5 +7,6 @@ struct instagram_downloaderApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: ReelUrl.self)
     }
 }
