@@ -52,49 +52,42 @@ func makeRequest(strUrl: String, videoCode: String) async throws -> Data {
     return data
 }
 
-func getBiggestVideo(from responseData: Data) -> String? {
-    let jsonObject: Any
-    
-    do {
-        jsonObject = try JSONSerialization.jsonObject(with: responseData, options: [])
-    } catch {
-        print("Failed to parse JSON: \(error.localizedDescription)")
-        return nil
-    }
-        
+enum VideoParserError: Error {
+    case jsonParsingError
+    case keyNotFoundError
+    case invalidVideoVersions
+    case invalidVideoURL
+    case noWidth
+}
+
+func getBiggestVideo(from responseData: Data) throws -> String {
+    let jsonObject = try JSONSerialization.jsonObject(with: responseData, options: [])
+
     guard let jsonDictionary = jsonObject as? [String: Any] else {
-        return nil
+        throw VideoParserError.keyNotFoundError
     }
-    
-    guard let items = jsonDictionary["items"] as? [[String: Any]] else {
-        print("`items` key not found or not an array")
-        return nil
-    }
-    
-    guard items.count == 1 else {
-        print("`items` count is not 1. It's \(items.count)")
-        return nil
+
+    guard let items = jsonDictionary["items"] as? [[String: Any]], items.count == 1 else {
+        throw VideoParserError.keyNotFoundError
     }
     
     guard let firstItem = items.first else {
-        print("There is no first item in `items`")
-        return nil
+        throw VideoParserError.keyNotFoundError
     }
 
-    guard let videoVersions = firstItem["video_versions"] as? [[String: Any]] else {
-        print("`video_versions` key not found")
-        return nil
+    guard let videoVersions = firstItem["video_versions"] as? [[String: Any]], !videoVersions.isEmpty else {
+        throw VideoParserError.invalidVideoVersions
     }
 
-    let sortedVideoVersions = videoVersions.sorted {
-            if let width1 = $0["width"] as? Int, let width2 = $1["width"] as? Int {
-                return width1 > width2
-            }
-            return false
-        }
-    
-    guard let firstVideo = sortedVideoVersions.first else { return nil }
-    guard let firstVideoURL = firstVideo["url"] as? String else { return nil }
+    let sortedVideoVersions = try videoVersions.sorted {
+        guard let width1 = $0["width"] as? Int else { throw VideoParserError.noWidth }
+        guard let width2 = $1["width"] as? Int else { throw VideoParserError.noWidth }
+        return width1 > width2
+    }
+
+    guard let firstVideo = sortedVideoVersions.first, let firstVideoURL = firstVideo["url"] as? String else {
+        throw VideoParserError.invalidVideoURL
+    }
 
     return firstVideoURL
 }
@@ -105,7 +98,7 @@ func getVideoDownloadURL(reelURL: String) async throws -> URL? {
     let videoApiURL = videoIDToAPIURl(videoID)
 
     let response = try await makeRequest(strUrl: videoApiURL, videoCode: videoCode)
-    guard let videoURL = getBiggestVideo(from: response) else { return nil }
+    let videoURL = try getBiggestVideo(from: response)
     
     return URL(string: videoURL)
 }
