@@ -29,9 +29,6 @@ struct ShareView: View {
             .task{
                 await extractItems()
             }
-            .onChange(of: reelURL) {
-                guard let reelURL else { return }
-            }
     }
     
     func extractItems() async {
