@@ -31,19 +31,6 @@ struct ShareView: View {
             }
             .onChange(of: reelURL) {
                 guard let reelURL else { return }
-                
-                let attributes = DownloadProgressAttributes()
-                let state = DownloadProgressAttributes.ContentState(isDownloading: false, isDownloaded: false)
-                
-                let s2 = ActivityContent<DownloadProgressAttributes.ContentState>(state: state,
-                                                                                    staleDate: nil)
-                
-                do {
-                    activity = try Activity<DownloadProgressAttributes>.request(attributes: attributes, content: s2, pushType: nil)
-                }
-                catch let error {
-                    log(error)
-                }
             }
     }
     
