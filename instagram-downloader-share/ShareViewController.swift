@@ -22,8 +22,6 @@ struct ShareView: View {
     
     @State private var reelURL: String?
     
-    @State private var activity: Activity<DownloadProgressAttributes>?
-    
     var body: some View {
         Text(reelURL ?? "")
             .task{
@@ -51,14 +49,5 @@ struct ShareView: View {
         catch let error {
             log(error)
         }
-    }
-}
-
-struct DownloadProgressAttributes: ActivityAttributes {
-    public typealias DownloadStatus = ContentState
-    
-    public struct ContentState: Codable, Hashable {
-        var isDownloading: Bool
-        var isDownloaded: Bool
     }
 }
