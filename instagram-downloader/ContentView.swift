@@ -2,8 +2,6 @@ import SwiftUI
 import AlertKit
 import Photos
 
-let INFO_DOWNLOAD_URL_SCHEME = "\(SERVER_URL)/info?url=%@"
-
 func isValidInstagramReelURL(url: String) -> Bool {
     let pattern = "^https://www\\.instagram\\.com/reel/[A-Za-z0-9_-]+(?:/)?(?:\\?igsh=[A-Za-z0-9=]+)?$"
     let regex = try! NSRegularExpression(pattern: pattern, options: [])
@@ -51,15 +49,6 @@ class Notification {
             currentNotification?.present(on: scene)
         }
     }
-}
-
-func fetchVideoURL(reelUrl: String) async throws -> String? {
-    guard let infoURL = URL(string: String(format: INFO_DOWNLOAD_URL_SCHEME, reelUrl)) else {
-        return nil
-    }
-    let (infoData, _) = try await URLSession.shared.data(from: infoURL)
-    let videoInfoResponse = try JSONDecoder().decode(String.self, from: infoData)
-    return videoInfoResponse
 }
 
 func downloadFile(from url: URL) async throws -> URL? {
