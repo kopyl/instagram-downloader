@@ -19,10 +19,14 @@ struct Instagram_downloader_widget: Widget {
                 }
             } compactLeading: {
             } compactTrailing: {
-                if context.state.isDownloading {
-                    Image(systemName: "arrow.down.circle.fill").foregroundColor(.blue)
+                if context.state.isDownloaded {
+                    Image(systemName: "checkmark.circle.fill").foregroundColor(.blue)
                 }
-                EmptyView()
+                else if context.state.isDownloading {
+                    Image(systemName: "arrow.down.circle.fill").foregroundColor(.blue)
+                } else {
+                    EmptyView()
+                }
             } minimal: {
                 Text("Minimal")
             }

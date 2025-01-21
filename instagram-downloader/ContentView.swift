@@ -48,16 +48,15 @@ class ActivityManager {
     var isDownloaded = false
     
     var preState = DownloadProgressAttributes.ContentState(isDownloading: false, isDownloaded: false)
-    var state: ActivityContent<DownloadProgressAttributes.ContentState>?
     
     var activity: Activity<DownloadProgressAttributes>?
 
-    func getState() -> ActivityContent<DownloadProgressAttributes.ContentState>? {
-        let preState = DownloadProgressAttributes.ContentState(isDownloading: true, isDownloaded: false)
+    func getState(isDownloaded: Bool = false) -> ActivityContent<DownloadProgressAttributes.ContentState>? {
+        let preState = DownloadProgressAttributes.ContentState(isDownloading: true, isDownloaded: isDownloaded)
         return ActivityContent<DownloadProgressAttributes.ContentState>(state: preState,
                                                                             staleDate: nil)
     }
-    
+
     func launch() {
         guard let state = getState() else { return }
         
@@ -70,10 +69,12 @@ class ActivityManager {
     }
     
     func end() {
-        guard let state = getState() else { return }
+        guard let stateFinishing = getState(isDownloaded: true) else { return }
+
         guard let a = activity else { return }
         Task {
-            await a.end(state, dismissalPolicy: .immediate)
+            await a.update(stateFinishing)
+            await a.end(stateFinishing, dismissalPolicy: .after(Date().addingTimeInterval(5)))
         }
     }
 }
@@ -131,6 +132,11 @@ struct ContentView: View {
                 }
             } else {
                 Text("Download URL is \(isUrlValid ? "valid" : "invalid")")
+            }
+        }
+        .onChange(of: activity.isDownloaded) {
+            if activity.isDownloaded {
+                
             }
         }
         .onChange(of: scenePhase) {
