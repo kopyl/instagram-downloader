@@ -41,24 +41,6 @@ class Notification {
     }
 }
 
-func downloadFile(from url: URL) async throws -> URL? {
-    let (tempFileURL, _) = try await URLSession.shared.download(from: url)
-    
-    let destinationURL = tempFileURL.appendingPathExtension("mp4")
-    
-    if FileManager.default.fileExists(atPath: destinationURL.relativePath) {
-        try FileManager.default.removeItem(at: destinationURL)
-    }
-    
-    do {
-        try FileManager.default.moveItem(at: tempFileURL, to: destinationURL)
-    } catch let error {
-        print(error)
-    }
-
-    return destinationURL
-}
-
 struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
     @State private var isUrlValid = false

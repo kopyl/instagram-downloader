@@ -1,5 +1,23 @@
 import Foundation
 
+func downloadFile(from url: URL) async throws -> URL? {
+    let (tempFileURL, _) = try await URLSession.shared.download(from: url)
+    
+    let destinationURL = tempFileURL.appendingPathExtension("mp4")
+    
+    if FileManager.default.fileExists(atPath: destinationURL.relativePath) {
+        try FileManager.default.removeItem(at: destinationURL)
+    }
+    
+    do {
+        try FileManager.default.moveItem(at: tempFileURL, to: destinationURL)
+    } catch let error {
+        print(error)
+    }
+
+    return destinationURL
+}
+
 func isValidInstagramReelURL(url: String) -> Bool {
     let pattern = "^https://(www.)?instagram\\.com/(reel|p)/[A-Za-z0-9_-]+(?:/)?(?:\\?igsh=[A-Za-z0-9%=]+)?$"
     let regex = try! NSRegularExpression(pattern: pattern, options: [])

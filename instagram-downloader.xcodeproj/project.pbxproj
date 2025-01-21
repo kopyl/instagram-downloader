@@ -14,7 +14,7 @@
 		488699FC2D3CAAA5006DF44A /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 488699FB2D3CAAA5006DF44A /* AlertKit */; };
 		488699FF2D3CB5F5006DF44A /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 488699FE2D3CB5F5006DF44A /* AlertKit */; };
 		48D1B17C2D3D6EAC0040569E /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1B17B2D3D6EAC0040569E /* Secrets.swift */; };
-		48D1B1982D3F2ED10040569E /* LocalInstaVideoParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1B1972D3F2ED10040569E /* LocalInstaVideoParser.swift */; };
+		48D1B1982D3F2ED10040569E /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1B1972D3F2ED10040569E /* Network.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +25,7 @@
 		488699F32D3C99B4006DF44A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		48869A022D3CD25A006DF44A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Info.plist; sourceTree = "<group>"; };
 		48D1B17B2D3D6EAC0040569E /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
-		48D1B1972D3F2ED10040569E /* LocalInstaVideoParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalInstaVideoParser.swift; sourceTree = "<group>"; };
+		48D1B1972D3F2ED10040569E /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +62,7 @@
 			children = (
 				48869A022D3CD25A006DF44A /* Info.plist */,
 				488699EC2D3C99B2006DF44A /* instagram_downloaderApp.swift */,
-				48D1B1972D3F2ED10040569E /* LocalInstaVideoParser.swift */,
+				48D1B1972D3F2ED10040569E /* Network.swift */,
 				48D1B17B2D3D6EAC0040569E /* Secrets.swift */,
 				488699EE2D3C99B2006DF44A /* ContentView.swift */,
 				488699F02D3C99B4006DF44A /* Assets.xcassets */,
@@ -156,7 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48D1B1982D3F2ED10040569E /* LocalInstaVideoParser.swift in Sources */,
+				48D1B1982D3F2ED10040569E /* Network.swift in Sources */,
 				488699EF2D3C99B2006DF44A /* ContentView.swift in Sources */,
 				488699ED2D3C99B2006DF44A /* instagram_downloaderApp.swift in Sources */,
 				48D1B17C2D3D6EAC0040569E /* Secrets.swift in Sources */,
