@@ -26,6 +26,8 @@
 		48E39EF22D400135000341CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48E39EF12D400135000341CD /* Assets.xcassets */; };
 		48E39EF62D400135000341CD /* instagram-downloader-widgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 48E39EE62D400133000341CD /* instagram-downloader-widgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		48E39EFA2D400238000341CD /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E39EE02D3FFF14000341CD /* Activity.swift */; };
+		48E39F052D40312C000341CD /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1B1972D3F2ED10040569E /* Network.swift */; };
+		48E39F062D4031B2000341CD /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1B17B2D3D6EAC0040569E /* Secrets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -336,7 +338,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				48D1B1A02D3FB6D50040569E /* ShareViewController.swift in Sources */,
+				48E39F062D4031B2000341CD /* Secrets.swift in Sources */,
 				48E39EDF2D3FE8C1000341CD /* FileLogger.swift in Sources */,
+				48E39F052D40312C000341CD /* Network.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

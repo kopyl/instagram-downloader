@@ -1,6 +1,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 import ActivityKit
+import Photos
 
 class ShareViewController: UIViewController {
 
@@ -9,7 +10,6 @@ class ShareViewController: UIViewController {
 
         if let itemProviders = (extensionContext?.inputItems.first as? NSExtensionItem)?.attachments {
             let hostingView = UIHostingController(rootView: ShareView(extensionContext: extensionContext, itemProviders: itemProviders))
-            hostingView.view.frame = view.frame
             view.addSubview(hostingView.view)
         }
         
@@ -41,6 +41,15 @@ struct ShareView: View {
         do {
             guard let url = try await itemProvider.loadItem(forTypeIdentifier: UTType.url.identifier) as? URL else { return }
             reelURL = url.absoluteString
+            
+            guard let downloadUrl = try await getVideoDownloadURL(reelURL: url.absoluteString) else { return }
+            guard let file = try await downloadFile(from: downloadUrl) else { return }
+            try await PHPhotoLibrary.shared().performChanges({
+                PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: file)
+            })
+            
+            extensionContext?.completeRequest(returningItems: [])
+            
         }
         catch let error {
             log(error)
