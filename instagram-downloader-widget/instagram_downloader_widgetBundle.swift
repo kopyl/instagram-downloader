@@ -1,10 +1,3 @@
-//
-//  instagram_downloader_widgetBundle.swift
-//  instagram-downloader-widget
-//
-//  Created by Oleh Kopyl on 21.01.2025.
-//
-
 import WidgetKit
 import SwiftUI
 
