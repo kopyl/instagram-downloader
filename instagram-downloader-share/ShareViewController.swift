@@ -9,6 +9,7 @@ class ShareViewController: UIViewController {
 
         if let itemProviders = (extensionContext?.inputItems.first as? NSExtensionItem)?.attachments {
             let hostingView = UIHostingController(rootView: ShareView(extensionContext: extensionContext, itemProviders: itemProviders))
+            hostingView.view.frame = view.frame
             view.addSubview(hostingView.view)
         }
         
@@ -18,14 +19,19 @@ class ShareViewController: UIViewController {
 struct ShareView: View {
     var extensionContext: NSExtensionContext?
     var itemProviders: [NSItemProvider]
+    @State private var lastError: Error?
     
     @State private var reelURL: String?
     
     var body: some View {
-        Text(reelURL ?? "")
-            .task{
-                await extractItems()
-            }
+        VStack{
+            Text(lastError != nil ? "Network error: \(lastError!.localizedDescription)" : "")
+                .task{
+                    await extractItems()
+                }
+        }
+        .containerRelativeFrame([.horizontal, .vertical])
+        .background(lastError == nil ? .clear : .red)
     }
     
     func extractItems() async {
@@ -46,7 +52,7 @@ struct ShareView: View {
             
         }
         catch let error {
-            log(error)
+            lastError = error
         }
     }
 }
