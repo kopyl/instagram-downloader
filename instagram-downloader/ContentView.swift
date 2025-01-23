@@ -87,6 +87,7 @@ struct ContentView: View {
     @State private var isDownloading = false
     @State private var isDownloaded = false
     @State private var isError = false
+    @State private var lastError: Error?
     @State private var lastRequestResultedInError = false
     
     private var notification = Notification()
@@ -108,8 +109,10 @@ struct ContentView: View {
                     isError = false
                     lastRequestResultedInError = false
                 }
-            } catch {
+            } catch let error {
                 isError = true
+                lastError = error
+                
             }
         }
     }
@@ -129,7 +132,7 @@ struct ContentView: View {
                     Image(systemName: "globe")
                         .imageScale(.large)
                         .foregroundStyle(.white)
-                    Text("Network request")
+                    Text(lastError != nil ? "Network error: \(lastError!.localizedDescription)" : "Network error")
                 }
             } else {
                 Text("Download URL is \(isUrlValid ? "valid" : "invalid")")
@@ -141,6 +144,7 @@ struct ContentView: View {
             }
         }
         .onChange(of: scenePhase) {
+            
             notification.currentNotification?.dismiss()
             guard let _url = UIPasteboard.general.string else { return }
             withAnimation(.linear(duration: 0.15)){

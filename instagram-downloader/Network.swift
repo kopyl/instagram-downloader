@@ -80,12 +80,16 @@ func makeRequest(strUrl: String, videoCode: String) async throws -> Data {
     return data
 }
 
-enum VideoParserError: Error {
+enum VideoParserError: String, LocalizedError {
     case jsonParsingError
     case keyNotFoundError
     case invalidVideoVersions
     case invalidVideoURL
     case noWidth
+    
+    var errorDescription: String? {
+        rawValue
+    }
 }
 
 func getBiggestVideo(from responseData: Data) throws -> String {
