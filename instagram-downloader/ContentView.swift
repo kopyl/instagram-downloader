@@ -135,7 +135,7 @@ struct ContentView: View {
                     Text(lastError != nil ? "Network error: \(lastError!.localizedDescription)" : "Network error")
                 }
             } else {
-                Text("Download URL is \(isUrlValid ? "valid" : "invalid")")
+                Text("Reel URL is \(isUrlValid ? "valid" : "invalid")")
             }
         }
         .onChange(of: activity.isDownloaded) {
