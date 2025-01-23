@@ -67,7 +67,7 @@ func makeRequest(strUrl: String, videoCode: String) async throws -> Data {
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
 
-    let (cookies, headers) = getCookiesAndHeaders(videoCode: videoCode)
+    let (cookies, headers) = getCookiesAndHeaders(reelURL: strUrl)
 
     headers.forEach { key, value in
         request.setValue(value, forHTTPHeaderField: key)
