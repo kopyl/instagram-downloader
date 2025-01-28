@@ -17,7 +17,6 @@
 		48D1B1982D3F2ED10040569E /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1B1972D3F2ED10040569E /* Network.swift */; };
 		48D1B1A02D3FB6D50040569E /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1B19F2D3FB6D50040569E /* ShareViewController.swift */; };
 		48D1B1A72D3FB6D50040569E /* instagram-downloader-share.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 48D1B19D2D3FB6D50040569E /* instagram-downloader-share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		48E39EDF2D3FE8C1000341CD /* FileLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E39EDE2D3FE8C1000341CD /* FileLogger.swift */; };
 		48E39EE12D3FFF14000341CD /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E39EE02D3FFF14000341CD /* Activity.swift */; };
 		48E39EE92D400133000341CD /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48E39EE82D400133000341CD /* WidgetKit.framework */; };
 		48E39EEB2D400133000341CD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48E39EEA2D400133000341CD /* SwiftUI.framework */; };
@@ -74,7 +73,6 @@
 		48D1B19D2D3FB6D50040569E /* instagram-downloader-share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "instagram-downloader-share.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		48D1B19F2D3FB6D50040569E /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		48D1B1A42D3FB6D50040569E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		48E39EDE2D3FE8C1000341CD /* FileLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileLogger.swift; path = "../../../Safari-extensions/tab_finder/tab_finder Extension/FileLogger.swift"; sourceTree = "<group>"; };
 		48E39EE02D3FFF14000341CD /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		48E39EE62D400133000341CD /* instagram-downloader-widgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "instagram-downloader-widgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		48E39EE82D400133000341CD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -161,7 +159,6 @@
 		48D1B19E2D3FB6D50040569E /* instagram-downloader-share */ = {
 			isa = PBXGroup;
 			children = (
-				48E39EDE2D3FE8C1000341CD /* FileLogger.swift */,
 				48D1B19F2D3FB6D50040569E /* ShareViewController.swift */,
 				48D1B1A42D3FB6D50040569E /* Info.plist */,
 			);
@@ -339,7 +336,6 @@
 			files = (
 				48D1B1A02D3FB6D50040569E /* ShareViewController.swift in Sources */,
 				48E39F062D4031B2000341CD /* Secrets.swift in Sources */,
-				48E39EDF2D3FE8C1000341CD /* FileLogger.swift in Sources */,
 				48E39F052D40312C000341CD /* Network.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

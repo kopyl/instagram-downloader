@@ -98,11 +98,17 @@ struct ContentView: View {
             do {
                 lastRequestResultedInError = false
 
-                guard let downloadUrl = try await getVideoDownloadURL(reelURL: url) else { return }
-                guard let file = try await downloadFile(from: downloadUrl) else { return }
+                guard let downloadUrlObject = try await getDownloadURL(reelURL: url) else { return }               
+                
+                guard let file = try await downloadFile(from: downloadUrlObject) else { return }
                 
                 try await PHPhotoLibrary.shared().performChanges({
-                    PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: file)
+                    switch downloadUrlObject.type {
+                    case .video:
+                        PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: file)
+                    case .image2:
+                        PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: file)
+                    }
                 })
                 withAnimation(.linear(duration: 0.15)){
                     isDownloaded = true

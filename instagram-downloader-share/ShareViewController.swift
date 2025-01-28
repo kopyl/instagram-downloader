@@ -42,10 +42,16 @@ struct ShareView: View {
             guard let url = try await itemProvider.loadItem(forTypeIdentifier: UTType.url.identifier) as? URL else { return }
             reelURL = url.absoluteString
             
-            guard let downloadUrl = try await getVideoDownloadURL(reelURL: url.absoluteString) else { return }
-            guard let file = try await downloadFile(from: downloadUrl) else { return }
+            guard let downloadUrl = try await getDownloadURL(reelURL: url.absoluteString) else { return }
+            guard let file = try await downloadFile(from: downloadUrl) else { return }  
+            
             try await PHPhotoLibrary.shared().performChanges({
-                PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: file)
+                switch downloadUrl.type {
+                case .video:
+                    PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: file)
+                case .image2:
+                    PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: file)
+                }
             })
             
             extensionContext?.completeRequest(returningItems: [])

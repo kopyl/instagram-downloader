@@ -1,9 +1,15 @@
 import Foundation
 
-func downloadFile(from url: URL) async throws -> URL? {
-    let (tempFileURL, _) = try await URLSession.shared.download(from: url)
+func downloadFile(from url: _URL) async throws -> URL? {
+    let (tempFileURL, _) = try await URLSession.shared.download(from: url.url)
     
-    let destinationURL = tempFileURL.appendingPathExtension("mp4")
+    var destinationURL: URL
+    switch url.type {
+    case .video:
+        destinationURL = tempFileURL.appendingPathExtension("mp4")
+    case .image2:
+        destinationURL = tempFileURL.appendingPathExtension("png")
+    }
     
     if FileManager.default.fileExists(atPath: destinationURL.relativePath) {
         try FileManager.default.removeItem(at: destinationURL)
@@ -80,57 +86,93 @@ func makeRequest(strUrl: String, videoCode: String) async throws -> Data {
     return data
 }
 
-enum VideoParserError: String, LocalizedError {
-    case jsonParsingError
+enum JSONParserError: String, LocalizedError {
     case keyNotFoundError
-    case invalidVideoVersions
-    case invalidVideoURL
+    case itemVersionIsEmpty
+    case invalidItemURL
+    case invalidImageVersion
     case noWidth
+    case URLOBjectInvalid
     
     var errorDescription: String? {
         rawValue
     }
 }
 
-func getBiggestVideo(from responseData: Data) throws -> String {
+func getFirstItemFrom(from responseData: Data) throws -> [String : Any] {
     let jsonObject = try JSONSerialization.jsonObject(with: responseData, options: [])
+    
+    print("jsonObject")
 
     guard let jsonDictionary = jsonObject as? [String: Any] else {
-        throw VideoParserError.keyNotFoundError
+        throw JSONParserError.keyNotFoundError
     }
 
     guard let items = jsonDictionary["items"] as? [[String: Any]], items.count == 1 else {
-        throw VideoParserError.keyNotFoundError
+        throw JSONParserError.keyNotFoundError
     }
     
     guard let firstItem = items.first else {
-        throw VideoParserError.keyNotFoundError
+        throw JSONParserError.keyNotFoundError
     }
+    
+    return firstItem
+}
 
-    guard let videoVersions = firstItem["video_versions"] as? [[String: Any]], !videoVersions.isEmpty else {
-        throw VideoParserError.invalidVideoVersions
-    }
-
-    let sortedVideoVersions = try videoVersions.sorted {
-        guard let width1 = $0["width"] as? Int else { throw VideoParserError.noWidth }
-        guard let width2 = $1["width"] as? Int else { throw VideoParserError.noWidth }
+func getBiggestItem(itemVersion: [[String : Any]]) throws -> String {
+    guard !itemVersion.isEmpty else { throw JSONParserError.itemVersionIsEmpty }
+    
+    let sortedItemVersions = try itemVersion.sorted {
+        guard let width1 = $0["width"] as? Int else { throw JSONParserError.noWidth }
+        guard let width2 = $1["width"] as? Int else { throw JSONParserError.noWidth }
         return width1 > width2
     }
 
-    guard let firstVideo = sortedVideoVersions.first, let firstVideoURL = firstVideo["url"] as? String else {
-        throw VideoParserError.invalidVideoURL
+    guard let firsItem = sortedItemVersions.first, let firsItemURL = firsItem["url"] as? String else {
+        throw JSONParserError.invalidItemURL
     }
 
-    return firstVideoURL
+    return firsItemURL
 }
 
-func getVideoDownloadURL(reelURL: String) async throws -> URL? {
+func getBiggestVideoOrImageURL(from responseData: Data) throws -> _URL {
+    
+    let firstItem = try getFirstItemFrom(from: responseData)
+
+    if let videoVersions = firstItem["video_versions"] as? [[String: Any]] {
+        let biggestItem = try getBiggestItem(itemVersion: videoVersions)
+        guard let _url = URL(string: biggestItem) else { throw JSONParserError.URLOBjectInvalid }
+        return _URL(type: .video, url: _url)
+    }
+    guard
+        let imageCandidates = firstItem["image_versions2"] as? [String: [[String: Any]]],
+        let imageVersion = imageCandidates["candidates"]
+    else {
+        throw JSONParserError.invalidImageVersion
+    }
+    let biggestItem = try getBiggestItem(itemVersion: imageVersion)
+    guard let _url = URL(string: biggestItem) else { throw JSONParserError.URLOBjectInvalid }
+    return _URL(type: .image2, url: _url)
+}
+
+
+enum URLTypes {
+    case video
+    case image2
+}
+
+struct _URL {
+    let type: URLTypes
+    let url: URL
+}
+
+func getDownloadURL(reelURL: String) async throws -> _URL? {
     guard let videoCode = urlToVideoCode(reelURL) else { return nil }
     guard let videoID = videoCodeToVideoID(videoCode) else { return nil }
     let videoApiURL = videoIDToAPIURl(videoID)
 
     let response = try await makeRequest(strUrl: videoApiURL, videoCode: videoCode)
-    let videoURL = try getBiggestVideo(from: response)
+    let itemURL = try getBiggestVideoOrImageURL(from: response)
     
-    return URL(string: videoURL)
+    return itemURL
 }
