@@ -101,8 +101,6 @@ enum JSONParserError: String, LocalizedError {
 
 func getFirstItemFrom(from responseData: Data) throws -> [String : Any] {
     let jsonObject = try JSONSerialization.jsonObject(with: responseData, options: [])
-    
-    print("jsonObject")
 
     guard let jsonDictionary = jsonObject as? [String: Any] else {
         throw JSONParserError.keyNotFoundError
