@@ -15,11 +15,7 @@ func downloadFile(from url: _URL) async throws -> URL? {
         try FileManager.default.removeItem(at: destinationURL)
     }
     
-    do {
-        try FileManager.default.moveItem(at: tempFileURL, to: destinationURL)
-    } catch let error {
-        print(error)
-    }
+    try FileManager.default.moveItem(at: tempFileURL, to: destinationURL)
 
     return destinationURL
 }
