@@ -37,6 +37,7 @@ class Notification {
         case .error:
             currentNotification?.dismiss()
             currentNotification = AlertAppleMusic17View(title: "Error occured", icon: .error)
+            currentNotification?.haptic = .error
             currentNotification?.present(on: scene)
         }
     }
