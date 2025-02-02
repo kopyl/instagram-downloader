@@ -1,5 +1,31 @@
 import Foundation
 
+extension String: Error {}
+
+func getCookiesAndHeaders(reelURL: String) throws -> ([String: String], [String: String]) {
+    guard let cookiesFromStore = UserDefaults(suiteName: "group.CY-041AF8F6-4884-11E7-AB8C-406C8F57CB9A.com.cydia.Extender")?.string(forKey: "cookies") else {
+        throw JSONParserError.noSavedCookies
+    }
+    let cookies = try (convertStringToDictionary(cookiesFromStore)) as! [String: String]
+    
+    guard let headersFromStore = UserDefaults(suiteName: "group.CY-041AF8F6-4884-11E7-AB8C-406C8F57CB9A.com.cydia.Extender")?.string(forKey: "headers")  else {
+        throw JSONParserError.noSavedHeaders
+    }
+    var headers = try (convertStringToDictionary(headersFromStore)) as! [String: String]
+    
+    headers["referer"] = reelURL
+    
+    return (cookies, headers)
+}
+
+func convertStringToDictionary(_ text: String) throws -> [String: Any]? {
+    if let data = text.data(using: .utf8) {
+        let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]
+        return json
+    }
+    return nil
+}
+
 func downloadFile(from url: _URL) async throws -> URL? {
     let (tempFileURL, _) = try await URLSession.shared.download(from: url.url)
     
@@ -69,7 +95,7 @@ func makeRequest(strUrl: String, videoCode: String) async throws -> Data {
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
 
-    let (cookies, headers) = getCookiesAndHeaders(reelURL: strUrl)
+    let (cookies, headers) = try getCookiesAndHeaders(reelURL: strUrl)
 
     headers.forEach { key, value in
         request.setValue(value, forHTTPHeaderField: key)
@@ -89,6 +115,8 @@ enum JSONParserError: String, LocalizedError {
     case invalidImageVersion
     case noWidth
     case URLOBjectInvalid
+    case noSavedCookies
+    case noSavedHeaders
     
     var errorDescription: String? {
         rawValue
