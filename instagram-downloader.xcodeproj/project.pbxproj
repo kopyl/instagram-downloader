@@ -62,6 +62,7 @@
 /* Begin PBXFileReference section */
 		48390C862D4FB7BB00852829 /* instagram-downloader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "instagram-downloader.entitlements"; sourceTree = "<group>"; };
 		48390C872D4FB7FA00852829 /* instagram-downloader-share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "instagram-downloader-share.entitlements"; sourceTree = "<group>"; };
+		48390C882D4FBB7700852829 /* instagram-downloader-widgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "instagram-downloader-widgetExtension.entitlements"; sourceTree = "<group>"; };
 		488699E92D3C99B2006DF44A /* instagram-downloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "instagram-downloader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		488699EC2D3C99B2006DF44A /* instagram_downloaderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = instagram_downloaderApp.swift; sourceTree = "<group>"; };
 		488699EE2D3C99B2006DF44A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -114,6 +115,7 @@
 		488699E02D3C99B2006DF44A = {
 			isa = PBXGroup;
 			children = (
+				48390C882D4FBB7700852829 /* instagram-downloader-widgetExtension.entitlements */,
 				488699EB2D3C99B2006DF44A /* instagram-downloader */,
 				48D1B19E2D3FB6D50040569E /* instagram-downloader-share */,
 				48E39EEC2D400133000341CD /* instagram-downloader-widget */,
@@ -606,6 +608,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "instagram-downloader-widgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9QNMAN8CT6;
@@ -633,6 +636,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "instagram-downloader-widgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9QNMAN8CT6;
