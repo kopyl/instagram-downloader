@@ -11,7 +11,7 @@ func downloadMedia(reelURL: String) async throws -> _URL? {
 
 func saveMediaToPhotos(downloadUrl: _URL) async throws {
     guard let localFilePath = downloadUrl.localFilePath else {
-        throw JSONParserError.emptyLocalFileURL
+        throw Errors.emptyLocalFileURL
     }
     
     try await PHPhotoLibrary.shared().performChanges({

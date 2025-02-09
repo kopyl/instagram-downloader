@@ -4,12 +4,12 @@ extension String: Error {}
 
 func getCookiesAndHeaders(reelURL: String) throws -> ([String: String], [String: String]) {
     guard let cookiesFromStore = UserDefaults(suiteName: "group.CY-041AF8F6-4884-11E7-AB8C-406C8F57CB9A.com.cydia.Extender")?.string(forKey: "cookies") else {
-        throw JSONParserError.noSavedCookies
+        throw Errors.noSavedCookies
     }
     let cookies = try (convertStringToDictionary(cookiesFromStore)) as! [String: String]
     
     guard let headersFromStore = UserDefaults(suiteName: "group.CY-041AF8F6-4884-11E7-AB8C-406C8F57CB9A.com.cydia.Extender")?.string(forKey: "headers")  else {
-        throw JSONParserError.noSavedHeaders
+        throw Errors.noSavedHeaders
     }
     var headers = try (convertStringToDictionary(headersFromStore)) as! [String: String]
     
@@ -108,7 +108,7 @@ func makeRequest(strUrl: String, videoCode: String) async throws -> Data {
     return data
 }
 
-enum JSONParserError: String, LocalizedError {
+enum Errors: String, LocalizedError {
     case keyNotFoundError
     case itemVersionIsEmpty
     case invalidItemURL
@@ -129,31 +129,31 @@ func getFirstItemFrom(from responseData: Data) throws -> [String : Any] {
     let jsonObject = try JSONSerialization.jsonObject(with: responseData, options: [])
 
     guard let jsonDictionary = jsonObject as? [String: Any] else {
-        throw JSONParserError.keyNotFoundError
+        throw Errors.keyNotFoundError
     }
 
     guard let items = jsonDictionary["items"] as? [[String: Any]], items.count == 1 else {
-        throw JSONParserError.keyNotFoundError
+        throw Errors.keyNotFoundError
     }
     
     guard let firstItem = items.first else {
-        throw JSONParserError.keyNotFoundError
+        throw Errors.keyNotFoundError
     }
     
     return firstItem
 }
 
 func getBiggestItem(itemVersion: [[String : Any]]) throws -> String {
-    guard !itemVersion.isEmpty else { throw JSONParserError.itemVersionIsEmpty }
+    guard !itemVersion.isEmpty else { throw Errors.itemVersionIsEmpty }
     
     let sortedItemVersions = try itemVersion.sorted {
-        guard let width1 = $0["width"] as? Int else { throw JSONParserError.noWidth }
-        guard let width2 = $1["width"] as? Int else { throw JSONParserError.noWidth }
+        guard let width1 = $0["width"] as? Int else { throw Errors.noWidth }
+        guard let width2 = $1["width"] as? Int else { throw Errors.noWidth }
         return width1 > width2
     }
 
     guard let firsItem = sortedItemVersions.first, let firsItemURL = firsItem["url"] as? String else {
-        throw JSONParserError.invalidItemURL
+        throw Errors.invalidItemURL
     }
 
     return firsItemURL
@@ -165,17 +165,17 @@ func getBiggestVideoOrImageURL(from responseData: Data) throws -> _URL {
 
     if let videoVersions = firstItem["video_versions"] as? [[String: Any]] {
         let biggestItem = try getBiggestItem(itemVersion: videoVersions)
-        guard let _url = URL(string: biggestItem) else { throw JSONParserError.URLOBjectInvalid }
+        guard let _url = URL(string: biggestItem) else { throw Errors.URLOBjectInvalid }
         return _URL(type: .video, url: _url)
     }
     guard
         let imageCandidates = firstItem["image_versions2"] as? [String: [[String: Any]]],
         let imageVersion = imageCandidates["candidates"]
     else {
-        throw JSONParserError.invalidImageVersion
+        throw Errors.invalidImageVersion
     }
     let biggestItem = try getBiggestItem(itemVersion: imageVersion)
-    guard let _url = URL(string: biggestItem) else { throw JSONParserError.URLOBjectInvalid }
+    guard let _url = URL(string: biggestItem) else { throw Errors.URLOBjectInvalid }
     return _URL(type: .image2, url: _url)
 }
 
