@@ -24,9 +24,13 @@ func saveMediaToPhotos(downloadUrl: _URL) async throws {
     })
 }
 
-func saveMediaToHistory(downloadUrl: String) async throws {
+func saveMediaToHistory(downloadUrl: _URL) async throws {
+    guard let shortCode = urlToVideoCode(downloadUrl.initReelURL) else {
+        throw Errors.shortcodeFromURLParsingFailed
+    }
+    
     let context = try ModelContext(.init(for: ReelUrl.self))
-    context.insert(ReelUrl(downloadUrl))
+    context.insert(ReelUrl(shortCode, type: downloadUrl.type))
     try context.save()
     
     //    let context = try ModelContext(.init(for: ReelUrl.self))
@@ -37,9 +41,14 @@ func saveMediaToHistory(downloadUrl: String) async throws {
 }
 
 func downloadAndSaveMedia(reelURL: String) async throws {
-//    guard let downloadUrl = try await downloadMedia(reelURL: reelURL) else {
-//        throw JSONParserError.noDownloadURL
-//    }
-//    try await saveMediaToPhotos(downloadUrl: downloadUrl)
-//    try await saveMediaToHistory(downloadUrl: reelURL)
+    guard let downloadUrl = try await downloadMedia(reelURL: reelURL) else {
+        throw Errors.noDownloadURL
+    }
+    try await saveMediaToPhotos(downloadUrl: downloadUrl)
+    try await saveMediaToHistory(downloadUrl: downloadUrl)
+    
+//    let context = try ModelContext(.init(for: ReelUrl.self))
+//    context.insert(ReelUrl("shortCode", type: .image2))
+//    try context.save()
+//    try context.delete(model: ReelUrl.self)
 }

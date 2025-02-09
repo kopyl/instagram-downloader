@@ -149,6 +149,55 @@ struct CredentialsButton: View {
     }
 }
 
+struct Icon: View {
+    let reelUrl: ReelUrl
+    
+    var name: String {
+        switch reelUrl.type {
+        case .video:
+            return "video.fill"
+        case .image2:
+            return "photo.fill"
+        }
+    }
+    
+    var body: some View {
+        Image(systemName: name)
+            .font(.headline)
+            .foregroundColor(.gray)
+            .frame(width: 60, height: 60)
+            .background(.gray.opacity(0.10))
+            .cornerRadius(6)
+    }
+}
+
+func formattedDate(_ date: Date) -> String {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .full
+        return formatter.localizedString(for: date, relativeTo: Date())
+    }
+
+struct HistoryView: View {
+    @Query private var savedReelUrls: [ReelUrl]
+    
+    var body: some View {
+        List {
+            ForEach(savedReelUrls, id: \.self) { (reelUrl: ReelUrl) in
+                HStack(spacing: 20) {
+                    Icon(reelUrl: reelUrl)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(formattedDate(reelUrl.dateSaved))
+                            .font(.caption)
+                            .opacity(0.6)
+                        Text(reelUrl.url)
+                    }
+                }
+                .listRowSeparator(.hidden)
+            }
+        }
+    }
+}
+
 struct ContentView: View {
     @Environment(\.scenePhase) var scenePhase
     @State private var isUrlValid = false
@@ -161,7 +210,6 @@ struct ContentView: View {
     @State private var showingHistory = true
     
     @Environment(\.modelContext) private var store
-    @Query private var savedReelUrls: [ReelUrl]
     
     private var notification = Notification()
     private var alert = Alert()
@@ -199,16 +247,11 @@ struct ContentView: View {
                     .padding()
             }
             .sheet(isPresented: $showingHistory) {
-                List {
-                    ForEach(savedReelUrls, id: \.self) { reelUrl in
-                        Text(reelUrl.url)
-                            .listRowSeparator(.hidden)
-                    }
-                }
+                HistoryView()
                 .listRowSpacing(10)
                 .listStyle(.plain)
-                .padding()
-                .padding(.top, 20)
+                .padding(.horizontal, 0)
+                .padding(.top, 30)
                     .presentationDetents([.medium, .large])
             }
             .padding()

@@ -119,6 +119,7 @@ enum Errors: String, LocalizedError {
     case noSavedCookies
     case noSavedHeaders
     case noDownloadURL
+    case shortcodeFromURLParsingFailed
     
     var errorDescription: String? {
         rawValue
@@ -180,7 +181,7 @@ func getBiggestVideoOrImageURL(from responseData: Data) throws -> _URL {
 }
 
 
-enum URLTypes {
+enum URLTypes: String, Codable {
     case video
     case image2
 }
@@ -189,6 +190,7 @@ struct _URL {
     let type: URLTypes
     let url: URL
     var localFilePath = URL(string: "")
+    var initReelURL = ""
 }
 
 func getDownloadURL(reelURL: String) async throws -> _URL? {
@@ -197,7 +199,9 @@ func getDownloadURL(reelURL: String) async throws -> _URL? {
     let videoApiURL = videoIDToAPIURl(videoID)
 
     let response = try await makeRequest(strUrl: videoApiURL, videoCode: videoCode)
-    let itemURL = try getBiggestVideoOrImageURL(from: response)
+    var itemURL = try getBiggestVideoOrImageURL(from: response)
+    
+    itemURL.initReelURL = reelURL
     
     return itemURL
 }
