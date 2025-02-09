@@ -63,6 +63,18 @@ func urlToVideoCode(_ url: String) -> String? {
     return parts.last
 }
 
+func urlToCleanURL(_ url: String) -> String? {
+    guard let url = URL(string: url),
+              var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        else { return nil }
+
+        components.query = nil
+        components.scheme = nil
+        components.host = components.host?.replacingOccurrences(of: "www.", with: "")
+        
+        return components.url?.absoluteString.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+}
+
 func videoCodeToVideoID(_ shortcode: String) -> Int? {
     let encodingChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
     var table: [Character: Int] = [:]
@@ -119,7 +131,6 @@ enum Errors: String, LocalizedError {
     case noSavedCookies
     case noSavedHeaders
     case noDownloadURL
-    case shortcodeFromURLParsingFailed
     
     var errorDescription: String? {
         rawValue

@@ -12,4 +12,12 @@ class ReelUrl {
         self.type = type
         self.dateSaved = Date()
     }
+    
+    func shortcode() -> String {
+        urlToVideoCode(url) ?? ""
+    }
+    
+    func cleanURL() -> String {
+        urlToCleanURL(url) ?? ""
+    }
 }

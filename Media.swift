@@ -25,12 +25,8 @@ func saveMediaToPhotos(downloadUrl: _URL) async throws {
 }
 
 func saveMediaToHistory(downloadUrl: _URL) async throws {
-    guard let shortCode = urlToVideoCode(downloadUrl.initReelURL) else {
-        throw Errors.shortcodeFromURLParsingFailed
-    }
-    
     let context = try ModelContext(.init(for: ReelUrl.self))
-    context.insert(ReelUrl(shortCode, type: downloadUrl.type))
+    context.insert(ReelUrl(downloadUrl.initReelURL, type: downloadUrl.type))
     try context.save()
     
     //    let context = try ModelContext(.init(for: ReelUrl.self))

@@ -165,19 +165,17 @@ struct Icon: View {
         Image(systemName: name)
             .font(.headline)
             .foregroundColor(.gray)
-            .frame(width: 60, height: 60)
-            .background(.gray.opacity(0.10))
-            .cornerRadius(6)
     }
 }
 
 func formattedDate(_ date: Date) -> String {
         let formatter = RelativeDateTimeFormatter()
-        formatter.unitsStyle = .full
+        formatter.unitsStyle = .short
         return formatter.localizedString(for: date, relativeTo: Date())
     }
 
 struct HistoryView: View {
+    let notification: Notification
     @Query private var savedReelUrls: [ReelUrl]
     
     var body: some View {
@@ -185,19 +183,20 @@ struct HistoryView: View {
             ForEach(savedReelUrls, id: \.self) { (reelUrl: ReelUrl) in
                 HStack(spacing: 20) {
                     Icon(reelUrl: reelUrl)
-                    VStack(alignment: .leading, spacing: 8) {
+                    HStack() {
                         Text(formattedDate(reelUrl.dateSaved))
+                        Spacer()
+                        Image(systemName: "arrow.right")
                             .font(.caption)
                             .opacity(0.6)
-                        Text(reelUrl.url)
                     }
                 }
                 .listRowSeparator(.hidden)
                 .swipeActions(edge: .trailing) {
                     Button("", systemImage: "document.on.document.fill") {
-                        UIPasteboard.general.string = reelUrl.url
+                        UIPasteboard.general.string = reelUrl.cleanURL()
+                        notification.present(type: .success, title: "URL copied")
                     }
-                    .tint(.gray.opacity(0.3))
                 }
             }
         }
@@ -253,11 +252,11 @@ struct ContentView: View {
                     .padding()
             }
             .sheet(isPresented: $showingHistory) {
-                HistoryView()
+                HistoryView(notification: notification)
                 .listRowSpacing(10)
                 .listStyle(.plain)
                 .padding(.horizontal, 0)
-                .padding(.top, 30)
+                .padding(.top, 50)
                     .presentationDetents([.medium, .large])
             }
             .padding()
