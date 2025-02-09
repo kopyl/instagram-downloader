@@ -177,6 +177,7 @@ func formattedDate(_ date: Date) -> String {
 struct HistoryView: View {
     let notification: Notification
     @Query private var savedReelUrls: [ReelUrl]
+    @Environment(\.openURL) var openURL
     
     var body: some View {
         List {
@@ -191,7 +192,13 @@ struct HistoryView: View {
                             .opacity(0.6)
                     }
                 }
+                .frame(height: 50)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    openURL(URL(string: reelUrl.url)!)
+                }
                 .listRowSeparator(.hidden)
+                .listRowInsets(.init(top: 0, leading: 20, bottom: 0, trailing: 20))
                 .swipeActions(edge: .trailing) {
                     Button("", systemImage: "document.on.document.fill") {
                         UIPasteboard.general.string = reelUrl.cleanURL()
@@ -253,7 +260,6 @@ struct ContentView: View {
             }
             .sheet(isPresented: $showingHistory) {
                 HistoryView(notification: notification)
-                .listRowSpacing(10)
                 .listStyle(.plain)
                 .padding(.horizontal, 0)
                 .padding(.top, 50)
