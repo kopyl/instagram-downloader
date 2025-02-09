@@ -18,8 +18,8 @@ class ShareViewController: UIViewController {
 struct ShareView: View {
     var extensionContext: NSExtensionContext?
     var itemProviders: [NSItemProvider]
-    @State private var lastError: Error?
     
+    @State private var lastError: Error?
     @State private var reelURL: String?
     
     var body: some View {
