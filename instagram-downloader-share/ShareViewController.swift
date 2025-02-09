@@ -1,6 +1,5 @@
 import SwiftUI
 import Photos
-import SwiftData
 
 class ShareViewController: UIViewController {
 
@@ -22,8 +21,6 @@ struct ShareView: View {
     
     @State private var lastError: Error?
     @State private var reelURL: String?
-    
-    @Environment(\.modelContext) private var store
     
     var body: some View {
         VStack{
@@ -47,16 +44,7 @@ struct ShareView: View {
             guard let downloadUrl = try await getDownloadURL(reelURL: url.absoluteString) else { return }
             guard let file = try await downloadFile(from: downloadUrl) else { return }  
             
-            try await PHPhotoLibrary.shared().performChanges({
-                switch downloadUrl.type {
-                case .video:
-                    PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: file)
-                case .image2:
-                    PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: file)
-                }
-            })
-            
-            store.insert(ReelUrl(url.absoluteString))
+            try await saveMedia(downloadUrl: downloadUrl, file: file)
             
             extensionContext?.completeRequest(returningItems: [])
             

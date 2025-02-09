@@ -171,14 +171,8 @@ struct ContentView: View {
                 
                 guard let file = try await downloadFile(from: downloadUrl) else { return }
                 
-                try await PHPhotoLibrary.shared().performChanges({
-                    switch downloadUrl.type {
-                    case .video:
-                        PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: file)
-                    case .image2:
-                        PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: file)
-                    }
-                })
+                try await saveMedia(downloadUrl: downloadUrl, file: file)
+                
                 withAnimation(.linear(duration: 0.15)){
                     isDownloaded = true
                     isError = false
