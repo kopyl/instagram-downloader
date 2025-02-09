@@ -167,11 +167,7 @@ struct ContentView: View {
             do {
                 lastRequestResultedInError = false
 
-                guard let downloadUrl = try await getDownloadURL(reelURL: url) else { return }
-                
-                guard let file = try await downloadFile(from: downloadUrl) else { return }
-                
-                try await saveMedia(downloadUrl: downloadUrl, file: file)
+                try await downloadMedia(reelURL: url)
                 
                 withAnimation(.linear(duration: 0.15)){
                     isDownloaded = true

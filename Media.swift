@@ -15,3 +15,10 @@ func saveMedia(downloadUrl: _URL, file: URL) async throws {
     
     context.insert(ReelUrl(downloadUrl.url.absoluteString))
 }
+
+func downloadMedia(reelURL: String) async throws {
+    guard let downloadUrl = try await getDownloadURL(reelURL: reelURL) else { return }
+    guard let file = try await downloadFile(from: downloadUrl) else { return }
+    
+    try await saveMedia(downloadUrl: downloadUrl, file: file)
+}

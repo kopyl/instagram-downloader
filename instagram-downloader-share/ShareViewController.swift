@@ -41,10 +41,7 @@ struct ShareView: View {
             guard let url = try await itemProvider.loadItem(forTypeIdentifier: UTType.url.identifier) as? URL else { return }
             reelURL = url.absoluteString
             
-            guard let downloadUrl = try await getDownloadURL(reelURL: url.absoluteString) else { return }
-            guard let file = try await downloadFile(from: downloadUrl) else { return }  
-            
-            try await saveMedia(downloadUrl: downloadUrl, file: file)
+            try await downloadMedia(reelURL: url.absoluteString)
             
             extensionContext?.completeRequest(returningItems: [])
             
