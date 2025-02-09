@@ -338,5 +338,16 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: ReelUrl.self, configurations: config)
+    
+    let context = container.mainContext
+    
+    context.insert(
+        ReelUrl("https://www.instagram.com/reel/DF2k_eFMhgb/?igsh=ZThrZGtta3czcWt5", type: .video)
+    )
+
+    return ContentView()
+        .modelContainer(container)
+        .preferredColorScheme(.dark)
 }
