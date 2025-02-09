@@ -167,7 +167,7 @@ struct ContentView: View {
             do {
                 lastRequestResultedInError = false
 
-                guard let downloadUrlObject = try await getDownloadURL(reelURL: url) else { return }               
+                guard let downloadUrlObject = try await getDownloadURL(reelURL: url) else { return }
                 
                 guard let file = try await downloadFile(from: downloadUrlObject) else { return }
                 
