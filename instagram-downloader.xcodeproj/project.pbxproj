@@ -13,6 +13,8 @@
 		488699F42D3C99B4006DF44A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 488699F32D3C99B4006DF44A /* Preview Assets.xcassets */; };
 		488699FC2D3CAAA5006DF44A /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 488699FB2D3CAAA5006DF44A /* AlertKit */; };
 		488699FF2D3CB5F5006DF44A /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 488699FE2D3CB5F5006DF44A /* AlertKit */; };
+		48CA8A9C2D58DA7F005CD16F /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CA8A9B2D58DA7F005CD16F /* Data.swift */; };
+		48CA8A9D2D58DCEF005CD16F /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CA8A9B2D58DA7F005CD16F /* Data.swift */; };
 		48D1B1982D3F2ED10040569E /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1B1972D3F2ED10040569E /* Network.swift */; };
 		48D1B1A02D3FB6D50040569E /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1B19F2D3FB6D50040569E /* ShareViewController.swift */; };
 		48D1B1A72D3FB6D50040569E /* instagram-downloader-share.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 48D1B19D2D3FB6D50040569E /* instagram-downloader-share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -69,6 +71,7 @@
 		488699F02D3C99B4006DF44A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		488699F32D3C99B4006DF44A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		48869A022D3CD25A006DF44A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Info.plist; sourceTree = "<group>"; };
+		48CA8A9B2D58DA7F005CD16F /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		48D1B1972D3F2ED10040569E /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		48D1B19D2D3FB6D50040569E /* instagram-downloader-share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "instagram-downloader-share.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		48D1B19F2D3FB6D50040569E /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +118,7 @@
 		488699E02D3C99B2006DF44A = {
 			isa = PBXGroup;
 			children = (
+				48CA8A9B2D58DA7F005CD16F /* Data.swift */,
 				488699EB2D3C99B2006DF44A /* instagram-downloader */,
 				48D1B19E2D3FB6D50040569E /* instagram-downloader-share */,
 				48E39EEC2D400133000341CD /* instagram-downloader-widget */,
@@ -325,6 +329,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48E39EE12D3FFF14000341CD /* Activity.swift in Sources */,
+				48CA8A9C2D58DA7F005CD16F /* Data.swift in Sources */,
 				48D1B1982D3F2ED10040569E /* Network.swift in Sources */,
 				488699EF2D3C99B2006DF44A /* ContentView.swift in Sources */,
 				488699ED2D3C99B2006DF44A /* instagram_downloaderApp.swift in Sources */,
@@ -336,6 +341,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48D1B1A02D3FB6D50040569E /* ShareViewController.swift in Sources */,
+				48CA8A9D2D58DCEF005CD16F /* Data.swift in Sources */,
 				48E39F052D40312C000341CD /* Network.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

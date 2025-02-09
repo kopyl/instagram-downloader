@@ -1,5 +1,6 @@
 import SwiftUI
 import Photos
+import SwiftData
 
 class ShareViewController: UIViewController {
 
@@ -21,6 +22,8 @@ struct ShareView: View {
     
     @State private var lastError: Error?
     @State private var reelURL: String?
+    
+    @Environment(\.modelContext) private var store
     
     var body: some View {
         VStack{
@@ -52,6 +55,8 @@ struct ShareView: View {
                     PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: file)
                 }
             })
+            
+            store.insert(ReelUrl(url.absoluteString))
             
             extensionContext?.completeRequest(returningItems: [])
             
