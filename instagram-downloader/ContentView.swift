@@ -193,6 +193,12 @@ struct HistoryView: View {
                     }
                 }
                 .listRowSeparator(.hidden)
+                .swipeActions(edge: .trailing) {
+                    Button("", systemImage: "document.on.document.fill") {
+                        UIPasteboard.general.string = reelUrl.url
+                    }
+                    .tint(.gray.opacity(0.3))
+                }
             }
         }
     }
