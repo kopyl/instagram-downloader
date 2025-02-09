@@ -28,12 +28,6 @@ func saveMediaToHistory(downloadUrl: _URL) async throws {
     let context = try ModelContext(.init(for: ReelUrl.self))
     context.insert(ReelUrl(downloadUrl.initReelURL, type: downloadUrl.type))
     try context.save()
-    
-    //    let context = try ModelContext(.init(for: ReelUrl.self))
-    //    context.insert(ReelUrl("Test-3"))
-    //    try context.save()
-        
-    //    try context.delete(model: ReelUrl.self)
 }
 
 func downloadAndSaveMedia(reelURL: String) async throws {

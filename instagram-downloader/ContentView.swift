@@ -176,7 +176,7 @@ func formattedDate(_ date: Date) -> String {
 
 struct HistoryView: View {
     let notification: Notification
-    @Query private var savedReelUrls: [ReelUrl]
+    @Query(sort: \ReelUrl.dateSaved, order: .reverse) private var savedReelUrls: [ReelUrl]
     @Environment(\.openURL) var openURL
     
     var body: some View {
