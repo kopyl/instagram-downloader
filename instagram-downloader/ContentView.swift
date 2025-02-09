@@ -167,12 +167,12 @@ struct ContentView: View {
             do {
                 lastRequestResultedInError = false
 
-                guard let downloadUrlObject = try await getDownloadURL(reelURL: url) else { return }
+                guard let downloadUrl = try await getDownloadURL(reelURL: url) else { return }
                 
-                guard let file = try await downloadFile(from: downloadUrlObject) else { return }
+                guard let file = try await downloadFile(from: downloadUrl) else { return }
                 
                 try await PHPhotoLibrary.shared().performChanges({
-                    switch downloadUrlObject.type {
+                    switch downloadUrl.type {
                     case .video:
                         PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: file)
                     case .image2:
