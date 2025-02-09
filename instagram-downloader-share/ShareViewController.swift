@@ -20,7 +20,6 @@ struct ShareView: View {
     var itemProviders: [NSItemProvider]
     
     @State private var lastError: Error?
-    @State private var reelURL: String?
     
     var body: some View {
         VStack{
@@ -39,7 +38,6 @@ struct ShareView: View {
 
         do {
             guard let url = try await itemProvider.loadItem(forTypeIdentifier: UTType.url.identifier) as? URL else { return }
-            reelURL = url.absoluteString
             
             try await downloadAndSaveMedia(reelURL: url.absoluteString)
             
