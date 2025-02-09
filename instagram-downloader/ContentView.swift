@@ -2,6 +2,7 @@ import SwiftUI
 import AlertKit
 import Photos
 import ActivityKit
+import SwiftData
 
 class Alert {
     func show(notification: Notification) {
@@ -157,6 +158,10 @@ struct ContentView: View {
     @State private var isError = false
     @State private var lastError: Error?
     @State private var lastRequestResultedInError = false
+    @State private var showingHistory = true
+    
+    @Environment(\.modelContext) private var store
+    @Query private var savedReelUrls: [ReelUrl]
     
     private var notification = Notification()
     private var alert = Alert()
@@ -167,7 +172,7 @@ struct ContentView: View {
             do {
                 lastRequestResultedInError = false
 
-                try await downloadMedia(reelURL: url)
+                try await downloadAndSaveMedia(reelURL: url)
                 
                 withAnimation(.linear(duration: 0.15)){
                     isDownloaded = true
@@ -184,6 +189,31 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
+            Button(action: {
+                showingHistory.toggle()
+            }) {
+                
+                Image(systemName: "list.bullet")
+                    .font(.title2)
+                    .foregroundColor(.white)
+                    .padding()
+            }
+            .sheet(isPresented: $showingHistory) {
+                List {
+                    ForEach(savedReelUrls, id: \.self) { reelUrl in
+                        Text(reelUrl.url)
+                            .listRowSeparator(.hidden)
+                    }
+                }
+                .listRowSpacing(10)
+                .listStyle(.plain)
+                .padding()
+                .padding(.top, 20)
+                    .presentationDetents([.medium, .large])
+            }
+            .padding()
+            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
+            
             Spacer()
             if isDownloaded {
                 VStack(spacing: 10){

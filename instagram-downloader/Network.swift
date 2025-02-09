@@ -112,11 +112,13 @@ enum JSONParserError: String, LocalizedError {
     case keyNotFoundError
     case itemVersionIsEmpty
     case invalidItemURL
+    case emptyLocalFileURL
     case invalidImageVersion
     case noWidth
     case URLOBjectInvalid
     case noSavedCookies
     case noSavedHeaders
+    case noDownloadURL
     
     var errorDescription: String? {
         rawValue
@@ -186,6 +188,7 @@ enum URLTypes {
 struct _URL {
     let type: URLTypes
     let url: URL
+    var localFilePath = URL(string: "")
 }
 
 func getDownloadURL(reelURL: String) async throws -> _URL? {
