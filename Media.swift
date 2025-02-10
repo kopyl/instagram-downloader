@@ -68,6 +68,7 @@ func downloadAndSaveMedia(reelURL: String) async throws {
     
     try await saveMediaToHistory(downloadUrl: downloadUrl)
 
+//    let context = try ModelContext(.init(for: ReelUrl.self))
 //    context.insert(ReelUrl("shortCode", type: .image2))
 //    try context.save()
 //    try context.delete(model: ReelUrl.self)

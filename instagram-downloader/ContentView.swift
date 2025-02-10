@@ -191,14 +191,19 @@ struct HistoryView: View {
                 HStack(spacing: 20) {
                     Icon(reelUrl: reelUrl)
                     HStack() {
-                        Text(formattedDate(reelUrl.dateSaved))
+                        VStack(alignment: .leading) {
+                            Text(reelUrl.type.rawValue)
+                                .font(.caption)
+                                .opacity(0.6)
+                            Text(formattedDate(reelUrl.dateSaved))
+                        }
                         Spacer()
                         Image(systemName: "arrow.right")
                             .font(.caption)
                             .opacity(0.6)
                     }
                 }
-                .frame(height: 50)
+                .frame(height: 70)
                 .contentShape(Rectangle())
                 .onTapGesture {
                     openURL(URL(string: reelUrl.url)!)
