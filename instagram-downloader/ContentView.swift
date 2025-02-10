@@ -174,6 +174,24 @@ struct Icon: View {
     }
 }
 
+struct CopyButton: View {
+    let text: String?
+    let reelUrl: ReelUrl
+    let notification: Notification
+    
+    var body: some View {
+        Button {
+            UIPasteboard.general.string = reelUrl.cleanURL()
+            notification.present(type: .success, title: "URL copied")
+        } label: {
+            if let text {
+                Text(text)
+            }
+            Image(systemName: "document.on.document.fill")
+        }
+    }
+}
+
 func formattedDate(_ date: Date) -> String {
         let formatter = RelativeDateTimeFormatter()
         formatter.unitsStyle = .short
@@ -215,13 +233,7 @@ struct HistoryView: View {
                         Text("Go to video")
                         Image(systemName: "arrow.right")
                     }
-                    Button {
-                        UIPasteboard.general.string = reelUrl.cleanURL()
-                        notification.present(type: .success, title: "URL copied")
-                    } label: {
-                        Text("Copy link")
-                        Image(systemName: "document.on.document.fill")
-                    }
+                    CopyButton(text: "Copy link", reelUrl: reelUrl, notification: notification)
                 } preview: {
                     if let image = reelUrl.thumbnail {
                         Image(uiImage: image).resizable()
@@ -230,10 +242,7 @@ struct HistoryView: View {
                 .listRowSeparator(.hidden)
                 .listRowInsets(.init(top: 0, leading: 20, bottom: 5, trailing: 20))
                 .swipeActions(edge: .trailing) {
-                    Button("", systemImage: "document.on.document.fill") {
-                        UIPasteboard.general.string = reelUrl.cleanURL()
-                        notification.present(type: .success, title: "URL copied")
-                    }
+                    CopyButton(text: nil, reelUrl: reelUrl, notification: notification)
                 }
             }
         }
