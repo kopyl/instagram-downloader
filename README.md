@@ -1,4 +1,13 @@
 # Instagram video and photo downloader
+*With user cookies and headers for downloading*
+
+### Features:
+- Video downloads
+- Pictures downloads
+- Ads downloads
+- History of downloads
+- Downloads with Share Extension (Share to -> Instagram dl)
+
 
 ### Here is a video demo on how it works:
 <video src="https://github.com/user-attachments/assets/fda935e4-886e-4666-9bee-7e94debdf1ae" width="300" controls></video>
