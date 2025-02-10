@@ -1,5 +1,20 @@
 How to:
 
+### Delete all data from SwiftData store:
+
+```swift
+let context = try ModelContext(.init(for: ReelUrl.self))
+try context.delete(model: ReelUrl.self)
+```
+
+### Insert some dummy data to the SwiftData store:
+
+```swift
+let context = try ModelContext(.init(for: ReelUrl.self))
+context.insert(ReelUrl("shortCode", type: .image))  // add more data if needed
+try context.save()  // this is necessary step, otherwise the data is not saved
+```
+
 ### Download video with a final item URL:
 
 ```swift
