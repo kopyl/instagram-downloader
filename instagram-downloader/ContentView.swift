@@ -208,6 +208,25 @@ struct HistoryView: View {
                 .onTapGesture {
                     openURL(URL(string: reelUrl.url)!)
                 }
+                .contextMenu {
+                    Button {
+                        openURL(URL(string: reelUrl.url)!)
+                    } label: {
+                        Text("Go to video")
+                        Image(systemName: "arrow.right")
+                    }
+                    Button {
+                        UIPasteboard.general.string = reelUrl.cleanURL()
+                        notification.present(type: .success, title: "URL copied")
+                    } label: {
+                        Text("Copy link")
+                        Image(systemName: "document.on.document.fill")
+                    }
+                } preview: {
+                    if let image = reelUrl.thumbnail {
+                        Image(uiImage: image).resizable()
+                    }
+                }
                 .listRowSeparator(.hidden)
                 .listRowInsets(.init(top: 0, leading: 20, bottom: 5, trailing: 20))
                 .swipeActions(edge: .trailing) {
