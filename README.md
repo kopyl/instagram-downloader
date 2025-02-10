@@ -1,3 +1,8 @@
+# Instagram video and photo downloader
+
+### Here is a video demo on how it works:
+![Video demo](https://github.com/user-attachments/assets/fda935e4-886e-4666-9bee-7e94debdf1ae)
+
 How to:
 
 ### Use XCode Previews Previews with SwiftData:
