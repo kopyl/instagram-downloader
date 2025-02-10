@@ -23,10 +23,16 @@ struct ShareView: View {
     
     var body: some View {
         VStack{
-            Text(lastError != nil ? "Network error: \(lastError!.localizedDescription)" : "")
-                .task{
-                    await extractItems()
-                }
+            if let lastError {
+                Text("Network error: \(lastError.localizedDescription)")
+            }
+            else {
+                Text("Downloading media")
+                ProgressView()
+            }
+        }
+        .task{
+            await extractItems()
         }
         .containerRelativeFrame([.horizontal, .vertical])
         .background(lastError == nil ? .clear : .red)
