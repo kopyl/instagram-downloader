@@ -4,55 +4,6 @@ import Photos
 import ActivityKit
 import SwiftData
 
-class Alert {
-    func show(notification: Notification) {
-        let alertController = UIAlertController(title: "Enter your data", message: nil, preferredStyle: .alert)
-
-        alertController.addTextField { textField in
-            textField.placeholder = "Headers"
-        }
-        
-        alertController.addTextField { textField in
-            textField.placeholder = "Cookies"
-        }
-
-        let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
-            guard let textFields = alertController.textFields else { return }
-            let inputs = textFields.compactMap { $0.text }
-            guard inputs[0] != "", inputs[1] != "" else {
-                notification.present(type: .error, title: "All fields need to have data")
-                return
-            }
-            let headers = inputs[0]
-            let cookies = inputs[1]
-            
-            do {
-                try _ = convertStringToDictionary(headers)
-            } catch let error {
-                print(error)
-                notification.present(type: .error, title: "Headers are not valid")
-            }
-            
-            do {
-                _ = try convertStringToDictionary(cookies)
-            } catch let error {
-                print(error)
-                notification.present(type: .error, title: "Cookies are not valid")
-            }
-            
-            UserDefaults(suiteName: "group.CY-041AF8F6-4884-11E7-AB8C-406C8F57CB9A.com.cydia.Extender")?.set(inputs[0], forKey: "headers")
-            UserDefaults(suiteName: "group.CY-041AF8F6-4884-11E7-AB8C-406C8F57CB9A.com.cydia.Extender")?.set(inputs[1], forKey: "cookies")
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-
-        alertController.addAction(cancelAction)
-        alertController.addAction(saveAction)
-
-        notification.scene?.rootViewController?.present(alertController, animated: true, completion: nil)
-    }
-}
-
 class Notification {
     var scene: UIWindow?
     var currentNotification: AlertAppleMusic17View?
@@ -131,13 +82,16 @@ class ActivityManager {
     }
 }
 
-struct CredentialsButton: View {
-    let alert: Alert
-    let notification: Notification
+struct LoginBrowserButton: View {
+    var action: () -> Void
+    
+    init(action: @escaping () -> Void) {
+        self.action = action
+    }
     
     var body: some View {
-        Button(action: {alert.show(notification: notification)}) {
-            Image(systemName: "gear")
+        Button(action: action) {
+            Image(systemName: "safari")
                 .font(.title2)
                 .foregroundColor(.white)
                 .padding()
@@ -254,12 +208,12 @@ struct ContentView: View {
     @State private var isError = false
     @State private var lastError: Error?
     @State private var lastRequestResultedInError = false
-    @State private var showingHistory = true
+    @State private var showingHistory = false
+    @State private var showingWebView  = false
     
     @Environment(\.modelContext) private var store
     
     private var notification = Notification()
-    private var alert = Alert()
     private var activity = ActivityManager()
     
     func downloadVideoAndSaveToPhotos() {
@@ -302,7 +256,12 @@ struct ContentView: View {
                         .presentationDetents([.medium, .large])
                 }
                 Spacer()
-                CredentialsButton(alert: alert, notification: notification)
+                LoginBrowserButton {
+                    showingWebView.toggle()
+                }
+                .sheet(isPresented: $showingWebView) {
+                    WebView(url: URL(string: "https://instagram.com")!)
+                }
             }
             .padding()
             .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
@@ -369,6 +328,15 @@ struct ContentView: View {
         }
         .onAppear{
             notification.setWindowScene()
+            
+//            guard let cookies = HTTPCookieStorage.shared.cookies else {
+//                return
+//            }
+//            
+//            let nice = 9
+//            
+//            let cookieHeader = cookies.map { "\($0.name)=\($0.value)" }.joined(separator: "; ")
+//            request.setValue(cookieHeader, forHTTPHeaderField: "Cookie")
         }
         .containerRelativeFrame([.horizontal, .vertical])
         .background(isDownloaded ? .green : isUrlValid && !lastRequestResultedInError ? .blue : .red)

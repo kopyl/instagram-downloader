@@ -1,24 +1,6 @@
 import Foundation
 import SwiftUI
 
-extension String: Error {}
-
-func getCookiesAndHeaders(reelURL: String) throws -> ([String: String], [String: String]) {
-    guard let cookiesFromStore = UserDefaults(suiteName: "group.CY-041AF8F6-4884-11E7-AB8C-406C8F57CB9A.com.cydia.Extender")?.string(forKey: "cookies") else {
-        throw Errors.noSavedCookies
-    }
-    let cookies = try (convertStringToDictionary(cookiesFromStore)) as! [String: String]
-    
-    guard let headersFromStore = UserDefaults(suiteName: "group.CY-041AF8F6-4884-11E7-AB8C-406C8F57CB9A.com.cydia.Extender")?.string(forKey: "headers")  else {
-        throw Errors.noSavedHeaders
-    }
-    var headers = try (convertStringToDictionary(headersFromStore)) as! [String: String]
-    
-    headers["referer"] = reelURL
-    
-    return (cookies, headers)
-}
-
 func convertStringToDictionary(_ text: String) throws -> [String: Any]? {
     if let data = text.data(using: .utf8) {
         let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]
@@ -100,6 +82,16 @@ func videoIDToAPIURl(_ id: Int) -> String {
     return "\(API_BASE_URL)/media/\(id)/info/"
 }
 
+
+var HEADERS: [String: String] = [
+    "X-IG-App-ID": "936619743392459",
+    "X-ASBD-ID": "198387",
+    "X-IG-WWW-Claim": "0",
+    "Origin": "https://www.instagram.com",
+    "Accept": "*/*",
+    "X-Requested-With": "XMLHttpRequest",
+]
+
 func makeRequest(strUrl: String, videoCode: String) async throws -> Data {
     guard let url = URL(string: strUrl) else {
         throw NSError(domain: "Invalid URL", code: -1, userInfo: nil)
@@ -107,17 +99,28 @@ func makeRequest(strUrl: String, videoCode: String) async throws -> Data {
 
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
+    
+    guard let sharedDefaults = UserDefaults(suiteName: Names.APPGROUP),
+          let savedCookies = sharedDefaults.array(forKey: Names.cookies) as? [[String: String]] else {
+        throw Errors.noCookiesSavedFromWebView
+    }
 
-    let (cookies, headers) = try getCookiesAndHeaders(reelURL: strUrl)
-
-    headers.forEach { key, value in
+    if let csrfToken = savedCookies.first(where: { $0["name"] == "csrftoken" })?["value"] {
+        HEADERS["X-CSRFToken"] = csrfToken
+    }
+    
+    HEADERS["Referer"] = strUrl
+    HEADERS.forEach { key, value in
         request.setValue(value, forHTTPHeaderField: key)
     }
 
-    let cookieHeader = cookies.map { "\($0.key)=\($0.value)" }.joined(separator: "; ")
+    let cookieHeader = savedCookies.map { "\($0["name"] ?? "")=\($0["value"] ?? "")" }.joined(separator: "; ")
     request.setValue(cookieHeader, forHTTPHeaderField: "Cookie")
 
-    let (data, _) = try await URLSession.shared.data(for: request)
+    guard let (data, _) = try? await URLSession.shared.data(for: request) else {
+        throw Errors.makeRequestFailed
+    }
+    
     return data
 }
 
@@ -132,6 +135,8 @@ enum Errors: String, LocalizedError {
     case noSavedCookies
     case noSavedHeaders
     case noDownloadURL
+    case noCookiesSavedFromWebView
+    case makeRequestFailed
     
     var errorDescription: String? {
         rawValue
@@ -139,6 +144,7 @@ enum Errors: String, LocalizedError {
 }
 
 func getFirstItemFrom(from responseData: Data) throws -> [String : Any] {
+    
     let jsonObject = try JSONSerialization.jsonObject(with: responseData, options: [])
 
     guard let jsonDictionary = jsonObject as? [String: Any] else {
@@ -173,7 +179,6 @@ func getBiggestItem(itemVersion: [[String : Any]]) throws -> String {
 }
 
 func getBiggestVideoOrImageURL(from responseData: Data) throws -> _URL {
-    
     let firstItem = try getFirstItemFrom(from: responseData)
 
     if let videoVersions = firstItem["video_versions"] as? [[String: Any]] {
@@ -213,6 +218,7 @@ func getDownloadURL(reelURL: String) async throws -> _URL? {
 
     let response = try await makeRequest(strUrl: videoApiURL, videoCode: videoCode)
     var itemURL = try getBiggestVideoOrImageURL(from: response)
+//    throw Errors.URLOBjectInvalid
     
     itemURL.initReelURL = reelURL
     
