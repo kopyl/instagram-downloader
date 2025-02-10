@@ -162,9 +162,15 @@ struct Icon: View {
     }
     
     var body: some View {
-        Image(systemName: name)
-            .font(.headline)
-            .foregroundColor(.gray)
+        if let image = reelUrl.thumbnail {
+            Image(uiImage: image).resizable().aspectRatio(contentMode: .fit).frame(width: 50, height: 50)
+        }
+         else {
+            Image(systemName: name)
+                .font(.headline)
+                .foregroundColor(.gray)
+                .frame(width: 50, height: 50)
+        }
     }
 }
 
@@ -198,7 +204,7 @@ struct HistoryView: View {
                     openURL(URL(string: reelUrl.url)!)
                 }
                 .listRowSeparator(.hidden)
-                .listRowInsets(.init(top: 0, leading: 20, bottom: 0, trailing: 20))
+                .listRowInsets(.init(top: 0, leading: 20, bottom: 5, trailing: 20))
                 .swipeActions(edge: .trailing) {
                     Button("", systemImage: "document.on.document.fill") {
                         UIPasteboard.general.string = reelUrl.cleanURL()

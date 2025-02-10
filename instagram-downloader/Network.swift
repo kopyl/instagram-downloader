@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 extension String: Error {}
 
@@ -202,6 +203,7 @@ struct _URL {
     let url: URL
     var localFilePath = URL(string: "")
     var initReelURL = ""
+    var thumbnail: UIImage?
 }
 
 func getDownloadURL(reelURL: String) async throws -> _URL? {
