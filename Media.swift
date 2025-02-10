@@ -18,7 +18,7 @@ func generateThumbnailFromItem(downloadUrl: _URL) throws -> UIImage? {
         throw Errors.emptyLocalFileURL
     }
     
-    if downloadUrl.type == .image2 {
+    if downloadUrl.type == .image {
         return UIImage(contentsOfFile: localFilePath.relativePath)
     }
     
@@ -42,7 +42,7 @@ func saveMediaToPhotos(downloadUrl: _URL) async throws {
         switch downloadUrl.type {
         case .video:
             PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: localFilePath)
-        case .image2:
+        case .image:
             PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: localFilePath)
         }
     })
@@ -69,7 +69,7 @@ func downloadAndSaveMedia(reelURL: String) async throws {
     try await saveMediaToHistory(downloadUrl: downloadUrl)
 
 //    let context = try ModelContext(.init(for: ReelUrl.self))
-//    context.insert(ReelUrl("shortCode", type: .image2))
+//    context.insert(ReelUrl("shortCode", type: .image))
 //    try context.save()
 //    try context.delete(model: ReelUrl.self)
 }

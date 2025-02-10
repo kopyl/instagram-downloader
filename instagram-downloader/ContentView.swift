@@ -156,7 +156,7 @@ struct Icon: View {
         switch reelUrl.type {
         case .video:
             return "video.fill"
-        case .image2:
+        case .image:
             return "photo.fill"
         }
     }

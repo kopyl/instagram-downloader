@@ -34,7 +34,7 @@ func downloadFile(from url: _URL) async throws -> URL? {
     switch url.type {
     case .video:
         destinationURL = tempFileURL.appendingPathExtension("mp4")
-    case .image2:
+    case .image:
         destinationURL = tempFileURL.appendingPathExtension("png")
     }
     
@@ -189,13 +189,13 @@ func getBiggestVideoOrImageURL(from responseData: Data) throws -> _URL {
     }
     let biggestItem = try getBiggestItem(itemVersion: imageVersion)
     guard let _url = URL(string: biggestItem) else { throw Errors.URLOBjectInvalid }
-    return _URL(type: .image2, url: _url)
+    return _URL(type: .image, url: _url)
 }
 
 
 enum URLTypes: String, Codable {
     case video
-    case image2
+    case image
 }
 
 struct _URL {
