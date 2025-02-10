@@ -18,6 +18,17 @@ Using a fresh instagram account you're not afraid to loose is highly advised.
 
 How to:
 
+# Distribute
+
+### Change app version:
+
+1. Go to Project settings (not targes)
+2. Go to Build Settings
+3. Scroll to the very bottom
+4. Change `APP_BUILD` to `APP_BUILD` +1 and `APP_VERSION` to any higher number
+
+# Develop:
+
 ### Use XCode Previews with SwiftData:
 
 ```swift
