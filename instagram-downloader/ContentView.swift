@@ -137,15 +137,11 @@ struct CredentialsButton: View {
     
     var body: some View {
         Button(action: {alert.show(notification: notification)}) {
-            Text("Set cookies and headers")
-                .padding(10)
-                .frame(maxWidth: .infinity)
+            Image(systemName: "gear")
+                .font(.title2)
                 .foregroundColor(.white)
-                .font(.system(size: 14))
+                .padding()
         }
-        .background(.black)
-        .cornerRadius(5)
-        .padding()
     }
 }
 
@@ -288,21 +284,25 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Button(action: {
-                showingHistory.toggle()
-            }) {
-                
-                Image(systemName: "list.bullet")
-                    .font(.title2)
-                    .foregroundColor(.white)
-                    .padding()
-            }
-            .sheet(isPresented: $showingHistory) {
-                HistoryView(notification: notification)
-                .listStyle(.plain)
-                .padding(.horizontal, 0)
-                .padding(.top, 50)
-                    .presentationDetents([.medium, .large])
+            HStack {
+                Button(action: {
+                    showingHistory.toggle()
+                }) {
+                    
+                    Image(systemName: "list.bullet")
+                        .font(.title2)
+                        .foregroundColor(.white)
+                        .padding()
+                }
+                .sheet(isPresented: $showingHistory) {
+                    HistoryView(notification: notification)
+                        .listStyle(.plain)
+                        .padding(.horizontal, 0)
+                        .padding(.top, 50)
+                        .presentationDetents([.medium, .large])
+                }
+                Spacer()
+                CredentialsButton(alert: alert, notification: notification)
             }
             .padding()
             .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
@@ -327,7 +327,6 @@ struct ContentView: View {
                 Text("Reel URL is \(isUrlValid ? "valid" : "invalid")")
             }
             Spacer()
-            CredentialsButton(alert: alert, notification: notification)
         }
         .onChange(of: activity.isDownloaded) {
             if activity.isDownloaded {
