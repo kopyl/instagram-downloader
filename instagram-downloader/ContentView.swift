@@ -320,6 +320,7 @@ struct ContentView: View {
                 
                 if isError {
                     notification.present(type: .error)
+                    activity.end()
                     isError = false
                     isDownloaded = false
                     lastRequestResultedInError = true
