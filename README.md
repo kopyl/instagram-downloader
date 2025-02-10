@@ -5,7 +5,7 @@
 
 How to:
 
-### Use XCode Previews Previews with SwiftData:
+### Use XCode Previews with SwiftData:
 
 ```swift
 #Preview {
