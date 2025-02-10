@@ -1,6 +1,10 @@
 # Instagram video and photo downloader
 *With user cookies and headers for downloading*
 
+**IMPORTANT:** <br>
+A user is required to enter username and password from Instagram, so use it on your own risk. <br>
+Using a fresh instagram account you're not afraid to loose is highly advised.
+
 ### Features:
 - Video downloads
 - Pictures downloads
