@@ -169,6 +169,12 @@ struct HistoryView: View {
     @Environment(\.openURL) var openURL
     
     var body: some View {
+        if savedReelUrls.isEmpty {
+            Spacer()
+            Text("History of downloaded media will appear here")
+                .font(.system(size: 14))
+            Spacer()
+        }
         List {
             ForEach(savedReelUrls, id: \.self) { (reelUrl: ReelUrl) in
                 HStack(spacing: 15) {
