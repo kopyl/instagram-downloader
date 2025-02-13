@@ -95,6 +95,7 @@ struct LoginBrowserButton: View {
                 .font(.title2)
                 .foregroundColor(.white)
                 .padding()
+                .opacity(0.7)
         }
     }
 }
