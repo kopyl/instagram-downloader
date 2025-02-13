@@ -101,6 +101,22 @@ struct LoginBrowserButton: View {
 }
 
 struct Icon: View {
+    let imageName: String
+    let font: Font
+    
+    init(imageName: String, font: Font? = nil) {
+        self.imageName = imageName
+        self.font = font ?? .headline
+    }
+    
+    var body: some View {
+        Image(systemName: imageName)
+            .font(font)
+            .foregroundColor(.gray)
+    }
+}
+
+struct Thumbnail: View {
     let reelUrl: ReelUrl
     
     var name: String {
@@ -117,10 +133,8 @@ struct Icon: View {
             Image(uiImage: image).resizable().aspectRatio(contentMode: .fit).frame(width: 50, height: 50)
         }
          else {
-            Image(systemName: name)
-                .font(.headline)
-                .foregroundColor(.gray)
-                .frame(width: 50, height: 50)
+             Icon(imageName: name)
+             .frame(width: 50, height: 50)
         }
     }
 }
@@ -157,13 +171,12 @@ struct HistoryView: View {
     var body: some View {
         List {
             ForEach(savedReelUrls, id: \.self) { (reelUrl: ReelUrl) in
-                HStack(spacing: 20) {
-                    Icon(reelUrl: reelUrl)
-                    HStack() {
-                        VStack(alignment: .leading) {
-                            Text(reelUrl.type.rawValue)
-                                .font(.caption)
-                                .opacity(0.6)
+                HStack(spacing: 15) {
+                    let preview = Thumbnail(reelUrl: reelUrl)
+                    preview
+                    HStack {
+                        HStack(spacing: 12) {
+                            Icon(imageName: preview.name, font: .system(size: 12))
                             Text(formattedDate(reelUrl.dateSaved))
                         }
                         Spacer()
