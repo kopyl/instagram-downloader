@@ -195,20 +195,12 @@ struct HistoryView: View {
                     CopyButton(text: nil, reelUrl: reelUrl, notification: notification)
                 }
             }
+            .listRowBackground(Color.bg)
         }
     }
 }
 
 struct ContentView: View {
-    @Environment(\.scenePhase) var scenePhase
-    @State private var isUrlValid = false
-    @State private var url: String = ""
-    @State private var isDownloading = false
-    @State private var isDownloaded = false
-    @State private var isError = false
-    @State private var lastError: Error?
-    @State private var lastRequestResultedInError = false
-    @State private var showingHistory = false
     @State private var showingWebView  = false
     
     @Environment(\.modelContext) private var store
@@ -216,45 +208,10 @@ struct ContentView: View {
     private var notification = Notification()
     private var activity = ActivityManager()
     
-    func downloadVideoAndSaveToPhotos() {
-        Task{
-            do {
-                lastRequestResultedInError = false
-
-                try await downloadAndSaveMedia(reelURL: url)
-                
-                withAnimation(.linear(duration: 0.15)){
-                    isDownloaded = true
-                    isError = false
-                    lastRequestResultedInError = false
-                }
-            } catch let error {
-                isError = true
-                lastError = error
-                
-            }
-        }
-    }
-    
     var body: some View {
         VStack {
             HStack {
-                Button(action: {
-                    showingHistory.toggle()
-                }) {
-                    
-                    Image(systemName: "list.bullet")
-                        .font(.title2)
-                        .foregroundColor(.white)
-                        .padding()
-                }
-                .sheet(isPresented: $showingHistory) {
-                    HistoryView(notification: notification)
-                        .listStyle(.plain)
-                        .padding(.horizontal, 0)
-                        .padding(.top, 50)
-                        .presentationDetents([.medium, .large])
-                }
+                Text("History").font(.title)
                 Spacer()
                 LoginBrowserButton {
                     showingWebView.toggle()
@@ -265,82 +222,14 @@ struct ContentView: View {
             }
             .padding()
             .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-            
-            Spacer()
-            if isDownloaded {
-                VStack(spacing: 10){
-                    Image(systemName: "checkmark.rectangle.stack.fill")
-                        .imageScale(.large)
-                        .foregroundStyle(.white)
-                    Text("Dowbloaded")
-                }
-            }
-            else if lastRequestResultedInError {
-                VStack(spacing: 10){
-                    Image(systemName: "globe")
-                        .imageScale(.large)
-                        .foregroundStyle(.white)
-                    Text(lastError != nil ? "Network error: \(lastError!.localizedDescription)" : "Network error")
-                }
-            } else {
-                Text("Reel URL is \(isUrlValid ? "valid" : "invalid")")
-            }
-            Spacer()
+            HistoryView(notification: notification)
+                .listStyle(.plain)
+                .padding(.horizontal, 0)
         }
-        .onChange(of: activity.isDownloaded) {
-            if activity.isDownloaded {
-                
-            }
-        }
-        .onChange(of: scenePhase) {
-            
-            notification.currentNotification?.dismiss()
-            guard let _url = UIPasteboard.general.string else { return }
-            withAnimation(.linear(duration: 0.15)){
-                isDownloaded = false
-                url = _url
-                isUrlValid = isValidInstagramReelURL(url: _url)
-            }
-            guard scenePhase == .active else { return }
-            guard isUrlValid else { return }
-            notification.present(type: .loading)
-            activity.launch()
-
-            downloadVideoAndSaveToPhotos()
-        }
-        .onChange(of: isDownloaded) {
-            if isDownloaded {
-                notification.present(type: .success)
-                activity.end()
-            }
-        }
-        .onChange(of: isError) {
-            withAnimation(.linear(duration: 0.15)){
-                isDownloading = false
-                
-                if isError {
-                    notification.present(type: .error)
-                    activity.end()
-                    isError = false
-                    isDownloaded = false
-                    lastRequestResultedInError = true
-                }
-            }
-        }
-        .onAppear{
+        .background(.bg)
+        .onAppear {
             notification.setWindowScene()
-            
-//            guard let cookies = HTTPCookieStorage.shared.cookies else {
-//                return
-//            }
-//            
-//            let nice = 9
-//            
-//            let cookieHeader = cookies.map { "\($0.name)=\($0.value)" }.joined(separator: "; ")
-//            request.setValue(cookieHeader, forHTTPHeaderField: "Cookie")
         }
-        .containerRelativeFrame([.horizontal, .vertical])
-        .background(isDownloaded ? .green : isUrlValid && !lastRequestResultedInError ? .blue : .red)
     }
 }
 
