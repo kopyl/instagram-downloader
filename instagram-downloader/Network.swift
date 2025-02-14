@@ -208,7 +208,6 @@ func getDownloadURL(reelURL: String) async throws -> _URL? {
 
     let response = try await makeRequest(strUrl: videoApiURL, videoCode: videoCode)
     var itemURL = try getBiggestVideoOrImageURL(from: response)
-//    throw Errors.URLOBjectInvalid
     
     itemURL.initReelURL = reelURL
     
