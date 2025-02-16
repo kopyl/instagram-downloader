@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		483ED7002D625743003DB0E5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483ED6FF2D625743003DB0E5 /* Utils.swift */; };
+		483ED7012D625743003DB0E5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483ED6FF2D625743003DB0E5 /* Utils.swift */; };
+		483ED7042D62578E003DB0E5 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483ED7032D62578E003DB0E5 /* Buttons.swift */; };
+		483ED7062D6257F8003DB0E5 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483ED7032D62578E003DB0E5 /* Buttons.swift */; };
 		4848925F2D59EDA60033182F /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4848925E2D59EDA60033182F /* WebView.swift */; };
 		484892642D5A061F0033182F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484892632D5A061F0033182F /* Constants.swift */; };
 		484892652D5A061F0033182F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484892632D5A061F0033182F /* Constants.swift */; };
@@ -14,8 +18,8 @@
 		488699EF2D3C99B2006DF44A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488699EE2D3C99B2006DF44A /* ContentView.swift */; };
 		488699F12D3C99B4006DF44A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 488699F02D3C99B4006DF44A /* Assets.xcassets */; };
 		488699F42D3C99B4006DF44A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 488699F32D3C99B4006DF44A /* Preview Assets.xcassets */; };
-		488699FC2D3CAAA5006DF44A /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 488699FB2D3CAAA5006DF44A /* AlertKit */; };
-		488699FF2D3CB5F5006DF44A /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 488699FE2D3CB5F5006DF44A /* AlertKit */; };
+		489A35702D625975001CD501 /* General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483ED6FC2D6256E1003DB0E5 /* General.swift */; };
+		489A35732D6259CD001CD501 /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 489A35722D6259CD001CD501 /* AlertKit */; };
 		48CA8A9C2D58DA7F005CD16F /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CA8A9B2D58DA7F005CD16F /* Data.swift */; };
 		48CA8A9D2D58DCEF005CD16F /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CA8A9B2D58DA7F005CD16F /* Data.swift */; };
 		48CA8A9F2D58E9CA005CD16F /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CA8A9E2D58E9CA005CD16F /* Media.swift */; };
@@ -54,6 +58,9 @@
 /* Begin PBXFileReference section */
 		48390C862D4FB7BB00852829 /* instagram-downloader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "instagram-downloader.entitlements"; sourceTree = "<group>"; };
 		48390C872D4FB7FA00852829 /* instagram-downloader-share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "instagram-downloader-share.entitlements"; sourceTree = "<group>"; };
+		483ED6FC2D6256E1003DB0E5 /* General.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = General.swift; sourceTree = "<group>"; };
+		483ED6FF2D625743003DB0E5 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		483ED7032D62578E003DB0E5 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		4848925E2D59EDA60033182F /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		484892632D5A061F0033182F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		488699E92D3C99B2006DF44A /* instagram-downloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "instagram-downloader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,8 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				488699FF2D3CB5F5006DF44A /* AlertKit in Frameworks */,
-				488699FC2D3CAAA5006DF44A /* AlertKit in Frameworks */,
+				489A35732D6259CD001CD501 /* AlertKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,9 +96,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		483ED7022D625772003DB0E5 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		488699E02D3C99B2006DF44A = {
 			isa = PBXGroup;
 			children = (
+				483ED6FC2D6256E1003DB0E5 /* General.swift */,
+				483ED7032D62578E003DB0E5 /* Buttons.swift */,
+				483ED7022D625772003DB0E5 /* UI */,
+				483ED6FF2D625743003DB0E5 /* Utils.swift */,
 				484892632D5A061F0033182F /* Constants.swift */,
 				48CA8A9E2D58E9CA005CD16F /* Media.swift */,
 				48CA8A9B2D58DA7F005CD16F /* Data.swift */,
@@ -163,8 +180,7 @@
 			);
 			name = "instagram-downloader";
 			packageProductDependencies = (
-				488699FB2D3CAAA5006DF44A /* AlertKit */,
-				488699FE2D3CB5F5006DF44A /* AlertKit */,
+				489A35722D6259CD001CD501 /* AlertKit */,
 			);
 			productName = "instagram-downloader";
 			productReference = 488699E92D3C99B2006DF44A /* instagram-downloader.app */;
@@ -215,7 +231,7 @@
 			);
 			mainGroup = 488699E02D3C99B2006DF44A;
 			packageReferences = (
-				488699FD2D3CB5F5006DF44A /* XCRemoteSwiftPackageReference "AlertKit" */,
+				489A35712D6259CD001CD501 /* XCRemoteSwiftPackageReference "AlertKit" */,
 			);
 			productRefGroup = 488699EA2D3C99B2006DF44A /* Products */;
 			projectDirPath = "";
@@ -252,9 +268,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				48E39EE12D3FFF14000341CD /* Activity.swift in Sources */,
+				489A35702D625975001CD501 /* General.swift in Sources */,
 				48CA8A9C2D58DA7F005CD16F /* Data.swift in Sources */,
+				483ED7042D62578E003DB0E5 /* Buttons.swift in Sources */,
 				48CA8A9F2D58E9CA005CD16F /* Media.swift in Sources */,
 				48D1B1982D3F2ED10040569E /* Network.swift in Sources */,
+				483ED7002D625743003DB0E5 /* Utils.swift in Sources */,
 				488699EF2D3C99B2006DF44A /* ContentView.swift in Sources */,
 				488699ED2D3C99B2006DF44A /* instagram_downloaderApp.swift in Sources */,
 				4848925F2D59EDA60033182F /* WebView.swift in Sources */,
@@ -269,8 +288,10 @@
 				48D1B1A02D3FB6D50040569E /* ShareViewController.swift in Sources */,
 				48CA8A9D2D58DCEF005CD16F /* Data.swift in Sources */,
 				48CA8AA02D58E9CA005CD16F /* Media.swift in Sources */,
+				483ED7012D625743003DB0E5 /* Utils.swift in Sources */,
 				48E39F052D40312C000341CD /* Network.swift in Sources */,
 				484892652D5A061F0033182F /* Constants.swift in Sources */,
+				483ED7062D6257F8003DB0E5 /* Buttons.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,7 +588,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		488699FD2D3CB5F5006DF44A /* XCRemoteSwiftPackageReference "AlertKit" */ = {
+		489A35712D6259CD001CD501 /* XCRemoteSwiftPackageReference "AlertKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sparrowcode/AlertKit.git";
 			requirement = {
@@ -578,13 +599,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		488699FB2D3CAAA5006DF44A /* AlertKit */ = {
+		489A35722D6259CD001CD501 /* AlertKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = AlertKit;
-		};
-		488699FE2D3CB5F5006DF44A /* AlertKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 488699FD2D3CB5F5006DF44A /* XCRemoteSwiftPackageReference "AlertKit" */;
+			package = 489A35712D6259CD001CD501 /* XCRemoteSwiftPackageReference "AlertKit" */;
 			productName = AlertKit;
 		};
 /* End XCSwiftPackageProductDependency section */
