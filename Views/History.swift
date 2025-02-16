@@ -24,7 +24,8 @@ struct HistoryView: View {
                     WebView(url: URL(string: "https://instagram.com")!)
                 }
             }
-            .padding()
+            .padding(.trailing, 2)
+            .padding(.leading, 18)
             .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
             VStack {
                 if savedReelUrls.isEmpty {
@@ -33,56 +34,58 @@ struct HistoryView: View {
                         .font(.system(size: 14))
                     Spacer()
                 }
-                List {
-                    ForEach(savedReelUrls, id: \.self) { (reelUrl: ReelUrl) in
-                        HStack(spacing: 15) {
-                            let preview = Thumbnail(reelUrl: reelUrl)
-                            preview
-                            HStack {
-                                HStack(spacing: 12) {
-                                    Icon(imageName: preview.name, font: .system(size: 12))
-                                    Text(formattedDate(reelUrl.dateSaved))
+                else {
+                    List {
+                        ForEach(savedReelUrls, id: \.self) { (reelUrl: ReelUrl) in
+                            HStack(spacing: 15) {
+                                let preview = Thumbnail(reelUrl: reelUrl)
+                                preview
+                                HStack {
+                                    HStack(spacing: 12) {
+                                        Icon(imageName: preview.name, font: .system(size: 12))
+                                        Text(formattedDate(reelUrl.dateSaved))
+                                    }
+                                    Spacer()
+                                    Image(systemName: "arrow.right")
+                                        .font(.caption)
+                                        .opacity(0.6)
                                 }
-                                Spacer()
-                                Image(systemName: "arrow.right")
-                                    .font(.caption)
-                                    .opacity(0.6)
                             }
-                        }
-                        .frame(height: 70)
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            openURL(URL(string: reelUrl.url)!)
-                        }
-                        .contextMenu {
-                            Button {
+                            .frame(height: 70)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
                                 openURL(URL(string: reelUrl.url)!)
-                            } label: {
-                                Text("Go to video")
-                                Image(systemName: "arrow.right")
                             }
-                            CopyButton(text: "Copy link", reelUrl: reelUrl, notification: notification)
-                        } preview: {
-                            if let image = reelUrl.thumbnail {
-                                Image(uiImage: image).resizable()
+                            .contextMenu {
+                                Button {
+                                    openURL(URL(string: reelUrl.url)!)
+                                } label: {
+                                    Text("Go to video")
+                                    Image(systemName: "arrow.right")
+                                }
+                                CopyButton(text: "Copy link", reelUrl: reelUrl, notification: notification)
+                            } preview: {
+                                if let image = reelUrl.thumbnail {
+                                    Image(uiImage: image).resizable()
+                                }
+                            }
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(.init(top: 0, leading: 20, bottom: 5, trailing: 20))
+                            .swipeActions(edge: .trailing) {
+                                CopyButton(text: nil, reelUrl: reelUrl, notification: notification)
                             }
                         }
-                        .listRowSeparator(.hidden)
-                        .listRowInsets(.init(top: 0, leading: 20, bottom: 5, trailing: 20))
-                        .swipeActions(edge: .trailing) {
-                            CopyButton(text: nil, reelUrl: reelUrl, notification: notification)
-                        }
+                        .listRowBackground(Color.appBg)
                     }
-                    .listRowBackground(Color.appBg)
                 }
             }
             .listStyle(.plain)
             .padding(.horizontal, 0)
         }
-        .padding(.horizontal, 18)
         .background(.appBg)
         .onAppear {
             notification.setWindowScene()
         }
+        .navigationBarBackButtonHidden()
     }
 }

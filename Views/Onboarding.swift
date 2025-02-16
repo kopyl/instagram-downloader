@@ -208,7 +208,9 @@ struct OnboardingView: View {
                 hasUserLoggedInAtLeastOnce = true
                 path.append("Home")
             },
-            content: {}
+            content: {
+                WebView(url: URL(string: "https://instagram.com")!)
+            }
         )
     }
 }
