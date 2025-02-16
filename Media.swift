@@ -67,4 +67,6 @@ func downloadAndSaveMedia(reelURL: String) async throws {
     }
     
     try await saveMediaToHistory(downloadUrl: downloadUrl)
+    
+    try deleteAllTmpFiles()
 }

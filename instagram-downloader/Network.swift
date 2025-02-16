@@ -9,12 +9,12 @@ func convertStringToDictionary(_ text: String) throws -> [String: Any]? {
     return nil
 }
 
-func deleteAllTmpFiles(except: URL) throws {
+func deleteAllTmpFiles() throws {
     let tempDirectory = FileManager.default.temporaryDirectory
     
     let fileURLs = try FileManager.default.contentsOfDirectory(at: tempDirectory, includingPropertiesForKeys: nil)
     
-    for fileURL in fileURLs.filter({$0 != except}) {
+    for fileURL in fileURLs {
         try FileManager.default.removeItem(at: fileURL)
     }
 }
@@ -31,8 +31,6 @@ func downloadFile(from url: _URL) async throws -> URL? {
     }
     
     try FileManager.default.moveItem(at: tempFileURL, to: destinationURL)
-    
-    try deleteAllTmpFiles(except: destinationURL)
 
     return destinationURL
 }
