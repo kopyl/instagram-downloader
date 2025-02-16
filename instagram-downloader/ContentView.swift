@@ -1,7 +1,6 @@
 import SwiftUI
 import AlertKit
 import Photos
-import ActivityKit
 import SwiftData
 
 class Notification {
@@ -40,44 +39,6 @@ class Notification {
             currentNotification = AlertAppleMusic17View(title: title ?? "Error occured", icon: .error)
             currentNotification?.haptic = .error
             currentNotification?.present(on: scene)
-        }
-    }
-}
-
-class ActivityManager {
-    let attributes = DownloadProgressAttributes()
-    var isDownloading = false
-    var isDownloaded = false
-    
-    var preState = DownloadProgressAttributes.ContentState(isDownloading: false, isDownloaded: false)
-    
-    var activity: Activity<DownloadProgressAttributes>?
-
-    func getState(isDownloaded: Bool = false) -> ActivityContent<DownloadProgressAttributes.ContentState>? {
-        let preState = DownloadProgressAttributes.ContentState(isDownloading: true, isDownloaded: isDownloaded)
-        return ActivityContent<DownloadProgressAttributes.ContentState>(state: preState,
-                                                                            staleDate: nil)
-    }
-
-    func launch() {
-        guard let state = getState() else { return }
-        
-        do {
-            activity = try Activity<DownloadProgressAttributes>.request(attributes: attributes, content: state, pushType: nil)
-        }
-        catch let error {
-            print(error)
-        }
-    }
-    
-    func end() {
-        guard let stateFinishing = getState(isDownloaded: true) else { return }
-
-        guard let a = activity else { return }
-        Task {
-            await a.update(stateFinishing)
-            try await Task.sleep(for: .seconds(2))
-            await a.end(stateFinishing, dismissalPolicy: .immediate)
         }
     }
 }
@@ -226,7 +187,6 @@ struct ContentView: View {
     @Environment(\.modelContext) private var store
     
     private var notification = Notification()
-    private var activity = ActivityManager()
     
     var body: some View {
         VStack {

@@ -24,13 +24,6 @@
 		48D1B1A02D3FB6D50040569E /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1B19F2D3FB6D50040569E /* ShareViewController.swift */; };
 		48D1B1A72D3FB6D50040569E /* instagram-downloader-share.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 48D1B19D2D3FB6D50040569E /* instagram-downloader-share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		48E39EE12D3FFF14000341CD /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E39EE02D3FFF14000341CD /* Activity.swift */; };
-		48E39EE92D400133000341CD /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48E39EE82D400133000341CD /* WidgetKit.framework */; };
-		48E39EEB2D400133000341CD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48E39EEA2D400133000341CD /* SwiftUI.framework */; };
-		48E39EEE2D400133000341CD /* instagram_downloader_widgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E39EED2D400133000341CD /* instagram_downloader_widgetBundle.swift */; };
-		48E39EF02D400133000341CD /* instagram_downloader_widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E39EEF2D400133000341CD /* instagram_downloader_widget.swift */; };
-		48E39EF22D400135000341CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48E39EF12D400135000341CD /* Assets.xcassets */; };
-		48E39EF62D400135000341CD /* instagram-downloader-widgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 48E39EE62D400133000341CD /* instagram-downloader-widgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		48E39EFA2D400238000341CD /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E39EE02D3FFF14000341CD /* Activity.swift */; };
 		48E39F052D40312C000341CD /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1B1972D3F2ED10040569E /* Network.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,13 +35,6 @@
 			remoteGlobalIDString = 48D1B19C2D3FB6D50040569E;
 			remoteInfo = "instagram-downloader-share";
 		};
-		48E39EF42D400135000341CD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 488699E12D3C99B2006DF44A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 48E39EE52D400133000341CD;
-			remoteInfo = "instagram-downloader-widgetExtension";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,7 +44,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				48E39EF62D400135000341CD /* instagram-downloader-widgetExtension.appex in Embed Foundation Extensions */,
 				48D1B1A72D3FB6D50040569E /* instagram-downloader-share.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -69,7 +54,6 @@
 /* Begin PBXFileReference section */
 		48390C862D4FB7BB00852829 /* instagram-downloader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "instagram-downloader.entitlements"; sourceTree = "<group>"; };
 		48390C872D4FB7FA00852829 /* instagram-downloader-share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "instagram-downloader-share.entitlements"; sourceTree = "<group>"; };
-		48390C882D4FBB7700852829 /* instagram-downloader-widgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "instagram-downloader-widgetExtension.entitlements"; sourceTree = "<group>"; };
 		4848925E2D59EDA60033182F /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		484892632D5A061F0033182F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		488699E92D3C99B2006DF44A /* instagram-downloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "instagram-downloader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,13 +68,7 @@
 		48D1B19D2D3FB6D50040569E /* instagram-downloader-share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "instagram-downloader-share.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		48D1B19F2D3FB6D50040569E /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		48E39EE02D3FFF14000341CD /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
-		48E39EE62D400133000341CD /* instagram-downloader-widgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "instagram-downloader-widgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		48E39EE82D400133000341CD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		48E39EEA2D400133000341CD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		48E39EED2D400133000341CD /* instagram_downloader_widgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = instagram_downloader_widgetBundle.swift; sourceTree = "<group>"; };
-		48E39EEF2D400133000341CD /* instagram_downloader_widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = instagram_downloader_widget.swift; sourceTree = "<group>"; };
-		48E39EF12D400135000341CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		48E39EF32D400135000341CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,15 +88,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		48E39EE32D400133000341CD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				48E39EEB2D400133000341CD /* SwiftUI.framework in Frameworks */,
-				48E39EE92D400133000341CD /* WidgetKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -130,7 +99,6 @@
 				48CA8A9B2D58DA7F005CD16F /* Data.swift */,
 				488699EB2D3C99B2006DF44A /* instagram-downloader */,
 				48D1B19E2D3FB6D50040569E /* instagram-downloader-share */,
-				48E39EEC2D400133000341CD /* instagram-downloader-widget */,
 				48E39EE72D400133000341CD /* Frameworks */,
 				488699EA2D3C99B2006DF44A /* Products */,
 			);
@@ -141,7 +109,6 @@
 			children = (
 				488699E92D3C99B2006DF44A /* instagram-downloader.app */,
 				48D1B19D2D3FB6D50040569E /* instagram-downloader-share.appex */,
-				48E39EE62D400133000341CD /* instagram-downloader-widgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -182,22 +149,9 @@
 		48E39EE72D400133000341CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				48E39EE82D400133000341CD /* WidgetKit.framework */,
 				48E39EEA2D400133000341CD /* SwiftUI.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		48E39EEC2D400133000341CD /* instagram-downloader-widget */ = {
-			isa = PBXGroup;
-			children = (
-				48390C882D4FBB7700852829 /* instagram-downloader-widgetExtension.entitlements */,
-				48E39EED2D400133000341CD /* instagram_downloader_widgetBundle.swift */,
-				48E39EEF2D400133000341CD /* instagram_downloader_widget.swift */,
-				48E39EF12D400135000341CD /* Assets.xcassets */,
-				48E39EF32D400135000341CD /* Info.plist */,
-			);
-			path = "instagram-downloader-widget";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,7 +170,6 @@
 			);
 			dependencies = (
 				48D1B1A62D3FB6D50040569E /* PBXTargetDependency */,
-				48E39EF52D400135000341CD /* PBXTargetDependency */,
 			);
 			name = "instagram-downloader";
 			packageProductDependencies = (
@@ -244,23 +197,6 @@
 			productReference = 48D1B19D2D3FB6D50040569E /* instagram-downloader-share.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		48E39EE52D400133000341CD /* instagram-downloader-widgetExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 48E39EF72D400135000341CD /* Build configuration list for PBXNativeTarget "instagram-downloader-widgetExtension" */;
-			buildPhases = (
-				48E39EE22D400133000341CD /* Sources */,
-				48E39EE32D400133000341CD /* Frameworks */,
-				48E39EE42D400133000341CD /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "instagram-downloader-widgetExtension";
-			productName = "instagram-downloader-widgetExtension";
-			productReference = 48E39EE62D400133000341CD /* instagram-downloader-widgetExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -275,9 +211,6 @@
 						CreatedOnToolsVersion = 15.2;
 					};
 					48D1B19C2D3FB6D50040569E = {
-						CreatedOnToolsVersion = 15.2;
-					};
-					48E39EE52D400133000341CD = {
 						CreatedOnToolsVersion = 15.2;
 					};
 				};
@@ -300,7 +233,6 @@
 			targets = (
 				488699E82D3C99B2006DF44A /* instagram-downloader */,
 				48D1B19C2D3FB6D50040569E /* instagram-downloader-share */,
-				48E39EE52D400133000341CD /* instagram-downloader-widgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -319,14 +251,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		48E39EE42D400133000341CD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				48E39EF22D400135000341CD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,16 +284,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		48E39EE22D400133000341CD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				48E39EFA2D400238000341CD /* Activity.swift in Sources */,
-				48E39EEE2D400133000341CD /* instagram_downloader_widgetBundle.swift in Sources */,
-				48E39EF02D400133000341CD /* instagram_downloader_widget.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -377,11 +291,6 @@
 			isa = PBXTargetDependency;
 			target = 48D1B19C2D3FB6D50040569E /* instagram-downloader-share */;
 			targetProxy = 48D1B1A52D3FB6D50040569E /* PBXContainerItemProxy */;
-		};
-		48E39EF52D400135000341CD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 48E39EE52D400133000341CD /* instagram-downloader-widgetExtension */;
-			targetProxy = 48E39EF42D400135000341CD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -635,64 +544,6 @@
 			};
 			name = Release;
 		};
-		48E39EF82D400135000341CD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APP_BUILD = 2;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = "instagram-downloader-widget/instagram-downloader-widgetExtension.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$(APP_VERSION)";
-				DEVELOPMENT_TEAM = 9QNMAN8CT6;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "instagram-downloader-widget/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "instagram-downloader-widget";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = "$(APP_VERSION)";
-				PRODUCT_BUNDLE_IDENTIFIER = "kopyl.instagram-downloader.instagram-downloader-widget";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		48E39EF92D400135000341CD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APP_BUILD = 2;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = "instagram-downloader-widget/instagram-downloader-widgetExtension.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "$(APP_VERSION)";
-				DEVELOPMENT_TEAM = 9QNMAN8CT6;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "instagram-downloader-widget/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "instagram-downloader-widget";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = "$(APP_VERSION)";
-				PRODUCT_BUNDLE_IDENTIFIER = "kopyl.instagram-downloader.instagram-downloader-widget";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -719,15 +570,6 @@
 			buildConfigurations = (
 				48D1B1A92D3FB6D50040569E /* Debug */,
 				48D1B1AA2D3FB6D50040569E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		48E39EF72D400135000341CD /* Build configuration list for PBXNativeTarget "instagram-downloader-widgetExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				48E39EF82D400135000341CD /* Debug */,
-				48E39EF92D400135000341CD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
