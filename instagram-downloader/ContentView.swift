@@ -1,95 +1,39 @@
 import SwiftUI
-import Photos
-import SwiftData
-
-struct HistoryView: View {
-    @Environment(\.modelContext) private var store
-    @Environment(\.openURL) var openURL
-    @State private var showingWebView  = false
-    @Query(sort: \ReelUrl.dateSaved, order: .reverse) private var savedReelUrls: [ReelUrl]
-
-    private var notification = Notification()
-    
-    var body: some View {
-        VStack {
-            HStack {
-                Text("History").font(.title)
-                Spacer()
-                LoginBrowserButton {
-                    showingWebView.toggle()
-                }
-                .sheet(isPresented: $showingWebView) {
-                    WebView(url: URL(string: "https://instagram.com")!)
-                }
-            }
-            .padding()
-            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
-            VStack {
-                if savedReelUrls.isEmpty {
-                    Spacer()
-                    Text("History of downloaded media will appear here")
-                        .font(.system(size: 14))
-                    Spacer()
-                }
-                List {
-                    ForEach(savedReelUrls, id: \.self) { (reelUrl: ReelUrl) in
-                        HStack(spacing: 15) {
-                            let preview = Thumbnail(reelUrl: reelUrl)
-                            preview
-                            HStack {
-                                HStack(spacing: 12) {
-                                    Icon(imageName: preview.name, font: .system(size: 12))
-                                    Text(formattedDate(reelUrl.dateSaved))
-                                }
-                                Spacer()
-                                Image(systemName: "arrow.right")
-                                    .font(.caption)
-                                    .opacity(0.6)
-                            }
-                        }
-                        .frame(height: 70)
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            openURL(URL(string: reelUrl.url)!)
-                        }
-                        .contextMenu {
-                            Button {
-                                openURL(URL(string: reelUrl.url)!)
-                            } label: {
-                                Text("Go to video")
-                                Image(systemName: "arrow.right")
-                            }
-                            CopyButton(text: "Copy link", reelUrl: reelUrl, notification: notification)
-                        } preview: {
-                            if let image = reelUrl.thumbnail {
-                                Image(uiImage: image).resizable()
-                            }
-                        }
-                        .listRowSeparator(.hidden)
-                        .listRowInsets(.init(top: 0, leading: 20, bottom: 5, trailing: 20))
-                        .swipeActions(edge: .trailing) {
-                            CopyButton(text: nil, reelUrl: reelUrl, notification: notification)
-                        }
-                    }
-                    .listRowBackground(Color.bg)
-                }
-            }
-            .listStyle(.plain)
-            .padding(.horizontal, 0)
-        }
-        .background(.bg)
-        .onAppear {
-            notification.setWindowScene()
-        }
-    }
-}
 
 struct ContentView: View {
+    @AppStorage(
+        Names.hasUserLoggedInAtLeastOnce,
+        store: UserDefaults(suiteName: Names.APPGROUP)
+    ) private var hasUserLoggedInAtLeastOnce: Bool = false
+    
+    @State private var path = NavigationPath()
+
     var body: some View {
-        HistoryView()
+        NavigationStack(path: $path) {
+            OnboardingView(
+                hasUserLoggedInAtLeastOnce: $hasUserLoggedInAtLeastOnce,
+                path: $path
+            )
+            .onAppear {
+                if hasUserLoggedInAtLeastOnce {
+                    path.append("Home")
+                }
+            }
+            .navigationDestination(for: String.self) { value in
+                if value == "Home" {
+                    HistoryView(
+                        hasUserLoggedInAtLeastOnce: $hasUserLoggedInAtLeastOnce,
+                        path: $path
+                    )
+                }
+            }
+        }
     }
 }
 
 #Preview {
     ContentView()
 }
+
+
+
