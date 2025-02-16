@@ -68,7 +68,6 @@
 		48D1B19D2D3FB6D50040569E /* instagram-downloader-share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "instagram-downloader-share.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		48D1B19F2D3FB6D50040569E /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		48E39EE02D3FFF14000341CD /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
-		48E39EEA2D400133000341CD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +98,6 @@
 				48CA8A9B2D58DA7F005CD16F /* Data.swift */,
 				488699EB2D3C99B2006DF44A /* instagram-downloader */,
 				48D1B19E2D3FB6D50040569E /* instagram-downloader-share */,
-				48E39EE72D400133000341CD /* Frameworks */,
 				488699EA2D3C99B2006DF44A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -144,14 +142,6 @@
 				48D1B19F2D3FB6D50040569E /* ShareViewController.swift */,
 			);
 			path = "instagram-downloader-share";
-			sourceTree = "<group>";
-		};
-		48E39EE72D400133000341CD /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				48E39EEA2D400133000341CD /* SwiftUI.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
