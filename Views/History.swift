@@ -26,7 +26,7 @@ struct HistoryView: View {
             }
             .padding(.trailing, 2)
             .padding(.leading, 18)
-            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
             VStack {
                 if savedReelUrls.isEmpty {
                     Spacer()
