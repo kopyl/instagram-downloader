@@ -63,6 +63,15 @@ struct HistoryView: View {
                                     WText("Go to video")
                                     Image(systemName: "arrow.right")
                                 }
+                                Button {
+                                    reelUrl.thumbnail?.pngData()
+                                    guard let thumbnail = reelUrl.thumbnail else { return }
+                                    UIImageWriteToSavedPhotosAlbum(thumbnail, nil, nil, nil)
+                                    notification.present(type: .success)
+                                } label: {
+                                    WText("Save preview")
+                                    Image(systemName: "photo.fill")
+                                }
                                 CopyButton(text: "Copy link", reelUrl: reelUrl, notification: notification)
                             } preview: {
                                 if let image = reelUrl.thumbnail {
