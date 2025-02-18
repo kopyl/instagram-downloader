@@ -134,9 +134,12 @@ class Step: ObservableObject {
 
 struct OnboardingView: View {
     @State var isSheetVisible: Bool = false
+    @State var isLoggingIn = false
     @Binding var hasUserLoggedInAtLeastOnce: Bool
     @Binding var path: NavigationPath
     @StateObject private var step = Step()
+    
+    public var notification = Notification()
     
     var body: some View {
         VStack {
@@ -167,6 +170,7 @@ struct OnboardingView: View {
             Button() {
                 if step.isLast {
                     isSheetVisible = true
+                    notification.present(type: .loading, title: "Veifying your account")
                 }
                 step.increase()
             } label: {
@@ -188,6 +192,8 @@ struct OnboardingView: View {
                     .font(.system(size: 14))
             }
         }
+        .opacity(isLoggingIn ? 0.1 : 1)
+        .animation(.linear(duration: 1), value: isLoggingIn)
         .padding(.horizontal, 18)
         .background(.appBg)
         .contentShape(Rectangle())
@@ -205,12 +211,30 @@ struct OnboardingView: View {
         .sheet(
             isPresented: $isSheetVisible,
             onDismiss: {
-                hasUserLoggedInAtLeastOnce = true
-                path.append("Home")
+                Task() {
+                    do {
+                        let response = try await makeRequest(strUrl: "https://www.instagram.com/api/v1/friendships/pending/")
+                        try JSONSerialization.jsonObject(with: response, options: [])
+                        notification.dismiss()
+                        isLoggingIn = false
+                        hasUserLoggedInAtLeastOnce = true
+                        path.append("Home")
+                    }
+                    catch {
+                        notification.present(type: .error, title: "Login failed. Please login.")
+                        isLoggingIn = false
+                    }
+                }
             },
             content: {
                 WebView(url: URL(string: "https://instagram.com")!)
+                    .onAppear {
+                        isLoggingIn = true
+                    }
             }
         )
+        .onAppear {
+            notification.setWindowScene()
+        }
     }
 }

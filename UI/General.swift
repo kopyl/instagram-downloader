@@ -39,6 +39,10 @@ class Notification {
             currentNotification?.present(on: scene)
         }
     }
+    
+    func dismiss() {
+        currentNotification?.dismiss()
+    }
 }
 
 struct Icon: View {
