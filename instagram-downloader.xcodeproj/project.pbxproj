@@ -103,6 +103,8 @@
 		483ED7022D625772003DB0E5 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				483ED6FC2D6256E1003DB0E5 /* General.swift */,
+				483ED7032D62578E003DB0E5 /* Buttons.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -111,8 +113,6 @@
 			isa = PBXGroup;
 			children = (
 				489A35A82D626D8F001CD501 /* Views */,
-				483ED6FC2D6256E1003DB0E5 /* General.swift */,
-				483ED7032D62578E003DB0E5 /* Buttons.swift */,
 				483ED7022D625772003DB0E5 /* UI */,
 				483ED6FF2D625743003DB0E5 /* Utils.swift */,
 				484892632D5A061F0033182F /* Constants.swift */,
