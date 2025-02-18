@@ -82,8 +82,8 @@ struct HistoryView: View {
                         .swipeActions(edge: .trailing) {
                             CopyButton(text: nil, reelUrl: reelUrl, notification: notification)
                         }
+                        .listRowBackground(Color.appBg)
                     }
-                    .listRowBackground(Color.appBg)
                 }
             }
             .listStyle(.plain)
