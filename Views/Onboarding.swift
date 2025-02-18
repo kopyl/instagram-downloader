@@ -36,6 +36,18 @@ class UIViews {
 
 let borderRadius = 6.0
 
+func dragGesture(step: Step) -> some Gesture {
+    return DragGesture()
+        .onEnded { value in
+            let threshold: CGFloat = 50
+            if value.translation.width < -threshold {
+                step.increase()
+            } else if value.translation.width > threshold {
+                step.decrease()
+            }
+        }
+}
+
 struct StepperDotView: View {
     let idx: Int
     let isActive: Bool
@@ -198,17 +210,7 @@ struct OnboardingView: View {
         .padding(.horizontal, 18)
         .background(.appBg)
         .contentShape(Rectangle())
-        .gesture(
-            DragGesture()
-                .onEnded { value in
-                    let threshold: CGFloat = 50
-                    if value.translation.width < -threshold {
-                        step.increase()
-                    } else if value.translation.width > threshold {
-                        step.decrease()
-                    }
-                }
-        )
+        .gesture(dragGesture(step: step))
         .sheet(
             isPresented: $isSheetVisible,
             onDismiss: {
