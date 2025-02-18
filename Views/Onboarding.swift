@@ -133,7 +133,7 @@ class Step: ObservableObject {
 }
 
 struct OnboardingView: View {
-    @State var isSheetVisible: Bool = false
+    @State var isSheetVisible = false
     @State var isLoggingIn = false
     @Binding var hasUserLoggedInAtLeastOnce: Bool
     @Binding var path: NavigationPath
