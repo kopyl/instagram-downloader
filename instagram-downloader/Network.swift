@@ -90,7 +90,7 @@ var HEADERS: [String: String] = [
 
 func makeRequest(strUrl: String) async throws -> Data {
     guard let url = URL(string: strUrl) else {
-        throw NSError(domain: "Invalid URL", code: -1, userInfo: nil)
+        throw Errors.InvalidURL
     }
 
     var request = URLRequest(url: url)
@@ -121,6 +121,7 @@ func makeRequest(strUrl: String) async throws -> Data {
 }
 
 enum Errors: String, LocalizedError {
+    case InvalidURL
     case keyNotFoundError
     case itemVersionIsEmpty
     case invalidItemURL
