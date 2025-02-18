@@ -88,7 +88,7 @@ var HEADERS: [String: String] = [
     "X-Requested-With": "XMLHttpRequest",
 ]
 
-func makeRequest(strUrl: String, videoCode: String) async throws -> Data {
+func makeRequest(strUrl: String) async throws -> Data {
     guard let url = URL(string: strUrl) else {
         throw NSError(domain: "Invalid URL", code: -1, userInfo: nil)
     }
@@ -212,7 +212,7 @@ func getDownloadURL(reelURL: String) async throws -> _URL? {
     guard let videoID = videoCodeToVideoID(videoCode) else { return nil }
     let videoApiURL = videoIDToAPIURl(videoID)
 
-    let response = try await makeRequest(strUrl: videoApiURL, videoCode: videoCode)
+    let response = try await makeRequest(strUrl: videoApiURL)
     var itemURL = try getBiggestVideoOrImageURL(from: response)
     
     itemURL.initReelURL = reelURL
