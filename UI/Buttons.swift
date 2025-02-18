@@ -29,7 +29,7 @@ struct CopyButton: View {
             notification.present(type: .success, title: "URL copied")
         } label: {
             if let text {
-                Text(text)
+                WText(text)
             }
             Image(systemName: "document.on.document.fill")
         }

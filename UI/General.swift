@@ -83,3 +83,17 @@ struct Thumbnail: View {
         }
     }
 }
+
+/// Whte Text
+struct WText: View {
+    var text: String
+    
+    init(_ text: String) {
+        self.text = text
+    }
+    
+    var body: some View {
+        Text(text)
+            .foregroundStyle(.white)
+    }
+}

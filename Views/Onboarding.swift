@@ -29,8 +29,8 @@ class UIViews {
         static let logo = Image("Logotype")
     }
     class Texts {
-        static let restart = Text("Restart")
-        static let cta = Text("Save reels to Photos")
+        static let restart = WText("Restart")
+        static let cta = WText("Save reels to Photos")
     }
 }
 
@@ -42,6 +42,7 @@ struct StepperDotView: View {
     
     var body: some View {
         Rectangle()
+            .fill(.white)
             .frame(width: 6, height: 6)
             .cornerRadius(100)
             .opacity(isActive ? 1 : 0.3)
@@ -72,7 +73,7 @@ struct StepperView: View {
     var body: some View {
         VStack {
             HStack {
-                Text(info[stepper.index].description)
+                WText(info[stepper.index].description)
                     .padding(.vertical, 20)
                     .font(.system(size: 16))
                     .transition(
@@ -175,7 +176,7 @@ struct OnboardingView: View {
                 step.increase()
             } label: {
                 VStack {
-                    Text(info[step.index].ctaText)
+                    WText(info[step.index].ctaText)
                     .foregroundStyle(.white)
                     .padding(.vertical, 20)
                     .transition(

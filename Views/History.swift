@@ -15,7 +15,7 @@ struct HistoryView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("History").font(.title)
+                WText("History").font(.title)
                 Spacer()
                 LoginBrowserButton {
                     showingWebView.toggle()
@@ -30,7 +30,7 @@ struct HistoryView: View {
             VStack {
                 if savedReelUrls.isEmpty {
                     Spacer()
-                    Text("History of downloaded media will appear here")
+                    WText("History of downloaded media will appear here")
                         .font(.system(size: 14))
                     Spacer()
                 }
@@ -43,7 +43,7 @@ struct HistoryView: View {
                                 HStack {
                                     HStack(spacing: 12) {
                                         Icon(imageName: preview.name, font: .system(size: 12))
-                                        Text(formattedDate(reelUrl.dateSaved))
+                                        WText(formattedDate(reelUrl.dateSaved))
                                     }
                                     Spacer()
                                     Image(systemName: "arrow.right")
@@ -60,7 +60,7 @@ struct HistoryView: View {
                                 Button {
                                     openURL(URL(string: reelUrl.url)!)
                                 } label: {
-                                    Text("Go to video")
+                                    WText("Go to video")
                                     Image(systemName: "arrow.right")
                                 }
                                 CopyButton(text: "Copy link", reelUrl: reelUrl, notification: notification)
