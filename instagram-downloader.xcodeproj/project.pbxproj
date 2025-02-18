@@ -10,7 +10,6 @@
 		483ED7002D625743003DB0E5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483ED6FF2D625743003DB0E5 /* Utils.swift */; };
 		483ED7012D625743003DB0E5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483ED6FF2D625743003DB0E5 /* Utils.swift */; };
 		483ED7042D62578E003DB0E5 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483ED7032D62578E003DB0E5 /* Buttons.swift */; };
-		483ED7062D6257F8003DB0E5 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483ED7032D62578E003DB0E5 /* Buttons.swift */; };
 		4848925F2D59EDA60033182F /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4848925E2D59EDA60033182F /* WebView.swift */; };
 		484892642D5A061F0033182F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484892632D5A061F0033182F /* Constants.swift */; };
 		484892652D5A061F0033182F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484892632D5A061F0033182F /* Constants.swift */; };
@@ -307,7 +306,6 @@
 				483ED7012D625743003DB0E5 /* Utils.swift in Sources */,
 				48E39F052D40312C000341CD /* Network.swift in Sources */,
 				484892652D5A061F0033182F /* Constants.swift in Sources */,
-				483ED7062D6257F8003DB0E5 /* Buttons.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -26,6 +26,7 @@ struct CopyButton: View {
     var body: some View {
         Button {
             UIPasteboard.general.string = reelUrl.cleanURL()
+            notification.present(type: .success, title: "URL copied")
         } label: {
             if let text {
                 Text(text)
