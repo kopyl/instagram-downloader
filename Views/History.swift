@@ -36,53 +36,55 @@ struct HistoryView: View {
                 }
                 else {
                     List(savedReelUrls, id: \.self) { (reelUrl: ReelUrl) in
-                        HStack(spacing: 15) {
-                            let preview = Thumbnail(reelUrl: reelUrl)
-                            preview
-                            HStack {
-                                HStack(spacing: 12) {
-                                    Icon(imageName: preview.name, font: .system(size: 12))
-                                    WText(formattedDate(reelUrl.dateSaved))
+                        LazyVStack {
+                            HStack(spacing: 15) {
+                                let preview = Thumbnail(reelUrl: reelUrl)
+                                preview
+                                HStack {
+                                    HStack(spacing: 12) {
+                                        Icon(imageName: preview.name, font: .system(size: 12))
+                                        WText(formattedDate(reelUrl.dateSaved))
+                                    }
+                                    Spacer()
+                                    Image(systemName: "arrow.right")
+                                        .font(.caption)
+                                        .opacity(0.6)
                                 }
-                                Spacer()
-                                Image(systemName: "arrow.right")
-                                    .font(.caption)
-                                    .opacity(0.6)
                             }
-                        }
-                        .frame(height: 70)
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            openURL(URL(string: reelUrl.url)!)
-                        }
-                        .contextMenu {
-                            Button {
+                            .frame(height: 70)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
                                 openURL(URL(string: reelUrl.url)!)
-                            } label: {
-                                WText("Go to video")
-                                Image(systemName: "arrow.right")
                             }
-                            Button {
-                                reelUrl.thumbnail?.pngData()
-                                guard let thumbnail = reelUrl.thumbnail else { return }
-                                UIImageWriteToSavedPhotosAlbum(thumbnail, nil, nil, nil)
-                                notification.present(type: .success)
-                            } label: {
-                                WText("Save preview")
-                                Image(systemName: "photo.fill")
-                            }
-                            CopyButton(text: "Copy link", reelUrl: reelUrl, notification: notification)
-                        } preview: {
-                            if let image = reelUrl.thumbnail {
-                                Image(uiImage: image).resizable()
+                            .contextMenu {
+                                Button {
+                                    openURL(URL(string: reelUrl.url)!)
+                                } label: {
+                                    WText("Go to video")
+                                    Image(systemName: "arrow.right")
+                                }
+                                Button {
+                                    reelUrl.thumbnail?.pngData()
+                                    guard let thumbnail = reelUrl.thumbnail else { return }
+                                    UIImageWriteToSavedPhotosAlbum(thumbnail, nil, nil, nil)
+                                    notification.present(type: .success)
+                                } label: {
+                                    WText("Save preview")
+                                    Image(systemName: "photo.fill")
+                                }
+                                CopyButton(text: "Copy link", reelUrl: reelUrl, notification: notification)
+                            } preview: {
+                                if let image = reelUrl.thumbnail {
+                                    Image(uiImage: image).resizable()
+                                }
                             }
                         }
-                        .listRowSeparator(.hidden)
                         .listRowInsets(.init(top: 0, leading: 20, bottom: 5, trailing: 20))
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.appBg)
                         .swipeActions(edge: .trailing) {
                             CopyButton(text: nil, reelUrl: reelUrl, notification: notification)
                         }
-                        .listRowBackground(Color.appBg)
                     }
                 }
             }
