@@ -49,7 +49,7 @@ struct HistoryView: View {
     @Environment(\.openURL) var openURL
     @State private var showingWebView  = false
     @State private var isTutorialSheetOpen = false
-    @Query(sort: \ReelUrl.dateSaved, order: .reverse) private var savedReelUrls: [ReelUrl]
+    @Query(sort: \Reel.dateSaved, order: .reverse) private var savedReels: [Reel]
 
     public var notification = Notification()
     
@@ -70,19 +70,19 @@ struct HistoryView: View {
                 .padding(.leading, 18)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 VStack {
-                    if savedReelUrls.isEmpty {
+                    if savedReels.isEmpty {
                         EmptyHistoryView(isTutorialSheetOpen: $isTutorialSheetOpen)
                     }
                     else {
-                        List(savedReelUrls, id: \.self) { (reelUrl: ReelUrl) in
+                        List(savedReels, id: \.self) { (reel: Reel) in
                             LazyVStack {
                                 HStack(spacing: 15) {
-                                    let preview = Thumbnail(reelUrl: reelUrl)
+                                    let preview = Thumbnail(reel: reel)
                                     preview
                                     HStack {
                                         HStack(spacing: 12) {
                                             Icon(imageName: preview.name, font: .system(size: 12))
-                                            WText(formattedDate(reelUrl.dateSaved))
+                                            WText(formattedDate(reel.dateSaved))
                                         }
                                         Spacer()
                                         Image(systemName: "arrow.right")
@@ -93,27 +93,27 @@ struct HistoryView: View {
                                 .frame(height: 70)
                                 .contentShape(Rectangle())
                                 .onTapGesture {
-                                    openURL(URL(string: reelUrl.url)!)
+                                    openURL(URL(string: reel.url)!)
                                 }
                                 .contextMenu {
                                     Button {
-                                        openURL(URL(string: reelUrl.url)!)
+                                        openURL(URL(string: reel.url)!)
                                     } label: {
                                         WText("Go to video")
                                         Image(systemName: "arrow.right")
                                     }
                                     Button {
-                                        reelUrl.thumbnail?.pngData()
-                                        guard let thumbnail = reelUrl.thumbnail else { return }
+                                        reel.thumbnail?.pngData()
+                                        guard let thumbnail = reel.thumbnail else { return }
                                         UIImageWriteToSavedPhotosAlbum(thumbnail, nil, nil, nil)
                                         notification.present(type: .success)
                                     } label: {
                                         WText("Save preview")
                                         Image(systemName: "photo.fill")
                                     }
-                                    CopyButton(text: "Copy link", reelUrl: reelUrl, notification: notification)
+                                    CopyButton(text: "Copy link", reel: reel, notification: notification)
                                 } preview: {
-                                    if let image = reelUrl.thumbnail {
+                                    if let image = reel.thumbnail {
                                         Image(uiImage: image).resizable()
                                     }
                                 }
@@ -122,7 +122,7 @@ struct HistoryView: View {
                             .listRowSeparator(.hidden)
                             .listRowBackground(Color.appBg)
                             .swipeActions(edge: .trailing) {
-                                CopyButton(text: nil, reelUrl: reelUrl, notification: notification)
+                                CopyButton(text: nil, reel: reel, notification: notification)
                             }
                         }
                     }

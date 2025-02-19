@@ -62,10 +62,10 @@ struct Icon: View {
 }
 
 struct Thumbnail: View {
-    let reelUrl: ReelUrl
+    let reel: Reel
     
     var name: String {
-        switch reelUrl.type {
+        switch reel.type {
         case .video:
             return "video.fill"
         case .image:
@@ -74,7 +74,7 @@ struct Thumbnail: View {
     }
     
     var body: some View {
-        if let image = reelUrl.thumbnail {
+        if let image = reel.thumbnail {
             Image(uiImage: image).resizable().aspectRatio(contentMode: .fit).frame(width: 50, height: 50)
         }
          else {

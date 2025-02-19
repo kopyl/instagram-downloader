@@ -7,7 +7,7 @@ struct instagram_downloaderApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .modelContainer(for: [ReelUrl.self])
+                .modelContainer(for: [Reel.self])
         }
     }
 }

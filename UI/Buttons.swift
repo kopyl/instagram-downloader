@@ -20,12 +20,12 @@ struct LoginBrowserButton: View {
 
 struct CopyButton: View {
     let text: String?
-    let reelUrl: ReelUrl
+    let reel: Reel
     let notification: Notification
     
     var body: some View {
         Button {
-            UIPasteboard.general.string = reelUrl.cleanURL()
+            UIPasteboard.general.string = reel.cleanURL()
             notification.present(type: .success, title: "URL copied")
         } label: {
             if let text {

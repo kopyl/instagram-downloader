@@ -49,10 +49,10 @@ func saveMediaToPhotos(downloadUrl: _URL) async throws {
 }
 
 func saveMediaToHistory(downloadUrl: _URL) async throws {
-    let context = try ModelContext(.init(for: ReelUrl.self))
-    let reelUrl = ReelUrl(downloadUrl.initReelURL, type: downloadUrl.type)
-    reelUrl.thumbnail = downloadUrl.thumbnail
-    context.insert(reelUrl)
+    let context = try ModelContext(.init(for: Reel.self))
+    let reel = Reel(downloadUrl.initReelURL, type: downloadUrl.type)
+    reel.thumbnail = downloadUrl.thumbnail
+    context.insert(reel)
     try context.save()
 }
 

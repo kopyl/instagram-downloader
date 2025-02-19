@@ -2,7 +2,7 @@ import SwiftData
 import SwiftUI
 
 @Model
-class ReelUrl {
+class Reel {
     var url: String
     var type: URLTypes
     var dateSaved: Date
