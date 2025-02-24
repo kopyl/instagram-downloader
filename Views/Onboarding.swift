@@ -216,8 +216,8 @@ struct OnboardingView: View {
                 isPresented: $isInstagramLoginSheetVisible,
                 isLoggingIn: $isLoggingIn,
                 hasUserLoggedInAtLeastOnce: $hasUserLoggedInAtLeastOnce,
-                notification: notification,
-                path: $path
+                path: $path,
+                notification: notification
             )
         )
         .onAppear {

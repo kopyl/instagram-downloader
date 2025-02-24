@@ -4,8 +4,8 @@ struct InstagramLoginSheet: ViewModifier {
     @Binding var isPresented: Bool
     @Binding var isLoggingIn: Bool
     @Binding var hasUserLoggedInAtLeastOnce: Bool
-    var notification: AlertNotification? = nil
     var path: Binding<NavigationPath>? = nil
+    var notification: AlertNotification? = nil
     var onSuccess: () -> Void = {}
 
     func body(content: Content) -> some View {
