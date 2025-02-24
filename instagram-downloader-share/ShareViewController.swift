@@ -28,6 +28,9 @@ struct ShareView: View {
         VStack{
             if let lastError {
                 Text("Network error: \(lastError.localizedDescription)")
+                Button("Re-login") {
+                    isInstagramLoginSheetVisible = true
+                }
             }
             else {
                 Text("Downloading media")
@@ -66,7 +69,6 @@ struct ShareView: View {
         }
         catch let error {
             lastError = error
-            isInstagramLoginSheetVisible = true
         }
     }
 }
