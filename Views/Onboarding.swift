@@ -183,7 +183,7 @@ struct OnboardingView: View {
             Button() {
                 if step.isLast {
                     isInstagramLoginSheetVisible = true
-                    notification.present(type: .loading, title: "Veifying your account")
+                    notification.present(type: .loading, title: "Verifying your account")
                 }
                 step.increase()
             } label: {
