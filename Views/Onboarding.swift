@@ -146,7 +146,7 @@ class Step: ObservableObject {
 }
 
 struct OnboardingView: View {
-    @State var isSheetVisible = false
+    @State var isInstagramLoginSheetVisible = false
     @State var isLoggingIn = false
     @Binding var hasUserLoggedInAtLeastOnce: Bool
     @Binding var path: NavigationPath
@@ -182,7 +182,7 @@ struct OnboardingView: View {
                 .padding(.bottom, 60)
             Button() {
                 if step.isLast {
-                    isSheetVisible = true
+                    isInstagramLoginSheetVisible = true
                     notification.present(type: .loading, title: "Veifying your account")
                 }
                 step.increase()
@@ -212,7 +212,7 @@ struct OnboardingView: View {
         .contentShape(Rectangle())
         .gesture(dragGesture(step: step))
         .sheet(
-            isPresented: $isSheetVisible,
+            isPresented: $isInstagramLoginSheetVisible,
             onDismiss: {
                 Task() {
                     do {
