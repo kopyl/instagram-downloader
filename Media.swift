@@ -33,24 +33,35 @@ func downloadMedia(reelURL: String) async throws -> _URL? {
     return downloadUrl
 }
 
-func saveMediaToPhotos(downloadUrl: _URL) async throws {
+func saveMediaToPhotos(downloadUrl: _URL) async throws -> _URL {
+    var _downloadUrl = downloadUrl
+    
     guard let localFilePath = downloadUrl.localFilePath else {
         throw Errors.emptyLocalFileURL
     }
     
+    
     try await PHPhotoLibrary.shared().performChanges({
         switch downloadUrl.type {
         case .video:
-            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: localFilePath)
+            guard let request = PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: localFilePath) else { return }
+            let placeholder = request.placeholderForCreatedAsset
+            _downloadUrl.mediaIdentifierFromPhotosApp = placeholder?.localIdentifier
         case .image:
             PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: localFilePath)
         }
     })
+    
+    return _downloadUrl
 }
 
 func saveMediaToHistory(downloadUrl: _URL) async throws {
     let context = try ModelContext(.init(for: Reel.self))
-    let reel = Reel(downloadUrl.initReelURL, type: downloadUrl.type)
+    let reel = Reel(
+        downloadUrl.initReelURL,
+        type: downloadUrl.type,
+        mediaIdentifierFromPhotosApp: downloadUrl.mediaIdentifierFromPhotosApp
+    )
     reel.thumbnail = downloadUrl.thumbnail
     context.insert(reel)
     try context.save()
@@ -60,7 +71,7 @@ func downloadAndSaveMedia(reelURL: String) async throws {
     guard var downloadUrl = try await downloadMedia(reelURL: reelURL) else {
         throw Errors.noDownloadURL
     }
-    try await saveMediaToPhotos(downloadUrl: downloadUrl)
+    downloadUrl = try await saveMediaToPhotos(downloadUrl: downloadUrl)
     
     if let thumbnailImage = try generateThumbnailFromItem(downloadUrl: downloadUrl) {
         downloadUrl.thumbnail = thumbnailImage

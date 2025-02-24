@@ -4,13 +4,15 @@ import SwiftUI
 @Model
 class Reel {
     var url: String
+    var mediaIdentifierFromPhotosApp: String?
     var type: URLTypes
     var dateSaved: Date
     
     @Attribute(.externalStorage) var thumbnailData: Data?
 
-    init(_ url: String, type: URLTypes) {
+    init(_ url: String, type: URLTypes, mediaIdentifierFromPhotosApp: String? = nil) {
         self.url = url
+        self.mediaIdentifierFromPhotosApp = mediaIdentifierFromPhotosApp
         self.type = type
         self.dateSaved = Date()
     }

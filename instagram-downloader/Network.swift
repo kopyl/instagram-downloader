@@ -203,6 +203,7 @@ enum URLTypes: String, Codable {
 struct _URL {
     let type: URLTypes
     let url: URL
+    var mediaIdentifierFromPhotosApp: String? = nil
     var localFilePath = URL(string: "")
     var initReelURL = ""
     var thumbnail: UIImage?

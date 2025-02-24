@@ -1,6 +1,8 @@
 import Foundation
 import SwiftUI
 import SwiftData
+import Photos
+import AVKit
 
 struct EmptyHistoryView: View {
     @Binding var isTutorialSheetOpen: Bool
@@ -38,6 +40,58 @@ struct EmptyHistoryView: View {
                 }
             }
             .presentationDetents([.medium])
+        }
+    }
+}
+
+func getVideoURL(from mediaIdentifierFromPhotosApp: String, completion: @escaping (URL?) -> Void) {
+    let assets = PHAsset.fetchAssets(withLocalIdentifiers: [mediaIdentifierFromPhotosApp], options: nil)
+    guard let asset = assets.firstObject else {
+        completion(nil)
+        return
+    }
+
+    let options = PHVideoRequestOptions()
+    options.isNetworkAccessAllowed = true
+
+    PHImageManager.default().requestAVAsset(forVideo: asset, options: options) { avAsset, _, _ in
+        if let urlAsset = avAsset as? AVURLAsset {
+            completion(urlAsset.url)
+        } else {
+            completion(nil)
+        }
+    }
+}
+
+struct VideoPlayerView: View {
+    let mediaIdentifierFromPhotosApp: String
+    @State private var player: AVPlayer?
+
+    var body: some View {
+        VStack {
+            if let player {
+                VideoPlayer(player: player)
+                    .onAppear {
+                        player.isMuted = true
+                        player.play()
+                    }
+            } else {
+                Text("Loading video...")
+            }
+        }
+        .onAppear {
+            fetchVideo()
+        }
+        .onDisappear {
+            player = nil
+        }
+    }
+
+    private func fetchVideo() {
+        getVideoURL(from: mediaIdentifierFromPhotosApp) { url in
+            if let url {
+                player = AVPlayer(url: url)
+            }
         }
     }
 }
@@ -113,8 +167,19 @@ struct HistoryView: View {
                                     }
                                     CopyButton(text: "Copy link", reel: reel, notification: notification)
                                 } preview: {
-                                    if let image = reel.thumbnail {
-                                        Image(uiImage: image).resizable()
+                                    if reel.type == .image {
+                                        if let image = reel.thumbnail {
+                                            Image(uiImage: image).resizable()
+                                        }
+                                    }
+                                    else {
+                                        if let mediaIdentifierFromPhotosApp = reel.mediaIdentifierFromPhotosApp {
+                                            VideoPlayerView(mediaIdentifierFromPhotosApp: mediaIdentifierFromPhotosApp)
+                                        }
+                                        else if let image = reel.thumbnail {
+                                            Image(uiImage: image).resizable()
+                                        }
+                                        
                                     }
                                 }
                             }
