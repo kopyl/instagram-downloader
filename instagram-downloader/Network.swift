@@ -20,7 +20,9 @@ func deleteAllTmpFiles() throws {
 }
 
 func downloadFile(from url: _URL) async throws -> URL? {
-    let (tempFileURL, _) = try await URLSession.shared.download(from: url.url)
+    guard let (tempFileURL, _) = try? await URLSession.shared.download(from: url.url) else {
+        throw Errors.makeRequestForDownloadingFinalMediaFileFailed
+    }
     
     var destinationURL: URL
     switch url.type {
@@ -134,6 +136,7 @@ enum Errors: String, LocalizedError {
     case noDownloadURL
     case noCookiesSavedFromWebView
     case makeRequestFailed
+    case makeRequestForDownloadingFinalMediaFileFailed
     case loginStatusIsFailed
     
     var errorDescription: String? {
