@@ -65,7 +65,9 @@ func getVideoURL(from mediaIdentifierFromPhotosApp: String, completion: @escapin
 
 struct VideoPlayerView: View {
     let mediaIdentifierFromPhotosApp: String
+    let thumbnail: UIImage?
     @State private var player: AVPlayer?
+    @State private var isVideoNotPresentInPhotos = false
 
     var body: some View {
         VStack {
@@ -76,7 +78,16 @@ struct VideoPlayerView: View {
                         player.play()
                     }
             } else {
-                Text("Loading video...")
+                if isVideoNotPresentInPhotos {
+                    if let thumbnail {
+                        Image(uiImage: thumbnail).resizable()
+                    } else {
+                        Text("There is no preview for this reel")
+                    }
+                }
+                else {
+                    Text("Loading video...")
+                }
             }
         }
         .onAppear {
@@ -91,6 +102,9 @@ struct VideoPlayerView: View {
         getVideoURL(from: mediaIdentifierFromPhotosApp) { url in
             if let url {
                 player = AVPlayer(url: url)
+            }
+            else {
+                isVideoNotPresentInPhotos = true
             }
         }
     }
@@ -174,7 +188,10 @@ struct HistoryView: View {
                                     }
                                     else {
                                         if let mediaIdentifierFromPhotosApp = reel.mediaIdentifierFromPhotosApp {
-                                            VideoPlayerView(mediaIdentifierFromPhotosApp: mediaIdentifierFromPhotosApp)
+                                            VideoPlayerView(
+                                                mediaIdentifierFromPhotosApp: mediaIdentifierFromPhotosApp,
+                                                thumbnail: reel.thumbnail
+                                            )
                                         }
                                         else if let image = reel.thumbnail {
                                             Image(uiImage: image).resizable()
