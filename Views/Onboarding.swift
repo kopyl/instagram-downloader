@@ -145,6 +145,41 @@ class Step: ObservableObject {
     }
 }
 
+struct InstagramLoginSheet: ViewModifier {
+    @Binding var isPresented: Bool
+    @Binding var isLoggingIn: Bool
+    @Binding var hasUserLoggedInAtLeastOnce: Bool
+    let notification: Notification
+    var path: NavigationPath? = nil
+
+    func body(content: Content) -> some View {
+        content.sheet(isPresented: $isPresented, onDismiss: {
+            Task() {
+                do {
+                    let response = try await makeRequest(strUrl: "https://www.instagram.com/api/v1/friendships/pending/")
+                    try JSONSerialization.jsonObject(with: response, options: [])
+                    notification.dismiss()
+                    isLoggingIn = false
+                    hasUserLoggedInAtLeastOnce = true
+                    guard var path else { return }
+                    path.append("Home")
+                }
+                catch {
+                    notification.present(type: .error, title: "Login failed. Please login.")
+                    isLoggingIn = false
+                }
+            }
+        },
+        content: {
+            WebView(url: URL(string: "https://instagram.com")!)
+                .onAppear {
+                    isLoggingIn = true
+                }
+        }
+    )
+    }
+}
+
 struct OnboardingView: View {
     @State var isInstagramLoginSheetVisible = false
     @State var isLoggingIn = false
@@ -211,33 +246,18 @@ struct OnboardingView: View {
         .background(.appBg)
         .contentShape(Rectangle())
         .gesture(dragGesture(step: step))
-        .sheet(
-            isPresented: $isInstagramLoginSheetVisible,
-            onDismiss: {
-                Task() {
-                    do {
-                        let response = try await makeRequest(strUrl: "https://www.instagram.com/api/v1/friendships/pending/")
-                        try JSONSerialization.jsonObject(with: response, options: [])
-                        notification.dismiss()
-                        isLoggingIn = false
-                        hasUserLoggedInAtLeastOnce = true
-                        path.append("Home")
-                    }
-                    catch {
-                        notification.present(type: .error, title: "Login failed. Please login.")
-                        isLoggingIn = false
-                    }
-                }
-            },
-            content: {
-                WebView(url: URL(string: "https://instagram.com")!)
-                    .onAppear {
-                        isLoggingIn = true
-                    }
-            }
+        .modifier(
+            InstagramLoginSheet(
+                isPresented: $isInstagramLoginSheetVisible,
+                isLoggingIn: $isLoggingIn,
+                hasUserLoggedInAtLeastOnce: $hasUserLoggedInAtLeastOnce,
+                notification: notification,
+                path: path
+            )
         )
         .onAppear {
             notification.setWindowScene()
         }
+        
     }
 }
