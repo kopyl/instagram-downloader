@@ -153,7 +153,7 @@ struct HistoryView: View {
                                             WText(formattedDate(reel.dateSaved))
                                         }
                                         Spacer()
-                                        Image(systemName: "arrow.right")
+                                        Image(systemName: "arrow.up.forward")
                                             .font(.caption)
                                             .opacity(0.6)
                                     }
@@ -168,7 +168,7 @@ struct HistoryView: View {
                                         openURL(URL(string: reel.url)!)
                                     } label: {
                                         WText("Go to video")
-                                        Image(systemName: "arrow.right")
+                                        Image(systemName: "arrow.up.forward")
                                     }
                                     Button {
                                         reel.thumbnail?.pngData()
