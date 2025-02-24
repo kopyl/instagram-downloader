@@ -217,7 +217,7 @@ struct OnboardingView: View {
                 isLoggingIn: $isLoggingIn,
                 hasUserLoggedInAtLeastOnce: $hasUserLoggedInAtLeastOnce,
                 notification: notification,
-                path: path
+                path: $path
             )
         )
         .onAppear {

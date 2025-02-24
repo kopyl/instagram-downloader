@@ -23,6 +23,7 @@ struct ShareView: View {
     @State var isInstagramLoginSheetVisible = false
     @State var isLoggingIn = false
     @State var hasUserLoggedInAtLeastOnce = false
+    @State var dummyPath = NavigationPath()
     
     var body: some View {
         VStack{
@@ -47,6 +48,7 @@ struct ShareView: View {
                 isPresented: $isInstagramLoginSheetVisible,
                 isLoggingIn: $isLoggingIn,
                 hasUserLoggedInAtLeastOnce: $hasUserLoggedInAtLeastOnce,
+                path: $dummyPath,
                 onSuccess: {
                     Task {
                         lastError = nil

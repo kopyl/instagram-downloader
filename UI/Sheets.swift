@@ -5,7 +5,7 @@ struct InstagramLoginSheet: ViewModifier {
     @Binding var isLoggingIn: Bool
     @Binding var hasUserLoggedInAtLeastOnce: Bool
     var notification: AlertNotification? = nil
-    var path: NavigationPath? = nil
+    @Binding var path: NavigationPath
     var onSuccess: () -> Void = {}
 
     func body(content: Content) -> some View {
@@ -30,9 +30,7 @@ struct InstagramLoginSheet: ViewModifier {
                     }
                     isLoggingIn = false
                     hasUserLoggedInAtLeastOnce = true
-                    if var path {
-                        path.append("Home")
-                    }
+                    path.append("Home")
                     onSuccess()
                 }
                 catch {
