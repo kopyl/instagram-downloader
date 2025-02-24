@@ -67,7 +67,6 @@ struct ShareView: View {
         catch let error {
             lastError = error
             isInstagramLoginSheetVisible = true
-            hasUserLoggedInAtLeastOnce = false
         }
     }
 }
