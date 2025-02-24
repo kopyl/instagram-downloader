@@ -21,7 +21,7 @@ struct LoginBrowserButton: View {
 struct CopyButton: View {
     let text: String?
     let reel: Reel
-    let notification: Notification
+    let notification: AlertNotification
     
     var body: some View {
         Button {

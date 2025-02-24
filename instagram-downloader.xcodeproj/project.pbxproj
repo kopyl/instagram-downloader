@@ -30,6 +30,11 @@
 		48D1B1A72D3FB6D50040569E /* instagram-downloader-share.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 48D1B19D2D3FB6D50040569E /* instagram-downloader-share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		48E39EE12D3FFF14000341CD /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E39EE02D3FFF14000341CD /* Activity.swift */; };
 		48E39F052D40312C000341CD /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1B1972D3F2ED10040569E /* Network.swift */; };
+		48F65C252D6C9F5F004A5011 /* Sheets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F65C242D6C9F5F004A5011 /* Sheets.swift */; };
+		48F65C262D6C9F71004A5011 /* Sheets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F65C242D6C9F5F004A5011 /* Sheets.swift */; };
+		48F65C282D6CA001004A5011 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4848925E2D59EDA60033182F /* WebView.swift */; };
+		48F65C2B2D6CA0AF004A5011 /* AlertKit in Frameworks */ = {isa = PBXBuildFile; productRef = 48F65C2A2D6CA0AF004A5011 /* AlertKit */; };
+		48F65C2C2D6CA0BC004A5011 /* General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483ED6FC2D6256E1003DB0E5 /* General.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +83,7 @@
 		48D1B19D2D3FB6D50040569E /* instagram-downloader-share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "instagram-downloader-share.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		48D1B19F2D3FB6D50040569E /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		48E39EE02D3FFF14000341CD /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
+		48F65C242D6C9F5F004A5011 /* Sheets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sheets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48F65C2B2D6CA0AF004A5011 /* AlertKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +111,7 @@
 			children = (
 				483ED6FC2D6256E1003DB0E5 /* General.swift */,
 				483ED7032D62578E003DB0E5 /* Buttons.swift */,
+				48F65C242D6C9F5F004A5011 /* Sheets.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -120,6 +128,7 @@
 				488699EB2D3C99B2006DF44A /* instagram-downloader */,
 				48D1B19E2D3FB6D50040569E /* instagram-downloader-share */,
 				488699EA2D3C99B2006DF44A /* Products */,
+				48F65C292D6CA0AF004A5011 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -174,6 +183,13 @@
 			path = "instagram-downloader-share";
 			sourceTree = "<group>";
 		};
+		48F65C292D6CA0AF004A5011 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -212,6 +228,9 @@
 			dependencies = (
 			);
 			name = "instagram-downloader-share";
+			packageProductDependencies = (
+				48F65C2A2D6CA0AF004A5011 /* AlertKit */,
+			);
 			productName = "instagram-downloader-share";
 			productReference = 48D1B19D2D3FB6D50040569E /* instagram-downloader-share.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -285,6 +304,7 @@
 				48CA8A9C2D58DA7F005CD16F /* Data.swift in Sources */,
 				483ED7042D62578E003DB0E5 /* Buttons.swift in Sources */,
 				48CA8A9F2D58E9CA005CD16F /* Media.swift in Sources */,
+				48F65C252D6C9F5F004A5011 /* Sheets.swift in Sources */,
 				48D1B1982D3F2ED10040569E /* Network.swift in Sources */,
 				489A35AA2D626E02001CD501 /* History.swift in Sources */,
 				483ED7002D625743003DB0E5 /* Utils.swift in Sources */,
@@ -301,10 +321,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				48D1B1A02D3FB6D50040569E /* ShareViewController.swift in Sources */,
+				48F65C282D6CA001004A5011 /* WebView.swift in Sources */,
 				48CA8A9D2D58DCEF005CD16F /* Data.swift in Sources */,
+				48F65C2C2D6CA0BC004A5011 /* General.swift in Sources */,
 				48CA8AA02D58E9CA005CD16F /* Media.swift in Sources */,
 				483ED7012D625743003DB0E5 /* Utils.swift in Sources */,
 				48E39F052D40312C000341CD /* Network.swift in Sources */,
+				48F65C262D6C9F71004A5011 /* Sheets.swift in Sources */,
 				484892652D5A061F0033182F /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -636,6 +659,11 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		489A35722D6259CD001CD501 /* AlertKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 489A35712D6259CD001CD501 /* XCRemoteSwiftPackageReference "AlertKit" */;
+			productName = AlertKit;
+		};
+		48F65C2A2D6CA0AF004A5011 /* AlertKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 489A35712D6259CD001CD501 /* XCRemoteSwiftPackageReference "AlertKit" */;
 			productName = AlertKit;

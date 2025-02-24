@@ -145,52 +145,6 @@ class Step: ObservableObject {
     }
 }
 
-struct InstagramLoginSheet: ViewModifier {
-    @Binding var isPresented: Bool
-    @Binding var isLoggingIn: Bool
-    @Binding var hasUserLoggedInAtLeastOnce: Bool
-    let notification: Notification
-    var path: NavigationPath? = nil
-
-    func body(content: Content) -> some View {
-        content.sheet(isPresented: $isPresented, onDismiss: {
-            Task() {
-                do {
-                    let response = try await makeRequest(strUrl: "https://www.instagram.com/api/v1/friendships/pending/")
-                    let jsonObject = try JSONSerialization.jsonObject(with: response, options: [])
-                    
-                    guard let jsonDictionary = jsonObject as? [String: Any] else {
-                        throw Errors.keyNotFoundError
-                    }
-                    guard let status = jsonDictionary["status"] as? String else {
-                        throw Errors.keyNotFoundError
-                    }
-                    if status == "fail" {
-                        throw Errors.loginStatusIsFailed
-                    }
-
-                    notification.dismiss()
-                    isLoggingIn = false
-                    hasUserLoggedInAtLeastOnce = true
-                    guard var path else { return }
-                    path.append("Home")
-                }
-                catch {
-                    notification.present(type: .error, title: "Login failed. Please login.")
-                    isLoggingIn = false
-                }
-            }
-        },
-        content: {
-            WebView(url: URL(string: "https://instagram.com")!)
-                .onAppear {
-                    isLoggingIn = true
-                }
-        }
-    )
-    }
-}
-
 struct OnboardingView: View {
     @State var isInstagramLoginSheetVisible = false
     @State var isLoggingIn = false
@@ -198,7 +152,7 @@ struct OnboardingView: View {
     @Binding var path: NavigationPath
     @StateObject private var step = Step()
     
-    public var notification = Notification()
+    public var notification = AlertNotification()
     
     var body: some View {
         VStack {
@@ -267,7 +221,7 @@ struct OnboardingView: View {
             )
         )
         .onAppear {
-            notification.setWindowScene()
+            notification.setWindowScene(application: UIApplication.shared)
         }
         
     }

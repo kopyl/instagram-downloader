@@ -20,6 +20,9 @@ struct ShareView: View {
     var itemProviders: [NSItemProvider]
     
     @State private var lastError: Error?
+    @State var isInstagramLoginSheetVisible = false
+    @State var isLoggingIn = false
+    @State var hasUserLoggedInAtLeastOnce = false
     
     var body: some View {
         VStack{
@@ -36,6 +39,19 @@ struct ShareView: View {
         }
         .containerRelativeFrame([.horizontal, .vertical])
         .background(lastError == nil ? .clear : .red)
+        .modifier(
+            InstagramLoginSheet(
+                isPresented: $isInstagramLoginSheetVisible,
+                isLoggingIn: $isLoggingIn,
+                hasUserLoggedInAtLeastOnce: $hasUserLoggedInAtLeastOnce,
+                onSuccess: {
+                    Task {
+                        lastError = nil
+                        await extractItems()
+                    }
+                }
+            )
+        )
     }
     
     func extractItems() async {
@@ -50,6 +66,8 @@ struct ShareView: View {
         }
         catch let error {
             lastError = error
+            isInstagramLoginSheetVisible = true
+            hasUserLoggedInAtLeastOnce = false
         }
     }
 }

@@ -119,7 +119,7 @@ struct HistoryView: View {
     @State private var isTutorialSheetOpen = false
     @Query(sort: \Reel.dateSaved, order: .reverse) private var savedReels: [Reel]
 
-    public var notification = Notification()
+    public var notification = AlertNotification()
     
     var body: some View {
         ZStack {
@@ -214,7 +214,7 @@ struct HistoryView: View {
             }
             .background(.appBg)
             .onAppear {
-                notification.setWindowScene()
+                notification.setWindowScene(application: UIApplication.shared)
             }
             .navigationBarBackButtonHidden()
             Color.white.opacity(0.05)

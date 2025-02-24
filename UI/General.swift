@@ -1,12 +1,12 @@
 import SwiftUI
 import AlertKit
 
-class Notification {
+class AlertNotification {
     var scene: UIWindow?
     var currentNotification: AlertAppleMusic17View?
     
-    func setWindowScene() {
-        guard let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
+    func setWindowScene(application: UIApplication) {
+        guard let windowScene = application.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene
         else {
             return
         }
