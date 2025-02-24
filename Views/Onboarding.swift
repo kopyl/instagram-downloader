@@ -157,7 +157,18 @@ struct InstagramLoginSheet: ViewModifier {
             Task() {
                 do {
                     let response = try await makeRequest(strUrl: "https://www.instagram.com/api/v1/friendships/pending/")
-                    try JSONSerialization.jsonObject(with: response, options: [])
+                    let jsonObject = try JSONSerialization.jsonObject(with: response, options: [])
+                    
+                    guard let jsonDictionary = jsonObject as? [String: Any] else {
+                        throw Errors.keyNotFoundError
+                    }
+                    guard let status = jsonDictionary["status"] as? String else {
+                        throw Errors.keyNotFoundError
+                    }
+                    if status == "fail" {
+                        throw Errors.loginStatusIsFailed
+                    }
+
                     notification.dismiss()
                     isLoggingIn = false
                     hasUserLoggedInAtLeastOnce = true

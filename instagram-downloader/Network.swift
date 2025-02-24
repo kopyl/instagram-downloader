@@ -134,6 +134,7 @@ enum Errors: String, LocalizedError {
     case noDownloadURL
     case noCookiesSavedFromWebView
     case makeRequestFailed
+    case loginStatusIsFailed
     
     var errorDescription: String? {
         rawValue
