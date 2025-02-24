@@ -1,23 +1,23 @@
 import SwiftUI
 
-struct Content {
+struct OnboardingContent {
     let description: String
     let image: Image
     let ctaText: String
 }
 
-let info: [Content] = [
-    Content(
+let info: [OnboardingContent] = [
+    OnboardingContent(
         description: "Find a reel and press “Share”",
         image: Image("onboarding-1"),
         ctaText: "Next"
     ),
-    Content(
+    OnboardingContent(
         description: "Then press on “Share to”",
         image: Image("onboarding-2"),
         ctaText: "Next"
     ),
-    Content(
+    OnboardingContent(
         description: "Select Reelsaver",
         image: Image("onboarding-3"),
         ctaText: "Login with Insta"
