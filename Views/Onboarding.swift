@@ -223,6 +223,5 @@ struct OnboardingView: View {
         .onAppear {
             notification.setWindowScene(application: UIApplication.shared)
         }
-        
     }
 }
