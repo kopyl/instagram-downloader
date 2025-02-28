@@ -131,7 +131,7 @@ struct HistoryView: View {
                         showingWebView.toggle()
                     }
                     .sheet(isPresented: $showingWebView) {
-                        WebView(url: URL(string: "https://instagram.com")!)
+                        WebView(url: URL(string: "https://instagram.com")!, hasUserLoggedInAtLeastOnce: $hasUserLoggedInAtLeastOnce)
                     }
                 }
                 .padding(.trailing, 2)

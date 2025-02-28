@@ -4,6 +4,7 @@ import WebKit
 
 struct WebView: UIViewRepresentable {
     let url: URL
+    var hasUserLoggedInAtLeastOnce: Binding<Bool>? = nil
 
     class Coordinator: NSObject, WKNavigationDelegate {
         var parent: WebView
@@ -57,6 +58,10 @@ struct WebView: UIViewRepresentable {
         // Create and load the request
         let request = URLRequest(url: url)
         webView.load(request)
+        
+        if let hasUserLoggedInAtLeastOnce {
+            hasUserLoggedInAtLeastOnce.wrappedValue = false
+        }
         
         return webView
     }
