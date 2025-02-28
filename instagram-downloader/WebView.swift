@@ -62,17 +62,4 @@ struct WebView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {}
-    
-    // Helper method to clear cookies
-    private func clearCookies(in webView: WKWebView) {
-        // Get all cookie types
-        let dataTypes = WKWebsiteDataStore.allWebsiteDataTypes()
-        
-        // Clear all website data
-        webView.configuration.websiteDataStore.removeData(
-            ofTypes: dataTypes,
-            modifiedSince: Date(timeIntervalSince1970: 0),
-            completionHandler: {}
-        )
-    }
 }
