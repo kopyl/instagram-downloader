@@ -145,12 +145,12 @@ enum Errors: String, LocalizedError {
     }
 }
 
-func getFirstItemFrom(from responseData: Data) throws -> [String : Any] {    
+func getFirstItemFrom(from responseData: Data) throws -> [String : Any] {
     var jsonObject: Any
     
     do {
         jsonObject = try JSONSerialization.jsonObject(with: responseData, options: [])
-    } catch let error {
+    } catch {
         throw Errors.jsonWithMediaURLsCantBeRead
     }
 
