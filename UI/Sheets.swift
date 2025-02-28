@@ -38,6 +38,7 @@ struct InstagramLoginSheet: ViewModifier {
                         notification.present(type: .error, title: "Login failed. Please login.")
                     }
                     isLoggingIn = false
+                    path?.wrappedValue = .init()
                 }
             }
         },

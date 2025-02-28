@@ -116,6 +116,7 @@ struct HistoryView: View {
     @Environment(\.modelContext) private var store
     @Environment(\.openURL) var openURL
     @State private var showingWebView  = false
+    @State private var isLoggingIn  = false
     @State private var isTutorialSheetOpen = false
     @Query(sort: \Reel.dateSaved, order: .reverse) private var savedReels: [Reel]
 
@@ -129,9 +130,6 @@ struct HistoryView: View {
                     Spacer()
                     LoginBrowserButton {
                         showingWebView.toggle()
-                    }
-                    .sheet(isPresented: $showingWebView) {
-                        WebView(url: URL(string: "https://instagram.com")!, hasUserLoggedInAtLeastOnce: $hasUserLoggedInAtLeastOnce)
                     }
                 }
                 .padding(.trailing, 2)
@@ -221,5 +219,14 @@ struct HistoryView: View {
             .ignoresSafeArea()
             .opacity(isTutorialSheetOpen ? 0.7 : 0)
         }
+        .modifier(
+            InstagramLoginSheet(
+                isPresented: $showingWebView,
+                isLoggingIn: $isLoggingIn,
+                hasUserLoggedInAtLeastOnce: $hasUserLoggedInAtLeastOnce,
+                path: $path,
+                notification: notification
+            )
+        )
     }
 }
