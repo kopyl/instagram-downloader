@@ -22,7 +22,11 @@ struct ShareView: View {
     @State private var lastError: Error?
     @State var isInstagramLoginSheetVisible = false
     @State var isLoggingIn = false
-    @State var hasUserLoggedInAtLeastOnce = false
+    
+    @AppStorage(
+        Names.hasUserLoggedInAtLeastOnce,
+        store: UserDefaults(suiteName: Names.APPGROUP)
+    ) private var hasUserLoggedInAtLeastOnce: Bool = false
     
     var body: some View {
         VStack{

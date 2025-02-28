@@ -19,6 +19,11 @@ struct ContentView: View {
                     path.append("Home")
                 }
             }
+            .onChange(of: hasUserLoggedInAtLeastOnce) {
+                if hasUserLoggedInAtLeastOnce {
+                    path.append("Home")
+                }
+            }
             .navigationDestination(for: String.self) { value in
                 if value == "Home" {
                     HistoryView(
