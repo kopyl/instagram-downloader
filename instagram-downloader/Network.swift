@@ -138,15 +138,21 @@ enum Errors: String, LocalizedError {
     case makeRequestFailed
     case makeRequestForDownloadingFinalMediaFileFailed
     case loginStatusIsFailed
+    case jsonWithMediaURLsCantBeRead
     
     var errorDescription: String? {
         rawValue
     }
 }
 
-func getFirstItemFrom(from responseData: Data) throws -> [String : Any] {
+func getFirstItemFrom(from responseData: Data) throws -> [String : Any] {    
+    var jsonObject: Any
     
-    let jsonObject = try JSONSerialization.jsonObject(with: responseData, options: [])
+    do {
+        jsonObject = try JSONSerialization.jsonObject(with: responseData, options: [])
+    } catch let error {
+        throw Errors.jsonWithMediaURLsCantBeRead
+    }
 
     guard let jsonDictionary = jsonObject as? [String: Any] else {
         throw Errors.keyNotFoundError
@@ -219,6 +225,7 @@ func getDownloadURL(reelURL: String) async throws -> _URL? {
     let videoApiURL = videoIDToAPIURl(videoID)
 
     let response = try await makeRequest(strUrl: videoApiURL)
+    
     var itemURL = try getBiggestVideoOrImageURL(from: response)
     
     itemURL.initReelURL = reelURL
