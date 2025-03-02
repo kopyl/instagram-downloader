@@ -162,7 +162,7 @@ struct HistoryView: View {
                                     Button {
                                         openURL(URL(string: reel.url)!)
                                     } label: {
-                                        WText("Go to video")
+                                        WText("Open in Instagram")
                                         Image(systemName: "arrow.up.forward")
                                     }
                                     Button {
@@ -171,7 +171,12 @@ struct HistoryView: View {
                                         UIImageWriteToSavedPhotosAlbum(thumbnail, nil, nil, nil)
                                         notification.present(type: .success)
                                     } label: {
-                                        WText("Save preview")
+                                        if reel.type == .video {
+                                            WText("Save first frame")
+                                        }
+                                        else {
+                                            WText("Save picture")
+                                        }
                                         Image(systemName: "photo.fill")
                                     }
                                     CopyButton(text: "Copy link", reel: reel, notification: notification)
