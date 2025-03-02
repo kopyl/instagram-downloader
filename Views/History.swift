@@ -128,9 +128,6 @@ struct HistoryView: View {
                 HStack {
                     WText("History").font(.title)
                     Spacer()
-                    LoginBrowserButton {
-                        showingWebView.toggle()
-                    }
                 }
                 .padding(.trailing, 2)
                 .padding(.leading, 18)
