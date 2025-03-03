@@ -15,7 +15,6 @@ class ShareViewController: UIViewController {
             hostingView.view.frame.origin.y = view.frame.height - hostingView.view.frame.height
             view.addSubview(hostingView.view)
         }
-        
     }
 }
 
