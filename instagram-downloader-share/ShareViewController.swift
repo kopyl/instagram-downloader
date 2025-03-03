@@ -8,7 +8,11 @@ class ShareViewController: UIViewController {
 
         if let itemProviders = (extensionContext?.inputItems.first as? NSExtensionItem)?.attachments {
             let hostingView = UIHostingController(rootView: ShareView(extensionContext: extensionContext, itemProviders: itemProviders))
-            hostingView.view.frame = view.frame
+            
+            addChild(hostingView)
+            hostingView.view.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 300)
+            hostingView.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            hostingView.view.frame.origin.y = view.frame.height - hostingView.view.frame.height
             view.addSubview(hostingView.view)
         }
         
