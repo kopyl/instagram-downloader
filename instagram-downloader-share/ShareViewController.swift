@@ -7,20 +7,28 @@ class ShareViewController: UIViewController {
         super.viewDidLoad()
 
         if let itemProviders = (extensionContext?.inputItems.first as? NSExtensionItem)?.attachments {
-            let hostingView = UIHostingController(rootView: ShareView(extensionContext: extensionContext, itemProviders: itemProviders))
             
-            addChild(hostingView)
-            hostingView.view.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 300)
-            hostingView.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            hostingView.view.frame.origin.y = view.frame.height - hostingView.view.frame.height
-            view.addSubview(hostingView.view)
+            guard let itemProvider = itemProviders.first else { return }
+            guard itemProvider.hasItemConformingToTypeIdentifier(UTType.url.identifier) else { return }
+            
+            itemProvider.loadItem(forTypeIdentifier: UTType.url.identifier as String) { [unowned self] (item, error) in
+                let contentView = ShareView(extensionContext: extensionContext, url: item as? URL)
+
+                DispatchQueue.main.async {
+                    let hostingView = UIHostingController(rootView: contentView)
+                    hostingView.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 300)
+                    hostingView.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                    hostingView.view.frame.origin.y = self.view.frame.height - hostingView.view.frame.height
+                    self.view.addSubview(hostingView.view)
+                }
+            }
         }
     }
 }
 
 struct ShareView: View {
     var extensionContext: NSExtensionContext?
-    var itemProviders: [NSItemProvider]
+    var url: URL?
     
     @State private var lastError: Error?
     @State var isInstagramLoginSheetVisible = false
@@ -65,14 +73,10 @@ struct ShareView: View {
     }
     
     func extractItems() async {
-        guard let itemProvider = itemProviders.first else { return }
-        guard itemProvider.hasItemConformingToTypeIdentifier(UTType.url.identifier) else { return }
-
         do {
-            guard let url = try await itemProvider.loadItem(forTypeIdentifier: UTType.url.identifier) as? URL else { return }
+            guard let url else { return }
             try await downloadAndSaveMedia(reelURL: url.absoluteString)
             extensionContext?.completeRequest(returningItems: [])
-            
         }
         catch let error {
             lastError = error
