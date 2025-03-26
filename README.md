@@ -65,7 +65,7 @@ try context.save()  // this is necessary step, otherwise the data is not saved
 ### Download video with a final item URL:
 
 ```swift
-func downloadAndSaveMedia(reelURL: String) async throws {
+func downloadAndSaveMedia() async throws {
     var downloadUrl = _URL(type: .video, url: URL(string: "https://github.com/user-attachments/assets/ef9b2c52-b98a-4346-a84e-d546c73a9deb")!)
     guard let file = try await downloadFile(from: downloadUrl) else {
         throw Errors.emptyLocalFileURL
