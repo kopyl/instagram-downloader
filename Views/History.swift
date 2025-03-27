@@ -156,7 +156,11 @@ struct HistoryView: View {
                                 .frame(height: 70)
                                 .contentShape(Rectangle())
                                 .onTapGesture {
-                                    openURL(URL(string: reel.url)!)
+                                    guard let url = URL(string: reel.url) else {
+                                        notification.present(type: .error, title: "Invalid URL")
+                                        return
+                                    }
+                                    openURL(url)
                                 }
                                 .contextMenu {
                                     Button {
