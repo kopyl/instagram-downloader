@@ -121,6 +121,14 @@ struct HistoryView: View {
 
     public var notification = AlertNotification()
     
+    private func openReel(_ reel: Reel) {
+        guard let url = URL(string: reel.url) else {
+            notification.present(type: .error, title: "Invalid URL")
+            return
+        }
+        UIApplication.shared.open(url)
+    }
+    
     var body: some View {
         ZStack {
             VStack {
@@ -154,17 +162,9 @@ struct HistoryView: View {
                                 }
                                 .frame(height: 70)
                                 .contentShape(Rectangle())
-                                .onTapGesture {
-                                    guard let url = URL(string: reel.url) else {
-                                        notification.present(type: .error, title: "Invalid URL")
-                                        return
-                                    }
-                                    UIApplication.shared.open(url)
-                                }
+                                .onTapGesture { openReel(reel) }
                                 .contextMenu {
-                                    Button {
-                                        UIApplication.shared.open(URL(string: reel.url)!)
-                                    } label: {
+                                    Button { openReel(reel) } label: {
                                         WText("Open in Instagram")
                                         Image(systemName: "arrow.up.forward")
                                     }
