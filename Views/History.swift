@@ -114,7 +114,6 @@ struct HistoryView: View {
     @Binding var hasUserLoggedInAtLeastOnce: Bool
     @Binding var path: NavigationPath
     @Environment(\.modelContext) private var store
-    @Environment(\.openURL) var openURL
     @State private var showingWebView  = false
     @State private var isLoggingIn  = false
     @State private var isTutorialSheetOpen = false
@@ -160,11 +159,11 @@ struct HistoryView: View {
                                         notification.present(type: .error, title: "Invalid URL")
                                         return
                                     }
-                                    openURL(url)
+                                    UIApplication.shared.open(url)
                                 }
                                 .contextMenu {
                                     Button {
-                                        openURL(URL(string: reel.url)!)
+                                        UIApplication.shared.open(URL(string: reel.url)!)
                                     } label: {
                                         WText("Open in Instagram")
                                         Image(systemName: "arrow.up.forward")
