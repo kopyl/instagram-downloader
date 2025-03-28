@@ -144,70 +144,76 @@ struct HistoryView: View {
                         EmptyHistoryView(isTutorialSheetOpen: $isTutorialSheetOpen)
                     }
                     else {
-                        List(savedReels, id: \.self) { (reel: Reel) in
-                            LazyVStack {
-                                HStack(spacing: 15) {
-                                    let preview = Thumbnail(reel: reel)
-                                    preview
-                                    HStack {
-                                        HStack(spacing: 12) {
-                                            Icon(imageName: preview.name, font: .system(size: 12))
-                                            WText(formattedDate(reel.dateSaved))
+                        List {
+                            Color.clear
+                                .frame(height: 400)
+                                .listRowBackground(Color.clear)
+                            
+                            ForEach(savedReels, id: \.self) { (reel: Reel) in
+                                LazyVStack {
+                                    HStack(spacing: 15) {
+                                        let preview = Thumbnail(reel: reel)
+                                        preview
+                                        HStack {
+                                            HStack(spacing: 12) {
+                                                Icon(imageName: preview.name, font: .system(size: 12))
+                                                WText(formattedDate(reel.dateSaved))
+                                            }
+                                            Spacer()
+                                            Image(systemName: "arrow.up.forward")
+                                                .font(.caption)
+                                                .opacity(0.6)
                                         }
-                                        Spacer()
-                                        Image(systemName: "arrow.up.forward")
-                                            .font(.caption)
-                                            .opacity(0.6)
                                     }
-                                }
-                                .frame(height: 70)
-                                .contentShape(Rectangle())
-                                .onTapGesture { openReel(reel) }
-                                .contextMenu {
-                                    Button { openReel(reel) } label: {
-                                        WText("Open in Instagram")
-                                        Image(systemName: "arrow.up.forward")
-                                    }
-                                    Button {
-                                        reel.thumbnail?.pngData()
-                                        guard let thumbnail = reel.thumbnail else { return }
-                                        UIImageWriteToSavedPhotosAlbum(thumbnail, nil, nil, nil)
-                                        notification.present(type: .success)
-                                    } label: {
-                                        if reel.type == .video {
-                                            WText("Save first frame")
+                                    .frame(height: 70)
+                                    .contentShape(Rectangle())
+                                    .onTapGesture { openReel(reel) }
+                                    .contextMenu {
+                                        Button { openReel(reel) } label: {
+                                            WText("Open in Instagram")
+                                            Image(systemName: "arrow.up.forward")
+                                        }
+                                        Button {
+                                            reel.thumbnail?.pngData()
+                                            guard let thumbnail = reel.thumbnail else { return }
+                                            UIImageWriteToSavedPhotosAlbum(thumbnail, nil, nil, nil)
+                                            notification.present(type: .success)
+                                        } label: {
+                                            if reel.type == .video {
+                                                WText("Save first frame")
+                                            }
+                                            else {
+                                                WText("Save picture")
+                                            }
+                                            Image(systemName: "photo.fill")
+                                        }
+                                        CopyButton(text: "Copy link", reel: reel, notification: notification)
+                                    } preview: {
+                                        if reel.type == .image {
+                                            if let image = reel.thumbnail {
+                                                Image(uiImage: image).resizable()
+                                            }
                                         }
                                         else {
-                                            WText("Save picture")
+                                            if let mediaIdentifierFromPhotosApp = reel.mediaIdentifierFromPhotosApp {
+                                                VideoPlayerView(
+                                                    mediaIdentifierFromPhotosApp: mediaIdentifierFromPhotosApp,
+                                                    thumbnail: reel.thumbnail
+                                                )
+                                            }
+                                            else if let image = reel.thumbnail {
+                                                Image(uiImage: image).resizable()
+                                            }
+                                            
                                         }
-                                        Image(systemName: "photo.fill")
-                                    }
-                                    CopyButton(text: "Copy link", reel: reel, notification: notification)
-                                } preview: {
-                                    if reel.type == .image {
-                                        if let image = reel.thumbnail {
-                                            Image(uiImage: image).resizable()
-                                        }
-                                    }
-                                    else {
-                                        if let mediaIdentifierFromPhotosApp = reel.mediaIdentifierFromPhotosApp {
-                                            VideoPlayerView(
-                                                mediaIdentifierFromPhotosApp: mediaIdentifierFromPhotosApp,
-                                                thumbnail: reel.thumbnail
-                                            )
-                                        }
-                                        else if let image = reel.thumbnail {
-                                            Image(uiImage: image).resizable()
-                                        }
-                                        
                                     }
                                 }
-                            }
-                            .listRowInsets(.init(top: 0, leading: 20, bottom: 5, trailing: 20))
-                            .listRowSeparator(.hidden)
-                            .listRowBackground(Color.appBg)
-                            .swipeActions(edge: .trailing) {
-                                CopyButton(text: nil, reel: reel, notification: notification)
+                                .listRowInsets(.init(top: 0, leading: 20, bottom: 5, trailing: 20))
+                                .listRowSeparator(.hidden)
+                                .listRowBackground(Color.appBg)
+                                .swipeActions(edge: .trailing) {
+                                    CopyButton(text: nil, reel: reel, notification: notification)
+                                }
                             }
                         }
                     }
