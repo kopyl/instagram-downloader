@@ -146,7 +146,7 @@ struct HistoryView: View {
                     else {
                         List {
                             Color.clear
-                                .frame(height: 400)
+                                .frame(height: UIScreen.main.bounds.height/2.5)
                                 .listRowBackground(Color.clear)
                             
                             ForEach(savedReels, id: \.self) { (reel: Reel) in
