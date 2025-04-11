@@ -11,10 +11,15 @@ Using a fresh instagram account you're not afraid to loose is highly advised.
 - Ads downloads
 - History of downloads
 - Downloads with Share Extension (Share to -> Instagram dl)
-
+- Copy clean URL to clipboard (withotut garbage parameters like ?igsh=XXX)
+- Save first video frame to photos (useful when a picture was uploaded as a video with some music)
 
 ### Here is a video demo on how it works:
-<video src="https://github.com/user-attachments/assets/fda935e4-886e-4666-9bee-7e94debdf1ae" width="300" controls></video>
+<video src="https://github.com/user-attachments/assets/178eb1e9-f142-4d5a-b5ee-62d3fc1d56cc" width="300" controls></video>
+
+### Plans:
+- [ ] Add support for downloading stories
+- [ ] More convenient UI for a media preview
 
 How to:
 
