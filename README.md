@@ -3,7 +3,8 @@
 
 **IMPORTANT:** <br>
 A user is required to enter username and password from Instagram, so use it on your own risk. <br>
-Using a fresh instagram account you're not afraid to loose is highly advised.
+Using a fresh instagram account you're not afraid to loose is highly advised. <br>
+I used to use my primary account and in a few weeks got an account restriction for creating multiple sessions.
 
 ### Features:
 - Video downloads
