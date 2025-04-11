@@ -30,7 +30,6 @@ struct InstagramLoginSheet: ViewModifier {
                     }
                     isLoggingIn = false
                     hasUserLoggedInAtLeastOnce = true
-                    path?.wrappedValue.append("Home")
                     onSuccess()
                 }
                 catch {
