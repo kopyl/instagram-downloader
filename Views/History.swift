@@ -214,7 +214,12 @@ struct HistoryView: View {
                                 .listRowSeparator(.hidden)
                                 .listRowBackground(Color.appBg)
                                 .swipeActions(edge: .trailing) {
-                                    CopyButton(text: nil, reel: reel, notification: notification)
+                                    Button {
+                                        UIPasteboard.general.string = reel.url
+                                        notification.present(type: .success, title: "Copied to clipboard")
+                                    } label: {
+                                        Label("Copy", systemImage: "doc.on.doc")
+                                    }
                                 }
                             }
                         }
