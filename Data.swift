@@ -65,3 +65,11 @@ class Reel {
         }
     }
 }
+
+extension Reel {
+    static var mock: Reel {
+        let mock = Reel("https://instagram.com/reel/123", type: .video)
+        mock.thumbnailPath = nil // or mock with test data
+        return mock
+    }
+}

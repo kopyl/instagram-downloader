@@ -10,10 +10,15 @@ struct CopyButton: View {
             UIPasteboard.general.string = reel.cleanURL()
             notification.present(type: .success, title: "URL copied")
         } label: {
-            if let text {
-                WText(text)
+            HStack {
+                if let text {
+                    WText(text)
+                }
+                Spacer()
+                Image(systemName: "document.on.document.fill")
+                    .foregroundStyle(.white)
+                    .opacity(0.9)
             }
-            Image(systemName: "document.on.document.fill")
         }
     }
 }

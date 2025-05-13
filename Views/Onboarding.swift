@@ -149,10 +149,10 @@ struct OnboardingView: View {
     @State var isInstagramLoginSheetVisible = false
     @State var isLoggingIn = false
     @Binding var hasUserLoggedInAtLeastOnce: Bool
-    @Binding var path: NavigationPath
+    @Binding var path: [Route]
     @StateObject private var step = Step()
     
-    public var notification = AlertNotification()
+    public var notification: AlertNotification
     
     var body: some View {
         VStack {
@@ -221,7 +221,10 @@ struct OnboardingView: View {
             )
         )
         .onAppear {
-            notification.setWindowScene(application: UIApplication.shared)
+            AppState.shared.swipeEnabled = false
+        }
+        .onDisappear {
+            AppState.shared.swipeEnabled = true
         }
     }
 }

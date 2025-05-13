@@ -112,14 +112,14 @@ struct VideoPlayerView: View {
 
 struct HistoryView: View {
     @Binding var hasUserLoggedInAtLeastOnce: Bool
-    @Binding var path: NavigationPath
+    @Binding var path: [Route]
     @Environment(\.modelContext) private var store
     @State private var showingWebView  = false
     @State private var isLoggingIn  = false
     @State private var isTutorialSheetOpen = false
     @Query(sort: \Reel.dateSaved, order: .reverse) private var savedReels: [Reel]
 
-    public var notification = AlertNotification()
+    public var notification: AlertNotification
     
     private func openReel(_ reel: Reel) {
         guard let url = URL(string: reel.url) else {
@@ -160,14 +160,16 @@ struct HistoryView: View {
                                                 WText(formattedDate(reel.dateSaved))
                                             }
                                             Spacer()
-                                            Image(systemName: "arrow.up.forward")
+                                            Image(systemName: "chevron.forward")
                                                 .font(.caption)
                                                 .opacity(0.6)
                                         }
                                     }
                                     .frame(height: 70)
                                     .contentShape(Rectangle())
-                                    .onTapGesture { openReel(reel) }
+                                    .onTapGesture {
+                                        path.append(.savedItem(reel))
+                                    }
                                     .contextMenu {
                                         Button { openReel(reel) } label: {
                                             WText("Open in Instagram")
@@ -222,9 +224,6 @@ struct HistoryView: View {
                 .padding(.horizontal, 0)
             }
             .background(.appBg)
-            .onAppear {
-                notification.setWindowScene(application: UIApplication.shared)
-            }
             .navigationBarBackButtonHidden()
             Color.white.opacity(0.05)
             .ignoresSafeArea()

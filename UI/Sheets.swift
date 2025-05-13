@@ -4,7 +4,7 @@ struct InstagramLoginSheet: ViewModifier {
     @Binding var isPresented: Bool
     @Binding var isLoggingIn: Bool
     @Binding var hasUserLoggedInAtLeastOnce: Bool
-    var path: Binding<NavigationPath>? = nil
+    var path: Binding<[Route]>? = nil
     var notification: AlertNotification? = nil
     var onSuccess: () -> Void = {}
 
@@ -38,7 +38,7 @@ struct InstagramLoginSheet: ViewModifier {
                     }
                     isLoggingIn = false
                     hasUserLoggedInAtLeastOnce = false
-                    path?.wrappedValue = .init()
+                    path?.wrappedValue = []
                 }
             }
         },

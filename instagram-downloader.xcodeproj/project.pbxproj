@@ -13,6 +13,9 @@
 		4848925F2D59EDA60033182F /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4848925E2D59EDA60033182F /* WebView.swift */; };
 		484892642D5A061F0033182F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484892632D5A061F0033182F /* Constants.swift */; };
 		484892652D5A061F0033182F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484892632D5A061F0033182F /* Constants.swift */; };
+		4862F4A82DD2F73500E6CE9E /* SavedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4862F4A72DD2F73500E6CE9E /* SavedItem.swift */; };
+		4862F4AA2DD2F8E200E6CE9E /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4862F4A92DD2F8E200E6CE9E /* Router.swift */; };
+		4862F4AB2DD2F8E200E6CE9E /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4862F4A92DD2F8E200E6CE9E /* Router.swift */; };
 		488699ED2D3C99B2006DF44A /* instagram_downloaderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488699EC2D3C99B2006DF44A /* instagram_downloaderApp.swift */; };
 		488699EF2D3C99B2006DF44A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488699EE2D3C99B2006DF44A /* ContentView.swift */; };
 		488699F12D3C99B4006DF44A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 488699F02D3C99B4006DF44A /* Assets.xcassets */; };
@@ -69,6 +72,8 @@
 		483ED7032D62578E003DB0E5 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		4848925E2D59EDA60033182F /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		484892632D5A061F0033182F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4862F4A72DD2F73500E6CE9E /* SavedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedItem.swift; sourceTree = "<group>"; };
+		4862F4A92DD2F8E200E6CE9E /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		488699E92D3C99B2006DF44A /* instagram-downloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "instagram-downloader.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		488699EC2D3C99B2006DF44A /* instagram_downloaderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = instagram_downloaderApp.swift; sourceTree = "<group>"; };
 		488699EE2D3C99B2006DF44A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -122,6 +127,7 @@
 				489A35A82D626D8F001CD501 /* Views */,
 				483ED7022D625772003DB0E5 /* UI */,
 				483ED6FF2D625743003DB0E5 /* Utils.swift */,
+				4862F4A92DD2F8E200E6CE9E /* Router.swift */,
 				484892632D5A061F0033182F /* Constants.swift */,
 				48CA8A9E2D58E9CA005CD16F /* Media.swift */,
 				48CA8A9B2D58DA7F005CD16F /* Data.swift */,
@@ -169,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				489A35A92D626E02001CD501 /* History.swift */,
+				4862F4A72DD2F73500E6CE9E /* SavedItem.swift */,
 				489A35AB2D626E67001CD501 /* Onboarding.swift */,
 			);
 			path = Views;
@@ -304,8 +311,10 @@
 				48CA8A9C2D58DA7F005CD16F /* Data.swift in Sources */,
 				483ED7042D62578E003DB0E5 /* Buttons.swift in Sources */,
 				48CA8A9F2D58E9CA005CD16F /* Media.swift in Sources */,
+				4862F4A82DD2F73500E6CE9E /* SavedItem.swift in Sources */,
 				48F65C252D6C9F5F004A5011 /* Sheets.swift in Sources */,
 				48D1B1982D3F2ED10040569E /* Network.swift in Sources */,
+				4862F4AA2DD2F8E200E6CE9E /* Router.swift in Sources */,
 				489A35AA2D626E02001CD501 /* History.swift in Sources */,
 				483ED7002D625743003DB0E5 /* Utils.swift in Sources */,
 				489A35AC2D626E67001CD501 /* Onboarding.swift in Sources */,
@@ -322,6 +331,7 @@
 			files = (
 				48D1B1A02D3FB6D50040569E /* ShareViewController.swift in Sources */,
 				48F65C282D6CA001004A5011 /* WebView.swift in Sources */,
+				4862F4AB2DD2F8E200E6CE9E /* Router.swift in Sources */,
 				48CA8A9D2D58DCEF005CD16F /* Data.swift in Sources */,
 				48F65C2C2D6CA0BC004A5011 /* General.swift in Sources */,
 				48CA8AA02D58E9CA005CD16F /* Media.swift in Sources */,
