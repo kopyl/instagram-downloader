@@ -220,6 +220,7 @@ struct HistoryView: View {
                                     } label: {
                                         Label("Copy", systemImage: "doc.on.doc")
                                     }
+                                    .tint(.blue)
                                 }
                             }
                         }
