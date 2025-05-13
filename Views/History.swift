@@ -213,7 +213,16 @@ struct HistoryView: View {
                                 .listRowInsets(.init(top: 0, leading: 20, bottom: 5, trailing: 20))
                                 .listRowSeparator(.hidden)
                                 .listRowBackground(Color.appBg)
+                                
                                 .swipeActions(edge: .trailing) {
+                                    Button(role: .destructive) {
+                                        store.delete(reel)
+                                        notification.present(type: .success, title: "Deleted successfully")
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                    .tint(.red)
+                                    
                                     Button {
                                         UIPasteboard.general.string = reel.url
                                         notification.present(type: .success, title: "Copied to clipboard")
