@@ -86,6 +86,9 @@ struct SavedItemView: View {
         .onAppear {
             AppState.shared.swipeEnabled = true
         }
+        .onDisappear {
+            AppState.shared.swipeEnabled = false
+        }
     }
 }
 
