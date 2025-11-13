@@ -1,4 +1,5 @@
 import SwiftUI
+import Photos
 
 class AppState {
     static let shared = AppState()
@@ -51,8 +52,18 @@ struct ContentView: View {
         }
         .onAppear {
             notification.setWindowScene(application: UIApplication.shared)
+            requestPhotosPermissionIfNeeded()
         }
         .onDisappear {
+        }
+    }
+
+    private func requestPhotosPermissionIfNeeded() {
+        let status = PHPhotoLibrary.authorizationStatus(for: .addOnly)
+        if status == .notDetermined {
+            PHPhotoLibrary.requestAuthorization(for: .addOnly) { newStatus in
+                print("Photos permission status:", newStatus.rawValue)
+            }
         }
     }
 }
