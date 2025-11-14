@@ -25,12 +25,19 @@ func generateThumbnailFromItem(downloadUrl: _URL) throws -> UIImage? {
     return try generateThumbnailFromVideo(localFilePath: localFilePath)
 }
 
-func downloadMedia(reelURL: String) async throws -> _URL? {
-    guard var downloadUrl = try await getDownloadURL(reelURL: reelURL) else { return nil }
-    guard let file = try await downloadFile(from: downloadUrl) else { return nil }
-    
-    downloadUrl.localFilePath = file
-    return downloadUrl
+func downloadMedia(reelURL: String) async throws -> [_URL] {
+    let downloadUrls = try await getDownloadURLs(reelURL: reelURL)
+
+    var downloadedUrls: [_URL] = []
+
+    for downloadUrl in downloadUrls {
+        var url = downloadUrl
+        guard let file = try await downloadFile(from: url) else { continue }
+        url.localFilePath = file
+        downloadedUrls.append(url)
+    }
+
+    return downloadedUrls
 }
 
 func saveMediaToPhotos(downloadUrl: _URL) async throws -> _URL {
@@ -68,16 +75,22 @@ func saveMediaToHistory(downloadUrl: _URL) async throws {
 }
 
 func downloadAndSaveMedia(reelURL: String) async throws {
-    guard var downloadUrl = try await downloadMedia(reelURL: reelURL) else {
+    let downloadUrls = try await downloadMedia(reelURL: reelURL)
+
+    guard !downloadUrls.isEmpty else {
         throw Errors.noDownloadURL
     }
-    downloadUrl = try await saveMediaToPhotos(downloadUrl: downloadUrl)
     
-    if let thumbnailImage = try generateThumbnailFromItem(downloadUrl: downloadUrl) {
-        downloadUrl.thumbnail = thumbnailImage
+    for downloadUrl in downloadUrls {
+        var url = downloadUrl
+        url = try await saveMediaToPhotos(downloadUrl: url)
+
+        if let thumbnailImage = try generateThumbnailFromItem(downloadUrl: url) {
+            url.thumbnail = thumbnailImage
+        }
+
+        try await saveMediaToHistory(downloadUrl: url)
     }
-    
-    try await saveMediaToHistory(downloadUrl: downloadUrl)
-    
+
     try deleteAllTmpFiles()
 }

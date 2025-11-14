@@ -185,16 +185,21 @@ func getBiggestItem(itemVersion: [[String : Any]]) throws -> String {
     return firsItemURL
 }
 
-func getBiggestVideoOrImageURL(from responseData: Data) throws -> _URL {
-    let firstItem = try getFirstItemFrom(from: responseData)
+func getCarousel(item initialJson: [String : Any]) throws -> [[String : Any]]? {
+    if let carouselMedia = initialJson["carousel_media"] as? [[String : Any]] {
+        return carouselMedia
+    }
+    return nil
+}
 
-    if let videoVersions = firstItem["video_versions"] as? [[String: Any]] {
+func getBiggestVideoOrImageURL(from initialJson: [String: Any]) throws -> _URL {
+    if let videoVersions = initialJson["video_versions"] as? [[String: Any]] {
         let biggestItem = try getBiggestItem(itemVersion: videoVersions)
         guard let _url = URL(string: biggestItem) else { throw Errors.URLOBjectInvalid }
         return _URL(type: .video, url: _url)
     }
     guard
-        let imageCandidates = firstItem["image_versions2"] as? [String: [[String: Any]]],
+        let imageCandidates = initialJson["image_versions2"] as? [String: [[String: Any]]],
         let imageVersion = imageCandidates["candidates"]
     else {
         throw Errors.invalidImageVersion
@@ -219,16 +224,27 @@ struct _URL {
     var thumbnail: UIImage?
 }
 
-func getDownloadURL(reelURL: String) async throws -> _URL? {
-    guard let videoCode = urlToVideoCode(reelURL) else { return nil }
-    guard let videoID = videoCodeToVideoID(videoCode) else { return nil }
+func getDownloadURLs(reelURL: String) async throws -> [_URL] {
+    guard let videoCode = urlToVideoCode(reelURL) else { return [] }
+    guard let videoID = videoCodeToVideoID(videoCode) else { return [] }
     let videoApiURL = videoIDToAPIURl(videoID)
 
     let response = try await makeRequest(strUrl: videoApiURL)
+    let firstItem = try getFirstItemFrom(from: response)
     
-    var itemURL = try getBiggestVideoOrImageURL(from: response)
+    let carouselMedia = try getCarousel(item: firstItem)
+    if let cm = carouselMedia {
+        var itemURLs: [_URL] = []
+        for carouselItem in cm {
+            var itemURL = try getBiggestVideoOrImageURL(from: carouselItem)
+            itemURL.initReelURL = reelURL
+            itemURLs.append(itemURL)
+        }
+        return itemURLs
+    }
     
+    var itemURL = try getBiggestVideoOrImageURL(from: firstItem)
     itemURL.initReelURL = reelURL
-    
-    return itemURL
+
+    return [itemURL]
 }
