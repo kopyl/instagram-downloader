@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		480871482EC8DAAA0054950E /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480871472EC8DAA80054950E /* Logging.swift */; };
+		480871492EC8DAAA0054950E /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480871472EC8DAA80054950E /* Logging.swift */; };
 		483ED7002D625743003DB0E5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483ED6FF2D625743003DB0E5 /* Utils.swift */; };
 		483ED7012D625743003DB0E5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483ED6FF2D625743003DB0E5 /* Utils.swift */; };
 		483ED7042D62578E003DB0E5 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483ED7032D62578E003DB0E5 /* Buttons.swift */; };
@@ -65,6 +67,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		480871472EC8DAA80054950E /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		48390C862D4FB7BB00852829 /* instagram-downloader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "instagram-downloader.entitlements"; sourceTree = "<group>"; };
 		48390C872D4FB7FA00852829 /* instagram-downloader-share.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "instagram-downloader-share.entitlements"; sourceTree = "<group>"; };
 		483ED6FC2D6256E1003DB0E5 /* General.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = General.swift; sourceTree = "<group>"; };
@@ -131,6 +134,7 @@
 				484892632D5A061F0033182F /* Constants.swift */,
 				48CA8A9E2D58E9CA005CD16F /* Media.swift */,
 				48CA8A9B2D58DA7F005CD16F /* Data.swift */,
+				480871472EC8DAA80054950E /* Logging.swift */,
 				488699EB2D3C99B2006DF44A /* instagram-downloader */,
 				48D1B19E2D3FB6D50040569E /* instagram-downloader-share */,
 				488699EA2D3C99B2006DF44A /* Products */,
@@ -310,6 +314,7 @@
 				489A35702D625975001CD501 /* General.swift in Sources */,
 				48CA8A9C2D58DA7F005CD16F /* Data.swift in Sources */,
 				483ED7042D62578E003DB0E5 /* Buttons.swift in Sources */,
+				480871482EC8DAAA0054950E /* Logging.swift in Sources */,
 				48CA8A9F2D58E9CA005CD16F /* Media.swift in Sources */,
 				4862F4A82DD2F73500E6CE9E /* SavedItem.swift in Sources */,
 				48F65C252D6C9F5F004A5011 /* Sheets.swift in Sources */,
@@ -332,6 +337,7 @@
 				48D1B1A02D3FB6D50040569E /* ShareViewController.swift in Sources */,
 				48F65C282D6CA001004A5011 /* WebView.swift in Sources */,
 				4862F4AB2DD2F8E200E6CE9E /* Router.swift in Sources */,
+				480871492EC8DAAA0054950E /* Logging.swift in Sources */,
 				48CA8A9D2D58DCEF005CD16F /* Data.swift in Sources */,
 				48F65C2C2D6CA0BC004A5011 /* General.swift in Sources */,
 				48CA8AA02D58E9CA005CD16F /* Media.swift in Sources */,
