@@ -93,3 +93,9 @@ func downloadAndSaveMedia() async throws {
     try deleteAllTmpFiles()
 }
 ```
+
+### App Store release notice:
+
+This app is never going to be published on the App Store.
+
+Unfortunately, Instagram's terms of service prohibit third-party applications from downloading content from their platform without explicit permission. As a result, apps that facilitate downloading Instagram violates these terms and could not be accepted on the App Store.
