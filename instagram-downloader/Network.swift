@@ -224,7 +224,7 @@ struct _URL {
     var thumbnail: UIImage?
 }
 
-func getDownloadURLs(reelURL: String) async throws -> [_URL] {
+func downloadRegularMediaURLs(reelURL: String) async throws -> [_URL] {
     guard let videoCode = urlToVideoCode(reelURL) else { return [] }
     guard let videoID = videoCodeToVideoID(videoCode) else { return [] }
     let videoApiURL = videoIDToAPIURl(videoID)
@@ -244,6 +244,61 @@ func getDownloadURLs(reelURL: String) async throws -> [_URL] {
     }
     
     var itemURL = try getBiggestVideoOrImageURL(from: firstItem)
+    itemURL.initReelURL = reelURL
+
+    return [itemURL]
+}
+
+func getDownloadURLs(reelURL: String) async throws -> [_URL] {
+    if reelURL.contains("/stories/") {
+        return try await getStoryDownloadURLs(reelURL: reelURL)
+    }
+    return try await downloadRegularMediaURLs(reelURL: reelURL)
+}
+
+func getStoryDownloadURLs(reelURL: String) async throws -> [_URL] {
+    guard let url = URL(string: reelURL) else {
+        throw Errors.InvalidURL
+    }
+    let pathComponents = Array(url.pathComponents.dropFirst())
+    guard pathComponents.count >= 2, pathComponents[0] == "stories" else {
+        throw Errors.InvalidURL
+    }
+
+    let username = pathComponents[1]
+    let storyID = pathComponents[2]
+    
+    let userProfileAPIURL = "https://www.instagram.com/api/v1/users/web_profile_info/?username=\(username)"
+    let userProfileResponse = try await makeRequest(strUrl: userProfileAPIURL)
+
+    guard let userProfileJSON = try JSONSerialization.jsonObject(with: userProfileResponse) as? [String: Any],
+          let data = userProfileJSON["data"] as? [String: Any],
+          let user = data["user"] as? [String: Any],
+          let userID = user["id"] as? String else {
+        throw Errors.keyNotFoundError
+    }
+    
+    let storyAPIURL = "https://i.instagram.com/api/v1/feed/user/\(userID)/story/"
+    let storyResponse = try await makeRequest(strUrl: storyAPIURL)
+
+    guard let storyJSON = try JSONSerialization.jsonObject(with: storyResponse) as? [String: Any],
+          let reel = storyJSON["reel"] as? [String: Any],
+          let items = reel["items"] as? [[String: Any]] else {
+        throw Errors.keyNotFoundError
+    }
+    
+    guard let storyItem = items.first(where: { item in
+        if let pk = item["pk"] as? String {
+            return pk == storyID
+        } else if let pk = item["pk"] as? Int {
+            return String(pk) == storyID
+        }
+        return false
+    }) else {
+        throw Errors.keyNotFoundError
+    }
+    
+    var itemURL = try getBiggestVideoOrImageURL(from: storyItem)
     itemURL.initReelURL = reelURL
 
     return [itemURL]
