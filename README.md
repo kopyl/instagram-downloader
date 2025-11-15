@@ -10,8 +10,10 @@ I used to use my primary account and in a few weeks got an account restriction f
 - Video downloads
 - Pictures downloads
 - Ads downloads
+- Stoys downloads
+- Carousel posts downloads
 - History of downloads
-- Downloads with Share Extension (Share to -> Instagram dl)
+- Downloads with Share Extension (Share to -> Reelsaver)
 - Copy clean URL to clipboard (withotut garbage parameters like ?igsh=XXX)
 - Save first video frame to photos (useful when a picture was uploaded as a video with some music)
 
@@ -19,8 +21,9 @@ I used to use my primary account and in a few weeks got an account restriction f
 <video src="https://github.com/user-attachments/assets/178eb1e9-f142-4d5a-b5ee-62d3fc1d56cc" width="300" controls></video>
 
 ### Plans:
-- [ ] Add support for downloading stories
-- [ ] More convenient UI for a media preview
+- [x] Add support for downloading stories
+- [x] More convenient UI for a media preview
+- [ ] Save selected frame from video as a picture
 
 How to:
 
