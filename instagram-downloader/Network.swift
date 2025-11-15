@@ -267,13 +267,13 @@ func getStoryDownloadURLs(reelURL: String) async throws -> [_URL] {
     else {
         throw Errors.InvalidURL
     }
-
+    
     let username = pathComponents[1]
     let storyID = pathComponents[2]
     
     let userProfileAPIURL = "https://www.instagram.com/api/v1/users/web_profile_info/?username=\(username)"
     let userProfileResponse = try await makeRequest(strUrl: userProfileAPIURL)
-
+    
     guard let userProfileJSON = try JSONSerialization.jsonObject(with: userProfileResponse) as? [String: Any],
           let data = userProfileJSON["data"] as? [String: Any],
           let user = data["user"] as? [String: Any],
@@ -283,7 +283,7 @@ func getStoryDownloadURLs(reelURL: String) async throws -> [_URL] {
     
     let storyAPIURL = "https://i.instagram.com/api/v1/feed/user/\(userID)/story/"
     let storyResponse = try await makeRequest(strUrl: storyAPIURL)
-
+    
     guard let storyJSON = try JSONSerialization.jsonObject(with: storyResponse) as? [String: Any],
           let reel = storyJSON["reel"] as? [String: Any],
           let items = reel["items"] as? [[String: Any]] else {
@@ -303,6 +303,6 @@ func getStoryDownloadURLs(reelURL: String) async throws -> [_URL] {
     
     var itemURL = try getBiggestVideoOrImageURL(from: storyItem)
     itemURL.initReelURL = reelURL
-
+    
     return [itemURL]
 }
