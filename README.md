@@ -1,4 +1,4 @@
-# Instagram video and photo downloader
+# Instagram video and photo downloader to Photos app
 *With user cookies and headers for downloading*
 
 **IMPORTANT:** <br>
@@ -19,6 +19,7 @@ I used to use my primary account and in a few weeks got an account restriction f
 
 ### Here is a video demo on how it works:
 <video src="https://github.com/user-attachments/assets/178eb1e9-f142-4d5a-b5ee-62d3fc1d56cc" width="300" controls></video>
+* After downloading it, the media appears both in the app and in the Photos app.
 
 ### Plans:
 - [x] Add support for downloading stories
