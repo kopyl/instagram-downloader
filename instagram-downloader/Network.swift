@@ -261,7 +261,10 @@ func getStoryDownloadURLs(reelURL: String) async throws -> [_URL] {
         throw Errors.InvalidURL
     }
     let pathComponents = Array(url.pathComponents.dropFirst())
-    guard pathComponents.count >= 2, pathComponents[0] == "stories" else {
+    guard
+        pathComponents.count >= 2,
+        pathComponents[0] == "stories"
+    else {
         throw Errors.InvalidURL
     }
 
