@@ -54,8 +54,6 @@ struct ContentView: View {
             notification.setWindowScene(application: UIApplication.shared)
             requestPhotosPermissionIfNeeded()
         }
-        .onDisappear {
-        }
     }
 
     private func requestPhotosPermissionIfNeeded() {
