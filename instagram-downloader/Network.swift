@@ -139,6 +139,7 @@ enum Errors: String, LocalizedError {
     case makeRequestForDownloadingFinalMediaFileFailed
     case loginStatusIsFailed
     case jsonWithMediaURLsCantBeRead
+    case urlIsNotFromInstagram
     
     var errorDescription: String? {
         rawValue
@@ -250,6 +251,9 @@ func downloadRegularMediaURLs(reelURL: String) async throws -> [_URL] {
 }
 
 func getDownloadURLs(reelURL: String) async throws -> [_URL] {
+    if !reelURL.contains("instagram") {
+        throw Errors.urlIsNotFromInstagram
+    }
     if reelURL.contains("/stories/") {
         return try await getStoryDownloadURLs(reelURL: reelURL)
     }
