@@ -224,7 +224,7 @@ struct HistoryView: View {
                                     .tint(.red)
                                     
                                     Button {
-                                        UIPasteboard.general.string = reel.url
+                                        UIPasteboard.general.string = reel.cleanURL()
                                         notification.present(type: .success, title: "Copied to clipboard")
                                     } label: {
                                         Label("Copy", systemImage: "doc.on.doc")
