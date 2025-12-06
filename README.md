@@ -14,6 +14,7 @@ I used to use my primary account and in a few weeks got an account restriction f
 - Carousel posts downloads
 - History of downloads
 - Downloads with Share Extension (Share to -> Reelsaver)
+- Downloads via a Shortcut (get it: https://www.icloud.com/shortcuts/3973cdde3dad42c28d91407736b4e80c ; set up: https://youtu.be/gtdAj2Khkoo)
 - Copy clean URL to clipboard (withotut garbage parameters like ?igsh=XXX)
 - Save first video frame to photos (useful when a picture was uploaded as a video with some music)
 
