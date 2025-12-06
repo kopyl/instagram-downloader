@@ -30,6 +30,7 @@
 		48CA8A9D2D58DCEF005CD16F /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CA8A9B2D58DA7F005CD16F /* Data.swift */; };
 		48CA8A9F2D58E9CA005CD16F /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CA8A9E2D58E9CA005CD16F /* Media.swift */; };
 		48CA8AA02D58E9CA005CD16F /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CA8A9E2D58E9CA005CD16F /* Media.swift */; };
+		48CACC522EE3B48400264D83 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CACC512EE3B48400264D83 /* AppIntent.swift */; };
 		48D1B1982D3F2ED10040569E /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1B1972D3F2ED10040569E /* Network.swift */; };
 		48D1B1A02D3FB6D50040569E /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D1B19F2D3FB6D50040569E /* ShareViewController.swift */; };
 		48D1B1A72D3FB6D50040569E /* instagram-downloader-share.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 48D1B19D2D3FB6D50040569E /* instagram-downloader-share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -87,6 +88,7 @@
 		489A35AB2D626E67001CD501 /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
 		48CA8A9B2D58DA7F005CD16F /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		48CA8A9E2D58E9CA005CD16F /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
+		48CACC512EE3B48400264D83 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		48D1B1972D3F2ED10040569E /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		48D1B19D2D3FB6D50040569E /* instagram-downloader-share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "instagram-downloader-share.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		48D1B19F2D3FB6D50040569E /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 		488699EB2D3C99B2006DF44A /* instagram-downloader */ = {
 			isa = PBXGroup;
 			children = (
+				48CACC512EE3B48400264D83 /* AppIntent.swift */,
 				48390C862D4FB7BB00852829 /* instagram-downloader.entitlements */,
 				48869A022D3CD25A006DF44A /* Info.plist */,
 				488699EC2D3C99B2006DF44A /* instagram_downloaderApp.swift */,
@@ -321,6 +324,7 @@
 				48D1B1982D3F2ED10040569E /* Network.swift in Sources */,
 				4862F4AA2DD2F8E200E6CE9E /* Router.swift in Sources */,
 				489A35AA2D626E02001CD501 /* History.swift in Sources */,
+				48CACC522EE3B48400264D83 /* AppIntent.swift in Sources */,
 				483ED7002D625743003DB0E5 /* Utils.swift in Sources */,
 				489A35AC2D626E67001CD501 /* Onboarding.swift in Sources */,
 				488699EF2D3C99B2006DF44A /* ContentView.swift in Sources */,
