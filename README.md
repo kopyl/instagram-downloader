@@ -10,7 +10,7 @@ I used to use my primary account and in a few weeks got an account restriction f
 - Video downloads
 - Pictures downloads
 - Ads downloads
-- Stoys downloads
+- Stories downloads
 - Carousel posts downloads
 - History of downloads
 - Downloads with Share Extension (Share to -> Reelsaver)
