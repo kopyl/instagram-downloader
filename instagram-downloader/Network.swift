@@ -122,9 +122,8 @@ func makeRequest(strUrl: String) async throws -> Data {
     return data
 }
 
-enum Errors: String, LocalizedError {
+enum Errors: LocalizedError {
     case InvalidURL
-    case keyNotFoundError
     case itemVersionIsEmpty
     case invalidItemURL
     case emptyLocalFileURL
@@ -141,8 +140,21 @@ enum Errors: String, LocalizedError {
     case jsonWithMediaURLsCantBeRead
     case urlIsNotFromInstagram
     
+    case keyNotFoundError(String?)
+    static var keyNotFoundError: Errors {
+        .keyNotFoundError(nil)
+    }
+    
     var errorDescription: String? {
-        rawValue
+        let mirror = Mirror(reflecting: self)
+        guard let label = mirror.children.first?.label else {
+            return String(describing: self)
+        }
+        
+        if case .keyNotFoundError(let key) = self, let k = key {
+            return "\(label)(\(k))"
+        }
+        return label
     }
 }
 
