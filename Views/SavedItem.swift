@@ -7,10 +7,13 @@
 
 import Foundation
 import SwiftUI
+import AVKit
 
 struct SavedItemView: View {
     let reel: Reel
     public var notification: AlertNotification
+    
+    @State private var videoPlayer: AVPlayer?
     
     private func openReel(_ reel: Reel) {
         guard let url = URL(string: reel.url) else {
@@ -18,6 +21,26 @@ struct SavedItemView: View {
             return
         }
         UIApplication.shared.open(url)
+    }
+    
+    private func saveCurrentFrame() {
+        guard let player = videoPlayer else {
+            notification.present(type: .error, title: "Video not loaded")
+            return
+        }
+        
+        Task {
+            if let image = await VideoPlayerView.captureCurrentFrame(from: player) {
+                await MainActor.run {
+                    UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+                    notification.present(type: .success)
+                }
+            } else {
+                await MainActor.run {
+                    notification.present(type: .error, title: "Failed to capture frame")
+                }
+            }
+        }
     }
     
     var body: some View {
@@ -47,7 +70,10 @@ struct SavedItemView: View {
                 if let mediaIdentifierFromPhotosApp = reel.mediaIdentifierFromPhotosApp {
                     VideoPlayerView(
                         mediaIdentifierFromPhotosApp: mediaIdentifierFromPhotosApp,
-                        thumbnail: reel.thumbnail
+                        thumbnail: reel.thumbnail,
+                        onPlayerReady: { player in
+                            videoPlayer = player
+                        }
                     )
                 }
                 else if let image = reel.thumbnail {
@@ -75,6 +101,21 @@ struct SavedItemView: View {
                                 .opacity(0.9)
                         }
                     }
+                    
+                    if reel.type == .video {
+                        Button {
+                            saveCurrentFrame()
+                        } label: {
+                            HStack {
+                                WText("Save current frame")
+                                Spacer()
+                                Image(systemName: "camera.fill")
+                                    .foregroundStyle(.white)
+                                    .opacity(0.9)
+                            }
+                        }
+                    }
+                    
                     CopyButton(text: "Copy link", reel: reel, notification: notification)
                 }
                 .scrollDisabled(true)

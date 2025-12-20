@@ -66,6 +66,8 @@ func getVideoURL(from mediaIdentifierFromPhotosApp: String, completion: @escapin
 struct VideoPlayerView: View {
     let mediaIdentifierFromPhotosApp: String
     let thumbnail: UIImage?
+    var onPlayerReady: ((AVPlayer) -> Void)?
+    
     @State private var player: AVPlayer?
     @State private var isVideoNotPresentInPhotos = false
     
@@ -101,11 +103,35 @@ struct VideoPlayerView: View {
     private func fetchVideo() {
         getVideoURL(from: mediaIdentifierFromPhotosApp) { url in
             if let url {
-                player = AVPlayer(url: url)
+                let newPlayer = AVPlayer(url: url)
+                player = newPlayer
+                onPlayerReady?(newPlayer)
             }
             else {
                 isVideoNotPresentInPhotos = true
             }
+        }
+    }
+    
+    static func captureCurrentFrame(from player: AVPlayer) async -> UIImage? {
+        guard let currentItem = player.currentItem,
+              let asset = currentItem.asset as? AVURLAsset else {
+            return nil
+        }
+        
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+        imageGenerator.appliesPreferredTrackTransform = true
+        imageGenerator.requestedTimeToleranceBefore = .zero
+        imageGenerator.requestedTimeToleranceAfter = .zero
+        
+        let currentTime = player.currentTime()
+        
+        do {
+            let (cgImage, _) = try await imageGenerator.image(at: currentTime)
+            return UIImage(cgImage: cgImage)
+        } catch {
+            print("Error capturing frame: \(error)")
+            return nil
         }
     }
 }
