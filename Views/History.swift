@@ -68,7 +68,7 @@ struct VideoPlayerView: View {
     let thumbnail: UIImage?
     @State private var player: AVPlayer?
     @State private var isVideoNotPresentInPhotos = false
-
+    
     var body: some View {
         VStack {
             if let player {
@@ -97,7 +97,7 @@ struct VideoPlayerView: View {
             player = nil
         }
     }
-
+    
     private func fetchVideo() {
         getVideoURL(from: mediaIdentifierFromPhotosApp) { url in
             if let url {
